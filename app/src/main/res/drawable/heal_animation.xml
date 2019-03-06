@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="true">
+    <item android:drawable="@drawable/heal_01"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_02"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_03"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_04"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_05"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_06"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_07"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_08"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_09"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_10"
+        android:duration="100"/>
+    <item android:drawable="@drawable/heal_11"
+        android:duration="100"/>
+</animation-list>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.user.bulletfalls">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Activities.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Result"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Nieużywane.Menu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Game"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.Heroes"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".P2PPackage.P2PConnection"
+            android:label="@string/title_activity_p2pconnection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".P2PPackage.P2PGame"
+            android:label="@string/title_activity_p2pgame"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HeroProfile"
+            android:label="@string/title_activity_hero_profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.MysterymMap"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.NotReadyYet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChosenHero"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BulletProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AbilityProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileActivity.ProfileScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ShopPackage.Shop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PopUpWindowsPackage.ShowPopUp"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.GameResult"></activity>
+    </application>
+
+</manifest>

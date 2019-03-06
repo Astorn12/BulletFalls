@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BulletFalls</string>
+    <string name="title_activity_p2pconnection">p2pconnection</string>
+    <string name="title_activity_p2pgame">p2pgame</string>
+    <string name="title_activity_hero_profile">HeroProfile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
