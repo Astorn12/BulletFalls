@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.example.user.bulletfalls.Interfaces.PossesAble;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.PossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 
 public class AbilityView extends android.support.v7.widget.AppCompatImageView implements Observer,PossesAble {
 

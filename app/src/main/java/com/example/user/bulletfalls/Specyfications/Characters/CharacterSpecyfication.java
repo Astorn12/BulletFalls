@@ -4,9 +4,9 @@ package com.example.user.bulletfalls.Specyfications.Characters;
 import com.example.user.bulletfalls.Character;
 import com.example.user.bulletfalls.Description;
 import com.example.user.bulletfalls.Enums.CharacterPositioning;
+import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Specyfications.ViewElementSpecyfication;
-import com.example.user.bulletfalls.Enums.Group;
 import com.example.user.bulletfalls.Enums.Kind;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.DoToBulletStrategy;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -35,7 +35,7 @@ public class CharacterSpecyfication extends ViewElementSpecyfication {
     //int idBullet;//tutaj zamieniliśmy obiekt bullet na id bullet
     Kind kind;
     String name;
-    List<Group> groups;
+    List<GroupName> groupNames;
     CharacterPositioning characterPositioning;
     public DoToBulletStrategy doToBulletStrategy;
     int irrealWidth;
@@ -52,7 +52,7 @@ public class CharacterSpecyfication extends ViewElementSpecyfication {
         this.shootingSpeed=character.getShootingSpeed();
         this.level=character.getLevel();
         this.resistance=character.getResistance();
-        this.groups=character.getGroups();
+        this.groupNames =character.getGroupNames();
         this.name=character.getName();
         this.kind=character.getKind();
         this.characterPositioning=character.getPosition();
@@ -131,11 +131,11 @@ public class CharacterSpecyfication extends ViewElementSpecyfication {
         this.name = name;
     }
 
-    public List<Group> getGroups() {
-        return groups;
+    public List<GroupName> getGroupNames() {
+        return groupNames;
     }
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
+    public void setGroupNames(List<GroupName> groupNames) {
+        this.groupNames = groupNames;
     }
 
     public int getIrrealWidth() {

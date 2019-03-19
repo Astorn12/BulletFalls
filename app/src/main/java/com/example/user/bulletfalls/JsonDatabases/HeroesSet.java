@@ -7,21 +7,25 @@ import com.example.user.bulletfalls.BarAbilities;
 import com.example.user.bulletfalls.Bullet;
 import com.example.user.bulletfalls.Bullets.RotateBullet;
 import com.example.user.bulletfalls.Database.DAO.CurrencyDao;
+import com.example.user.bulletfalls.Database.DAO.CurrencyEnum;
 import com.example.user.bulletfalls.Description;
 import com.example.user.bulletfalls.Enums.CharacterPositioning;
-import com.example.user.bulletfalls.Enums.Group;
+import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.Hero;
 import com.example.user.bulletfalls.KlasyPomocnicze.FileSupporter;
+import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.MoneyPossesStrategy;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.PossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeed;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.Standard;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.Stot;
+import com.example.user.bulletfalls.Strategies.Par;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
@@ -56,7 +60,6 @@ public class HeroesSet {
             e.printStackTrace();
         }
 
-
     }
 
     public static void Save(Context context)
@@ -65,7 +68,9 @@ public class HeroesSet {
 
         for(Hero b : heroesList)
         {
+
             bd.add(new HeroSpecyfication(b));
+
         }
         ObjectMapper mapper= new ObjectMapper();
         String s ="";
@@ -77,12 +82,7 @@ public class HeroesSet {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
-
-
         FileSupporter.WriteToFile(path,context,s);
-
-
     }
 
     public static void setBulletForHero(String name,Bullet bullet)
@@ -119,26 +119,38 @@ public class HeroesSet {
         CurrencyDao currencyDao= new CurrencyDao(context1);
 
         PossesStrategy ps= new MoneyPossesStrategy("Mystery Coin",10);
-        Hero hero1= new Hero(context,10,20,null,p,p,20,R.drawable.eater,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Eater",null,Arrays.asList(Group.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"żaden",Permission.YES,new Description(),ps);
-        Hero hero2= new Hero(context,10,20,null,p,p,20,R.drawable.rinor,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Rinor",null,Arrays.asList(Group.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"żaden",Permission.YES,new Description(),ps);
-        Hero hero3= new Hero(context,10,20,null,p,p,20,R.drawable.pansyk,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Pansyk",null,Arrays.asList(Group.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"żaden",Permission.YES,new Description(),ps);
 
-        Hero mabel= new Hero(context,10,30,null,p,p,20,R.drawable.mabel,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,20,1,0,null,"Mabel Pines",null,Arrays.asList(Group.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"żaden",Permission.YES,new Description(),ps);
+        List<MoneyNeed> moneyNeeds= new LinkedList<>();
+
+        MoneyNeed first= new MoneyNeed(Arrays.asList(new Par<Currency,Integer>(new Currency(CurrencyEnum.Connifer),40),
+                new Par<Currency,Integer>(new Currency(CurrencyEnum.MysteryCoin),20)));
+        MoneyNeed second= new MoneyNeed(Arrays.asList(new Par<Currency,Integer>(new Currency(CurrencyEnum.Connifer),10),
+                new Par<Currency,Integer>(new Currency(CurrencyEnum.MysteryCoin),30)));
+        PossesStrategy extendedPossesStrategy= new MoneyPossesStrategy(Arrays.asList(first,second));
+
+
+
+        Hero hero1= new Hero(context,10,20,null,p,p,20,R.drawable.eater,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Eater",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"żaden",Permission.YES,new Description(),ps);
+        Hero hero2= new Hero(context,10,20,null,p,p,20,R.drawable.rinor,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Rinor",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"żaden",Permission.YES,new Description(),ps);
+        Hero hero3= new Hero(context,10,20,null,p,p,20,R.drawable.pansyk,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Pansyk",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"żaden",Permission.YES,new Description(),ps);
+
+        Hero mabel= new Hero(context,10,30,null,p,p,20,R.drawable.mabel,null/*(FrameLayout) this.findViewById(R.id.frame)*/,0,20,1,0,null,"Mabel Pines",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"żaden",Permission.YES,new Description(),ps);
         BarAbilities bar= new BarAbilities(AbilitySet.getInstance().getAbility("carpediem"),AbilitySet.getInstance().getAbility("ability"),AbilitySet.getInstance().getAbility("summonlog"));
         mabel.setAbilities(bar);
 
 
-        Hero dipper= new Hero(context,10,20,null,p,p,20,R.drawable.dipper,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,70,1,0,null,"Dipper Pines",null,Arrays.asList(Group.MysteryShack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"dipper",Permission.NOT,new Description(),ps);
-        Hero soos= new Hero(context,10,20,null,p,p,20,R.drawable.soos,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,50,1,0,null,"Soos Ramirez",null,Arrays.asList(Group.MysteryShack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"soos",Permission.NOT,new Description(),ps);
-        Hero stanek= new Hero(context,5,20,null,p,p,20,R.drawable.stanek,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Stan Pines",null,Arrays.asList(Group.MysteryShack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"stanek",Permission.NOT,new Description(),ps);
-        Hero wendy= new Hero(context,10,20,null,p,p,20,R.drawable.wendy,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Wendy Corduroy",null,Arrays.asList(Group.MysteryShack,Group.Lumberjack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"wendy",Permission.YES,new Description(),ps);
-        Hero waddles= new Hero(context,4,10,null,p,p,20,R.drawable.waddles,null/*(FrameLayout) this.findViewById(R.id.frame)*/,500,400,1,5,null,"Waddles",null,Arrays.asList(Group.MysteryShack),CharacterPositioning.LEFTCENTER,new Stot(10),abilitirs,"waddle",Permission.YES,new Description(),ps);
-        Hero grenda= new Hero(context,4,10,null,p,p,20,R.drawable.grenda,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Grenda",null,Arrays.asList(Group.MabelTeam),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"grenda",Permission.YES,new Description(),ps);
-        Hero loglandgirl= new Hero(context,4,10,null,p,p,20,R.drawable.loglandgirl,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Log Land Girl",null,Arrays.asList(Group.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"loglandgirl",Permission.YES,new Description(),ps);
-        Hero tremblin= new Hero(context,4,10,null,40,p,20,R.drawable.tremblin,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Quentin Trembley",null,Arrays.asList(Group.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"quentintrembley",Permission.YES,new Description(),ps);
-        Hero candy= new Hero(context,4,10,null,40,p,20,R.drawable.candy,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Candy Chiu",null,Arrays.asList(Group.MabelTeam),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"candy",Permission.YES,new Description(),ps);
-        Hero mcgucket= new Hero(context,4,10,null,40,p,20,R.drawable.mcgucket,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Old Man McGucket",null,Arrays.asList(Group.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"mcgucket",Permission.YES,new Description(),ps);
-        Hero shootingMabel= new Hero(context,4,10,null,40,p,20,R.drawable.shootingmabel,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Mabel With Grappling Hook",null,Arrays.asList(Group.MysteryShack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"mabel",Permission.YES,new Description(),ps);
+        Hero dipper= new Hero(context,10,20,null,p,p,20,R.drawable.dipper,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,70,1,0,null,"Dipper Pines",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"dipper",Permission.NOT,new Description(),ps);
+        Hero soos= new Hero(context,10,20,null,p,p,20,R.drawable.soos,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,50,1,0,null,"Soos Ramirez",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"soos",Permission.NOT,new Description(),ps);
+        Hero stanek= new Hero(context,5,20,null,p,p,20,R.drawable.stanek,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Stan Pines",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"stanek",Permission.NOT,new Description(),ps);
+        Hero wendy= new Hero(context,10,20,null,p,p,20,R.drawable.wendy,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,0,null,"Wendy Corduroy",null,Arrays.asList(GroupName.MysteryShack,GroupName.Lumberjack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"wendy",Permission.YES,new Description(),extendedPossesStrategy);
+
+        Hero waddles= new Hero(context,4,10,null,p,p,20,R.drawable.waddles,null/*(FrameLayout) this.findViewById(R.id.frame)*/,500,400,1,5,null,"Waddles",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new Stot(10),abilitirs,"waddle",Permission.YES,new Description(),ps);
+        Hero grenda= new Hero(context,4,10,null,p,p,20,R.drawable.grenda,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Grenda",null,Arrays.asList(GroupName.MabelTeam),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"grenda",Permission.YES,new Description(),ps);
+        Hero loglandgirl= new Hero(context,4,10,null,p,p,20,R.drawable.loglandgirl,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Log Land Girl",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"loglandgirl",Permission.YES,new Description(),ps);
+        Hero tremblin= new Hero(context,4,10,null,40,p,20,R.drawable.tremblin,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Quentin Trembley",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"quentintrembley",Permission.YES,new Description(),extendedPossesStrategy);
+        Hero candy= new Hero(context,4,10,null,40,p,20,R.drawable.candy,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Candy Chiu",null,Arrays.asList(GroupName.MabelTeam),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"candy",Permission.YES,new Description(),ps);
+        Hero mcgucket= new Hero(context,4,10,null,40,p,20,R.drawable.mcgucket,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Old Man McGucket",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"mcgucket",Permission.YES,new Description(),ps);
+        Hero shootingMabel= new Hero(context,4,10,null,40,p,20,R.drawable.shootingmabel,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,5,null,"Mabel With Grappling Hook",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new Standard(),abilitirs,"mabel",Permission.YES,new Description(),ps);
 
         List<Hero> heroes= heroesList;
 
@@ -257,5 +269,35 @@ public class HeroesSet {
         }
     }
 
+
+    public float getGroupPercentage(GroupName groupName)
+    {
+        return ((float)getPossesedCharacterfFromTheGroup(groupName))/((float)getNumberOfCharacterOfGroup(groupName));
+    }
+    public int getNumberOfCharacterOfGroup(GroupName groupName)
+    {
+        int counter=0;
+        for(Hero hero:this.heroesList)
+        {
+            if(hero.isFromGroup(groupName))
+            {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public int getPossesedCharacterfFromTheGroup(GroupName groupName)
+    {
+        int counter=0;
+        for(Hero hero:this.heroesList)
+        {
+            if(hero.isFromGroup(groupName)&& hero.isPermitted())
+            {
+                counter++;
+            }
+        }
+        return counter;
+    }
 
 }

@@ -1,9 +1,11 @@
-package com.example.user.bulletfalls;
+package com.example.user.bulletfalls.ShopPackage;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
-import android.icu.text.RelativeDateTimeFormatter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,14 +20,21 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.user.bulletfalls.Ability;
+import com.example.user.bulletfalls.AbilityView;
+import com.example.user.bulletfalls.Bullet;
+import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.FragmentsSlider.SlidingTabLayout;
+import com.example.user.bulletfalls.Hero;
 import com.example.user.bulletfalls.Interfaces.PossesAble;
 import com.example.user.bulletfalls.JsonDatabases.AbilitySet;
 import com.example.user.bulletfalls.JsonDatabases.BulletSet;
 import com.example.user.bulletfalls.JsonDatabases.HeroesSet;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
+import com.example.user.bulletfalls.R;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeedIndex;
+import com.example.user.bulletfalls.ViewElement;
 
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,6 +52,7 @@ public class ShopShelfsFragment extends Fragment {
     PopupWindow popupWindow;
     FrameLayout main;
 
+
     public ShopShelfsFragment() {
         // Required empty public constructor
 
@@ -51,6 +61,7 @@ public class ShopShelfsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_shop_shelfs, container, false);
     }
 
@@ -61,6 +72,12 @@ public class ShopShelfsFragment extends Fragment {
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(new SamplePagerAdapter());
+        Intent intent=getActivity().getIntent();
+
+
+        intent.getIntExtra("itemnumber",0);
+
+        mViewPager.setCurrentItem(intent.getIntExtra("itemnumber",0));
         // END_INCLUDE (setup_viewpager)
 
         // BEGIN_INCLUDE (setup_slidingtablayout)
@@ -73,6 +90,7 @@ public class ShopShelfsFragment extends Fragment {
 
         // END_INCLUDE (setup_slidingtablayout)
     }
+
     // END_INCLUDE (fragment_onviewcreated)
 
     class SamplePagerAdapter extends PagerAdapter {
@@ -143,8 +161,6 @@ public class ShopShelfsFragment extends Fragment {
             {
                 case 0:
                     putHeroesOnShelf(view);
-
-
                     break;
                 case 1:
                     putBulletsOnShelf(view);
@@ -152,83 +168,126 @@ public class ShopShelfsFragment extends Fragment {
                 case 2:
                     putAbilitiesOnShelf(view);
                     break;
-
             }
             return view;
         }
-        private void putHeroesOnShelf(View view)
+        private List<LinearLayout> getSelfs(View view)
         {
             LinearLayout view1= (LinearLayout) view.findViewById(R.id.linearLayout1);
             LinearLayout view2= (LinearLayout) view.findViewById(R.id.linearLayout2);
             LinearLayout view3= (LinearLayout) view.findViewById(R.id.linearLayout3);
             LinearLayout view4= (LinearLayout) view.findViewById(R.id.linearLayout4);
-            List<LinearLayout> linears= Arrays.asList(view1,view2,view3,view4);
+            return Arrays.asList(view1,view2,view3,view4);
+        }
+
+        private void putViewsOnShelf(View view,List<? extends ImageView> images)
+        {
+            List<LinearLayout> linears= getSelfs(view);
             for(LinearLayout ll : linears) {
 
-                Hero pointer = stock.get(linears.indexOf(ll));
-                HeroesSet heroesSet = new HeroesSet();
-                if (!heroesSet.ifHasThisHero(pointer)) {
-                    pointer.setColorFilter(Color.BLACK);
-                }
-                ll.addView(pointer);
-                pointer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
-                TextView heroName = new TextView(getContext());
-                heroName.setText(pointer.getName());
-                ll.addView(heroName);
-                heroName.setGravity(Gravity.CENTER_HORIZONTAL);
+                int index=linears.indexOf(ll);
+                if(index<images.size()) {
+                    ImageView pointer = stock.get(index);
 
-                setCost(pointer, ll);
-                addListener(pointer);
+                    LinearLayout footer = (LinearLayout) ll.getChildAt(1);
+                    footer.setGravity(Gravity.CENTER);
+                    ((LinearLayout) ll.getChildAt(0)).addView(pointer);
+                    pointer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+                    TextView heroName = new TextView(getContext());
+                    ((LinearLayout) ll.getChildAt(0)).addView(heroName);
+                    heroName.setGravity(Gravity.CENTER_HORIZONTAL);
+                    if(pointer.getClass().equals(Hero.class)) {
+                        Hero hero=(Hero)pointer;
+                        heroName.setText(hero.getName());
+                        setCost(hero, footer);
+                        addListener(footer, hero);
+                    }else if(pointer.getClass().equals(Bullet.class)){
+                        Bullet bullet= (Bullet)pointer;
+                        heroName.setText(bullet.getName());
+                        setCost(bullet, footer);
+                        addListener(footer,bullet);
+
+                    }else if(pointer.getClass().equals(Ability.class)){
+                        AbilityView abilityView= (AbilityView)pointer;
+
+                        heroName.setText(abilityView.getName());
+                        setCost(abilityView, footer);
+                        addListener(footer, abilityView);
+                    }
+                    //ll.addView(heroName);
+
+
+
+                }
             }
+        }
+
+        private void putHeroesOnShelf(View view)
+        {
+            List<LinearLayout> linears= getSelfs(view);
+            for(LinearLayout ll : linears) {
+
+                int index=linears.indexOf(ll);
+                if(index<stock.size()) {
+                    Hero pointer = stock.get(index);
+                    pointer.setColorFilter(Color.BLACK);
+                    LinearLayout footer = (LinearLayout) ll.getChildAt(1);
+                    footer.setGravity(Gravity.CENTER);
+                    ((LinearLayout) ll.getChildAt(0)).addView(pointer);
+                    pointer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+                    TextView heroName = new TextView(getContext());
+                    heroName.setText(pointer.getName());
+
+                    ((LinearLayout) ll.getChildAt(0)).addView(heroName);
+                    heroName.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                    setCost(pointer, footer);
+                    addListener(footer, pointer);
+                }
+                }
         }
         private void putBulletsOnShelf(View view)
         {
-            LinearLayout view1= (LinearLayout) view.findViewById(R.id.linearLayout1);
-            LinearLayout view2= (LinearLayout) view.findViewById(R.id.linearLayout2);
-            LinearLayout view3= (LinearLayout) view.findViewById(R.id.linearLayout3);
-            LinearLayout view4= (LinearLayout) view.findViewById(R.id.linearLayout4);
-            List<LinearLayout> linears= Arrays.asList(view1,view2,view3,view4);
+            List<LinearLayout> linears= getSelfs(view);
             for(LinearLayout ll : linears) {
-
-                Bullet pointer = bulletStock.get(linears.indexOf(ll));
-                BulletSet bulletSet = new BulletSet();
-                if (!bulletSet.ifHasThisBullet(pointer)) {
+                int index=linears.indexOf(ll);
+                if(index<bulletStock.size()) {
+                    LinearLayout footer = (LinearLayout) ll.getChildAt(1);
+                    LinearLayout header = (LinearLayout) ll.getChildAt(0);
+                    footer.setGravity(Gravity.CENTER);
+                    Bullet pointer = bulletStock.get(linears.indexOf(ll));
                     pointer.setColorFilter(Color.BLACK);
+                    header.addView(pointer);
+                    pointer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+                    TextView heroName = new TextView(getContext());
+                    heroName.setText(pointer.getName());
+                    header.addView(heroName);
+                    heroName.setGravity(Gravity.CENTER_HORIZONTAL);
+                    setCost(pointer, footer);
+                    addListener(footer, pointer);
                 }
-                ll.addView(pointer);
-                pointer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
-                TextView heroName = new TextView(getContext());
-                heroName.setText(pointer.getName());
-                ll.addView(heroName);
-                heroName.setGravity(Gravity.CENTER_HORIZONTAL);
-
-                setCost(pointer, ll);
-                addListener(pointer);
-            }
+                }
         }
         private void putAbilitiesOnShelf(View view)
         {
-            LinearLayout view1= (LinearLayout) view.findViewById(R.id.linearLayout1);
-            LinearLayout view2= (LinearLayout) view.findViewById(R.id.linearLayout2);
-            LinearLayout view3= (LinearLayout) view.findViewById(R.id.linearLayout3);
-            LinearLayout view4= (LinearLayout) view.findViewById(R.id.linearLayout4);
-            List<LinearLayout> linears= Arrays.asList(view1,view2,view3,view4);
+            List<LinearLayout> linears= getSelfs(view);
             for(LinearLayout ll : linears) {
-
-                Ability ability = abilityStock.get(linears.indexOf(ll));
-                //AbilitySet abilitySet= new AbilitySet();
-                AbilityView pointer= new AbilityView(getContext(),ability);
-                if (!AbilitySet.getInstance().ifHasThisAbility(ability)) {
+                int index=linears.indexOf(ll);
+                if(index<abilityStock.size()) {
+                    LinearLayout footer = (LinearLayout) ll.getChildAt(1);
+                    footer.setGravity(Gravity.CENTER);
+                    Ability ability = abilityStock.get(linears.indexOf(ll));
+                    AbilityView pointer = new AbilityView(getContext(), ability);
                     pointer.setColorFilter(Color.BLACK);
+                    ((LinearLayout) ll.getChildAt(0)).addView(pointer);
+                    pointer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+                    TextView heroName = new TextView(getContext());
+                    heroName.setText(pointer.getName());
+                    ((LinearLayout) ll.getChildAt(0)).addView(heroName);
+                    heroName.setGravity(Gravity.CENTER_HORIZONTAL);
+                    setCost(pointer, footer);
+                    addListener(footer, pointer);
                 }
-                ll.addView(pointer);
-                pointer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
-                TextView heroName = new TextView(getContext());
-                heroName.setText(pointer.getName());
-                ll.addView(heroName);
-                heroName.setGravity(Gravity.CENTER_HORIZONTAL);
-                setCost(pointer, ll);
-                addListener(pointer);
             }
         }
 
@@ -243,13 +302,22 @@ public class ShopShelfsFragment extends Fragment {
 
         /**Metods to chose and place right hero, bullet and ability in shelfs
         */
-            private int getMod(int listSize,int number,int i)
+            private int getMod(int listSize,int number,int i) throws ArithmeticException
             {
                 Date now= Calendar.getInstance().getTime();
                 int day=now.getDay();
-                int mod=(int)(listSize/number+0.5);
-                return (i+day)%mod;
-            }
+                int mod=(int)((float)listSize/(float)number+0.5);
+
+                return (i + day) % mod;
+                }
+                public int getId(int listSize)
+                {
+                    Date now= Calendar.getInstance().getTime();
+                    int day=now.getDay();
+                    int month=now.getMonth();
+                    if(listSize==0) throw new ArithmeticException();
+                    return (day*month) % listSize;
+                }
 
             private void choseStock (int sizeOfStock)
             {
@@ -260,61 +328,106 @@ public class ShopShelfsFragment extends Fragment {
 
             private void choseHeroes(int sizeOfStock)
             {
-                List<Hero>heroes=HeroesSet.getHeroesList(getContext());
-                for(int i=0;i<heroes.size();i++)
+                List<Hero>heroeList=HeroesSet.getHeroesList(getContext());
+                List<Hero> heroes= new LinkedList<>();
+                for(Hero h:heroeList)
                 {
-                    if(getMod(heroes.size(),sizeOfStock,i)==0)
+                    if(h.getPermission().equals(Permission.NOT))
                     {
-                        heroes.get(i);
-                        stock.add(heroes.get(i));
+                        heroes.add(h);
+                    }
+                }
+
+                for(int i=0;i<sizeOfStock;i++)
+                {
+                    if(heroes.size()>0) {
+                        int n = getId(heroes.size());
+                        if (n < heroes.size()) {
+                            stock.add(heroes.get(n));
+                            heroes.remove(n);
+                            i--;
+                        }
                     }
                 }
             }
-            private void  choseAbilities(int n)
+            private void  choseAbilities(int sizeOfStock)
             {
-                List<Ability>abilities=AbilitySet.getInstance().getAbilityList();
-                for(int i=0;i<abilities.size();i++)
+                List<Ability>abilitieList=AbilitySet.getInstance().getAbilityList();
+
+                List<Ability> abilities= new LinkedList<>();
+                for(Ability a:abilitieList)
                 {
-                    if(getMod(abilities.size(),n,i)==0)
+                    if(a.getPermission().equals(Permission.NOT))
                     {
-                        abilities.get(i);
-                        abilityStock.add(abilities.get(i));
+                        abilities.add(a);
+                    }
+                }
+                for(int i=0;i<sizeOfStock;i++)
+                {
+                    if(abilities.size()>0) {
+                        int n=getId(abilities.size());
+                        if (n<abilities.size()) {
+
+                            abilityStock.add(abilities.get(n));
+                            abilities.remove(n);
+                            i--;
+                        }
+                    }
+                }
+            }
+            private void choseBullets(int sizeOfStock)
+            {
+                List<Bullet>bulletList=BulletSet.getBulletList(getContext());
+                List<Bullet> bullets= new LinkedList<>();
+                for(Bullet b:bulletList)
+                {
+                    if(b.getPermission().equals(Permission.NOT))
+                    {
+                        bullets.add(b);
+                    }
+                }
+                for(int i=0;i<sizeOfStock;i++)
+                {
+                    if(bullets.size()>0) {
+                        int n = getId(bullets.size());
+                        if (n < bullets.size()) {
+                            bulletStock.add(bullets.get(n));
+                            bullets.remove(n);
+                            i--;
+                        }
                     }
                 }
             }
 
-            private void choseBullets(int n)
-            {
-                List<Bullet>bullets=BulletSet.getBulletList(getContext());
-
-                for(int i=0;i<bullets.size();i++)
-                {
-                    if(getMod(bullets.size(),n,i)==0)
-                    {
-                        bullets.get(i);
-                        bulletStock.add(bullets.get(i));
-                    }
-                }
-            }
 
             private void setCost(PossesAble possesAble,LinearLayout linearLayout)
             {
                 possesAble.getPossesStrategy().setPossesFotter(linearLayout,getContext());
             }
 
-            private void addListener(final PossesAble hero)
-            {
-                ((ImageView)hero).setOnClickListener(new View.OnClickListener() {
+
+
+        private void addListener(LinearLayout footer,final PossesAble hero)
+        {
+
+            for(int i=0;i<footer.getChildCount();i+=2) {
+                final LinearLayout possesNeed=(LinearLayout) footer.getChildAt(i);
+                final int finalI = i-i/2;
+                possesNeed.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PossesAble h=(PossesAble) v;
-                        setPopUpLayout(h);
-                        popupWindow.showAtLocation(main,Gravity.CENTER_HORIZONTAL , 10, 10);
+                        MoneyNeedIndex.getInstance().setIndex(finalI);
+                        //mViewPager.setCurrentItem(2);
+
+                        //PossesAble h = (PossesAble) v;
+                        setPopUpLayout(hero,possesNeed);
+                        popupWindow.showAtLocation(main, Gravity.CENTER_HORIZONTAL, 10, 10);
                         popupWindow.update(50, 50, 500, 500);
                     }
                 });
             }
-        private void setPopUpLayout(final PossesAble hero)
+            }
+        private void setPopUpLayout(final PossesAble hero, final LinearLayout ll)
         {
             LinearLayout linearLayout= new LinearLayout(getContext());
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -326,21 +439,33 @@ public class ShopShelfsFragment extends Fragment {
             yes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    boolean flag=hero.getPermission().equals(Permission.YES);
+
                     UserProfile userProfile= new UserProfile(v.getContext());
                     if(hero.getClass().equals(Hero.class)) {
-                        userProfile.buy((Hero)hero);
+                        if( userProfile.buy((Hero)hero))
+                        {
+                        }
                     }
                     else if( hero.getClass().equals(Bullet.class))
                     {
-                        userProfile.buy((Bullet)hero);
+                        if(userProfile.buy((Bullet)hero))
+                        {
+                        }
                     }
                     else if( hero.getClass().equals(AbilityView.class))
                     {
-                        userProfile.buy(((AbilityView) hero).getAbility());
+                        if(userProfile.buy(((AbilityView) hero).getAbility()))
+                        {
+                        }
                     }
+
+                    //n= mViewPager.getCurrentItem();
                     popupWindow.dismiss();
-                    getActivity().finish();
-                    getActivity().overridePendingTransition(0, 0);
+                   getActivity().finish();
+                   getActivity().overridePendingTransition(0, 0);
+                   Intent intent =getActivity().getIntent();
+                   intent.putExtra("itemnumber",mViewPager.getCurrentItem());
                     getActivity().startActivity(getActivity().getIntent());
                     getActivity().overridePendingTransition(0, 0);
                 }
@@ -365,4 +490,4 @@ public class ShopShelfsFragment extends Fragment {
             popupWindow.setContentView(linearLayout);
         }
     }
-    }
+}

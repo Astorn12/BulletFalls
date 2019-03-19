@@ -26,16 +26,20 @@ import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.Hero;
 import com.example.user.bulletfalls.HeroProfile;
 import com.example.user.bulletfalls.KlasyPomocnicze.Dimension;
+import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeed;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Strategies.Par;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skyline.widget.layout.RoundCornerLayout;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,7 +63,9 @@ public class Heroes extends AppCompatActivity {
       ObjectMapper mapper= new ObjectMapper();
        hero.setDimension(new Dimension(200,200));
        if(hero.getBullet()==null) {
-           hero.setBullet(new Bullet("standardherobullet", this.getApplicationContext(),10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10)));
+
+           MoneyPossesStrategy moneyPossesStrategy= new MoneyPossesStrategy(Arrays.asList(new MoneyNeed(Arrays.asList(new Par<Currency,Integer>(new Currency("Mystery Coin"),10)))));
+           hero.setBullet(new Bullet("standardherobullet", this.getApplicationContext(),10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.YES,Rarity.STARTING,moneyPossesStrategy));
        }
 
        try {

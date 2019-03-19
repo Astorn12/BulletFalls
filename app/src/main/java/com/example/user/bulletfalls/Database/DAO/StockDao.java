@@ -3,6 +3,7 @@ package com.example.user.bulletfalls.Database.DAO;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.ContactsContract;
 
 import com.example.user.bulletfalls.Database.DatabaseAdministrator;
 import com.example.user.bulletfalls.ProfileActivity.Currency;
@@ -24,17 +25,16 @@ public class StockDao implements DAO<MutablePair<Currency,Integer>> {
         DatabaseAdministrator da= new DatabaseAdministrator(context);
         Cursor cursor=da.getAll(null,"Stock");
         cursor.moveToFirst();
-        Cursor cursore2= da.getAll(null,"Currencies");
-        int a=cursor.getCount();
-        int j=cursore2.getCount();
-        while(cursor.moveToNext())
-        {
-            CurrencyDao cd= new CurrencyDao(context);
-            int x=cursor.getInt(2);
-           Currency currency= cd.getById(cursor.getInt(2));
 
-            MutablePair<Currency,Integer> pair= new MutablePair<>(currency,cursor.getInt(1));
-            list.add(pair);
+        if(cursor.getCount()!=0) {
+            do {
+                CurrencyDao cd = new CurrencyDao(context);
+                int x = cursor.getInt(2);
+                Currency currency = cd.getById(cursor.getInt(2));
+
+                MutablePair<Currency, Integer> pair = new MutablePair<>(currency, cursor.getInt(1));
+                list.add(pair);
+            } while (cursor.moveToNext());
         }
         return list;
     }
@@ -45,9 +45,26 @@ public class StockDao implements DAO<MutablePair<Currency,Integer>> {
     }
 
     @Override
-    public void update(MutablePair<Currency, Integer> currencyIntegerMutablePair) {
+    public void update(MutablePair<Currency, Integer> pair) {
+        DatabaseAdministrator da= new DatabaseAdministrator(context);
+        ContentValues content= new ContentValues();
+        content.put("amount",pair.getRight());
+
+        int currencyId= da.getId("Currencies","name",pair.getLeft().getName());
+
+        int id= da.getId("Stock","currencyId",currencyId+"");
+        da.update("Stock","id",id,content);
 
     }
+
+    public void update(List<MutablePair<Currency, Integer> > currencyIntegerMutablePairList) {
+        for(MutablePair<Currency, Integer> pair: currencyIntegerMutablePairList)
+        {
+            update(pair);
+        }
+    }
+
+
 
     @Override
     public void remove(MutablePair<Currency, Integer> currencyIntegerMutablePair) {
@@ -55,7 +72,7 @@ public class StockDao implements DAO<MutablePair<Currency,Integer>> {
     }
 
     @Override
-    public void save(MutablePair<Currency, Integer> currencyIntegerMutablePair) {
+    public void add(MutablePair<Currency, Integer> currencyIntegerMutablePair) {
         CurrencyDao cd= new CurrencyDao(context);
         int id= cd.getId(currencyIntegerMutablePair.left.getName());
         ContentValues content= new ContentValues();

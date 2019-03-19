@@ -9,8 +9,8 @@ import com.example.user.bulletfalls.Interfaces.Observed;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.example.user.bulletfalls.Interfaces.PossesAble;
 import com.example.user.bulletfalls.Strategies.Abilities.DoToCharacterStrategy;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.MoneyPossesStrategy;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.PossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.LinkedList;

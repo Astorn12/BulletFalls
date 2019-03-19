@@ -1,6 +1,5 @@
 package com.example.user.bulletfalls;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -14,7 +13,6 @@ import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,20 +21,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Enums.CharacterPositioning;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
-import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemyReleaseStrategyPackage.RandomEnemyReleaseStrategy;
-import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemysChooser;
-import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.TimeReleaseStrategyPackage.LinearTimeReleaseStrategy;
 import com.example.user.bulletfalls.GameSupporters.GameStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.Standard;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -236,7 +230,7 @@ public class Game extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        controller.stop();
+        // controller.stop();
     }
     public void removeLifeText(final TextView textView)
     {

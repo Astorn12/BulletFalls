@@ -28,9 +28,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Result"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Nieużywane.Menu"
             android:screenOrientation="portrait" />
         <activity
@@ -72,10 +69,9 @@
         <activity
             android:name=".ShopPackage.Shop"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".PopUpWindowsPackage.ShowPopUp"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Activities.GameResult"></activity>
+        <activity android:name=".Activities.GameResult"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
     </application>
 
 </manifest>

@@ -5,7 +5,7 @@ import com.example.user.bulletfalls.BarAbilities;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Hero;
 import com.example.user.bulletfalls.Strategies.Abilities.ChangeBullet;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.PossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("hero")

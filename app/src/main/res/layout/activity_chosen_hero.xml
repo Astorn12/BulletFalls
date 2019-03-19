@@ -1,9 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChosenHero">
+    android:orientation="vertical"
+    tools:context=".ChosenHero"
+    android:layout_weight="1"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="418dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:layout_width="85dp"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/bulletlist"
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+            android:id="@+id/heroFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/herophoto"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="60dp"
+                app:srcCompat="@android:color/transparent"
+                tools:layout_editor_absoluteX="67dp"
+                tools:layout_editor_absoluteY="54dp" />
+
+            <TextView
+                android:id="@+id/heroname"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text=""
+                android:textSize="25dp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="102dp"
+                tools:layout_editor_absoluteY="14dp" />
+
+            <TextView
+                android:id="@+id/informationohero"
+                android:layout_width="335dp"
+                android:layout_height="92dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="Side hasn't been ready yet."
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="383dp"
+
+
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_gravity="bottom">
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_gravity="bottom"
+        >
+
+    <LinearLayout
+        android:id="@+id/abilitylist"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        />
+    </HorizontalScrollView>
+    </LinearLayout>
+</LinearLayout>

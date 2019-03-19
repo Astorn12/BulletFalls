@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.user.bulletfalls.Enums.CharacterPositioning;
-import com.example.user.bulletfalls.Enums.Group;
+import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.Enums.Kind;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
@@ -17,8 +17,8 @@ import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.DoToBulletStrategy;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.MoneyPossesStrategy;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.PossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -38,8 +38,8 @@ public class Hero extends Character implements PossesAble {
     int numberOfAbilities;
     PossesStrategy possesStrategy;
 
-    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet heroBullet, String name, Kind kind, List<Group> groups, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities, String indyvidualHeroMarker, Permission perm,Description description,PossesStrategy possesStrategy) {
-        super(context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, life, shootingSpeed,level,resistance,heroBullet,name,kind,groups,position,doToBulletStrategy,indyvidualHeroMarker,description);
+    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet heroBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities, String indyvidualHeroMarker, Permission perm, Description description, PossesStrategy possesStrategy) {
+        super(context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, life, shootingSpeed,level,resistance,heroBullet,name,kind, groupNames,position,doToBulletStrategy,indyvidualHeroMarker,description);
         this.touchFlag=false;
         //this.shootingTimer= new Timer();
         // this.gameController= gameController;
@@ -54,8 +54,8 @@ public class Hero extends Character implements PossesAble {
         this.numberOfAbilities=3;//defaultowa liczba abilitek dla botatera
         this.possesStrategy=possesStrategy;
     }
-    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet heroBullet, String name, Kind kind, List<Group> groups, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities,String indyvidualHeroMarker,Permission perm,int numberOfAbilities,Description description,PossesStrategy possesStrategy) {
-        this(context,power,speed,startingPoint,width,height,randeringFrequency,imageResource,frame,life,shootingSpeed,level,resistance,heroBullet,name,kind,groups,position,doToBulletStrategy,abilities,indyvidualHeroMarker,perm,description,possesStrategy);
+    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet heroBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities, String indyvidualHeroMarker, Permission perm, int numberOfAbilities, Description description, PossesStrategy possesStrategy) {
+        this(context,power,speed,startingPoint,width,height,randeringFrequency,imageResource,frame,life,shootingSpeed,level,resistance,heroBullet,name,kind, groupNames,position,doToBulletStrategy,abilities,indyvidualHeroMarker,perm,description,possesStrategy);
         this.numberOfAbilities=numberOfAbilities;
     }
     public Hero()
@@ -258,7 +258,7 @@ public class Hero extends Character implements PossesAble {
     }
     public Hero changeContext(Context context)
     {
-        Hero hero= new Hero(context,this.power,this.speed,this.startingPoint,this.width,this.height,this.randeringFrequency,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.bullet,this.name,this.kind,this.groups,this.position,this.doToBulletStrategy,this.abilities,this.indyvidualHeroMarker,this.permission,this.description,this.possesStrategy);
+        Hero hero= new Hero(context,this.power,this.speed,this.startingPoint,this.width,this.height,this.randeringFrequency,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.bullet,this.name,this.kind,this.groupNames,this.position,this.doToBulletStrategy,this.abilities,this.indyvidualHeroMarker,this.permission,this.description,this.possesStrategy);
         hero.setIrrealWidth(this.getIrrealWidth());
         hero.setIrrealHeight(this.getIrrealHeight());
         return hero;
@@ -278,4 +278,21 @@ public class Hero extends Character implements PossesAble {
         this.possesStrategy = possesStrategy;
     }
 
+    public boolean isPermitted()
+    {
+        if(permission.equals(Permission.YES)||permission.equals(Permission.FORALL))
+        {
+        return true;
+        }
+
+        return false;
+
+
+    }
+
+    public void boostLife(int extrLife)
+    {
+        if(extrLife>0)
+        this.life+=extrLife;
+    }
 }

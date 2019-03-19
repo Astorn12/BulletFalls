@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.user.bulletfalls.Enums.CharacterPositioning;
-import com.example.user.bulletfalls.Enums.Group;
+import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.Enums.Kind;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
@@ -15,7 +15,7 @@ import com.example.user.bulletfalls.Interfaces.Observer;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.DoToBulletStrategy;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
@@ -29,8 +29,8 @@ public class Enemy extends Character {
     @JsonView(Views.Normal.class)
     int killValue;
     EnemySpecyfication enemySpecyfication;
-    public Enemy(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, int killValue, Bullet enemyBullet, String name, Kind kind, List< Group> groups, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker,Description description) {
-        super(context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, life, shootingSpeed,level,resistance,enemyBullet,name,kind,groups,position, doToBulletStrategy,indyvidualHeroMarker,description);
+    public Enemy(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, int killValue, Bullet enemyBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description) {
+        super(context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, life, shootingSpeed,level,resistance,enemyBullet,name,kind, groupNames,position, doToBulletStrategy,indyvidualHeroMarker,description);
 
         if(frame!=null) {
             this.frameHeight = frame.getHeight();
@@ -86,7 +86,7 @@ if(frame.getHeight()!=0) {
 
     @Override
     public Enemy clone() {
-Enemy enemy= new Enemy(this.getContext(),this.power,this.speed,this.startingPoint,this.width,this.height,0,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.killValue,this.bullet,this.name,this.kind,this.groups,this.position,this.doToBulletStrategy,"żaden",this.description);
+Enemy enemy= new Enemy(this.getContext(),this.power,this.speed,this.startingPoint,this.width,this.height,0,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.killValue,this.bullet,this.name,this.kind,this.groupNames,this.position,this.doToBulletStrategy,"żaden",this.description);
 
         enemy.textLife=new TextView(this.getContext());
 return enemy;
@@ -94,7 +94,7 @@ return enemy;
 
     public Enemy changeContext(Context context)
     {
-        Enemy enemy= new Enemy(context,this.power,this.speed,this.startingPoint,this.width,this.height,0,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.killValue,this.bullet,this.name,this.kind,this.groups,this.position,this.doToBulletStrategy,"żaden",this.description);
+        Enemy enemy= new Enemy(context,this.power,this.speed,this.startingPoint,this.width,this.height,0,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.killValue,this.bullet,this.name,this.kind,this.groupNames,this.position,this.doToBulletStrategy,"żaden",this.description);
         enemy.textLife= new TextView(context);
         return enemy;
     }

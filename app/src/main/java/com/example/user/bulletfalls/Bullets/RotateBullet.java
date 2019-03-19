@@ -10,12 +10,11 @@ import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Game;
 import com.example.user.bulletfalls.Enums.Shape;
-import com.example.user.bulletfalls.Interfaces.PossesAble;
 import com.example.user.bulletfalls.Specyfications.Bullets.RotateBulletSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.BulletMoveStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.PossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 import com.example.user.bulletfalls.Views;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -137,7 +136,7 @@ public class RotateBullet extends Bullet {
        appear();
     }
     @Override
-    public void collisionWithCharacterEfect(Character character)
+    public int collisionWithCharacterEfect(Character character)
     {
         int finalDamage=this.power;
         if(rotationMeter==45) {
@@ -163,5 +162,6 @@ public class RotateBullet extends Bullet {
         finalDamage+=rotationSpeed;
         System.out.println("Obrazenia zadane przez sikiere: "+finalDamage);
         character.getDamage(finalDamage);
+        return finalDamage;
     }
 }

@@ -1,21 +1,9 @@
-package com.example.user.bulletfalls;
+package com.example.user.bulletfalls.ShopPackage;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.GradientDrawable;
-import android.media.Image;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ScrollingTabContainerView;
-import android.text.Layout;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,22 +16,16 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.user.bulletfalls.Enums.Group;
 import com.example.user.bulletfalls.Enums.Permission;
+import com.example.user.bulletfalls.Hero;
 import com.example.user.bulletfalls.JsonDatabases.HeroesSet;
-import com.example.user.bulletfalls.PopUpWindowsPackage.ShowPopUp;
 import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.MoneyPossesStrategy;
-import com.skyline.widget.layout.RoundCornerLayout;
+import com.example.user.bulletfalls.R;
 
 import org.apache.commons.lang3.tuple.MutablePair;
-import org.w3c.dom.Text;
 
-import java.time.Instant;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
@@ -219,6 +201,7 @@ public class Shop extends AppCompatActivity {
     private void setCost(Hero hero,LinearLayout linearLayout)
     {
         hero.getPossesStrategy().setPossesFotter(linearLayout,this);
+
     }
 
 

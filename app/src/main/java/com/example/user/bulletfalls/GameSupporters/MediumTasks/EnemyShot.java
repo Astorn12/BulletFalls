@@ -31,6 +31,16 @@ public class EnemyShot {
         else return false;
     }
 
+    public boolean equal(EnemyShot enemyShot)
+    {
+        if(enemyShot.bulletSpecyfication.getName().equals(this.bulletSpecyfication.getName())&&enemyShot.getEnemySpecyfication().equals(this.enemySpecyfication)) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public EnemySpecyfication getEnemySpecyfication() {
         return enemySpecyfication;
     }
@@ -39,5 +49,5 @@ public class EnemyShot {
         return bulletSpecyfication;
     }
 
-  
+
 }

@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.user.bulletfalls.Enums.CharacterPositioning;
-import com.example.user.bulletfalls.Enums.Group;
+import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.Enums.Kind;
 import com.example.user.bulletfalls.Interfaces.Observed;
 import com.example.user.bulletfalls.Interfaces.Observer;
@@ -58,7 +58,7 @@ public abstract class Character extends ViewElement implements Observed {
     @JsonView(Views.Normal.class)
     Kind kind;
     @JsonView(Views.Normal.class)
-    List<Group> groups;
+    List<GroupName> groupNames;
     CharacterPositioning position;
     protected int padding=10;
     DoToBulletStrategy doToBulletStrategy;
@@ -82,7 +82,7 @@ public abstract class Character extends ViewElement implements Observed {
     String story;
     Description description;
 
-    public Character(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet bullet, String name, Kind kind, List<Group> groups, CharacterPositioning position,DoToBulletStrategy doToBulletStrategy,String indyvidualHeroMarker,Description description) {
+    public Character(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet bullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description) {
         super(context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame,name);
         this.life=life;
         this.shootingSpeed=shootingSpeed;
@@ -96,7 +96,7 @@ public abstract class Character extends ViewElement implements Observed {
         }
         this.name=name;
         this.kind=kind;
-        this.groups=groups;
+        this.groupNames = groupNames;
         this.position=position;
         this.doToBulletStrategy=doToBulletStrategy;
         irrealDefaultSetter();
@@ -110,7 +110,7 @@ public abstract class Character extends ViewElement implements Observed {
             this.shootingSpeed=jsonCharacter.getShootingSpeed();
             this.level=jsonCharacter.getLevel();
             this.resistance=jsonCharacter.getResistance();
-            this.groups=jsonCharacter.getGroups();
+            this.groupNames =jsonCharacter.getGroupNames();
             this.name=jsonCharacter.getName();
             this.kind=jsonCharacter.getKind();
             this.doToBulletStrategy=jsonCharacter.getDoToBulletStrategy();
@@ -296,12 +296,12 @@ public abstract class Character extends ViewElement implements Observed {
     public void setKind(Kind kind) {
         this.kind = kind;
     }
-    public List<Group> getGroups() {
-        return groups;
+    public List<GroupName> getGroupNames() {
+        return groupNames;
     }
     @JsonView(Views.Normal.class)
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
+    public void setGroupNames(List<GroupName> groupNames) {
+        this.groupNames = groupNames;
     }
     abstract public String getJsonString();
     public boolean isAlive() {
@@ -555,11 +555,11 @@ public abstract class Character extends ViewElement implements Observed {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void colorBackgroundByGroup(RoundCornerLayout frameLayout)
     {
-        int n=this.groups.size();
+        int n=this.groupNames.size();
         for(int i=0;i<n;i++)
         {
             ImageView imageView= new ImageView(this.getContext());
-            imageView.setBackgroundColor(groups.get(i).getValue());
+            imageView.setBackgroundColor(groupNames.get(i).getValue());
             frameLayout.addView(imageView);
             imageView.setZ(0.1f);
             imageView.getLayoutParams().height=frameLayout.getHeight();
@@ -567,5 +567,15 @@ public abstract class Character extends ViewElement implements Observed {
             imageView.setX(i*(frameLayout.getHeight()/n));
             imageView.setY(0);
         }
+    }
+
+    public boolean isFromGroup(GroupName groupName)
+    {
+        for(GroupName g:this.groupNames)
+        {
+            if(g.equals(groupName))return true;
+        }
+
+        return false;
     }
 }

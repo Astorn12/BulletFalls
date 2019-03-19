@@ -1,13 +1,16 @@
 package com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy;
 
+import android.content.Context;
+import android.widget.FrameLayout;
+
 import com.example.user.bulletfalls.Enemy;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemyReleaseStrategyPackage.EnemyReleaseStrategy;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.TimeReleaseStrategyPackage.TimeReleaseStrategy;
 
-public class EnemyChooser {
+public class EnemysChooser {
     EnemyReleaseStrategy enemyReleaseStrategy;
     TimeReleaseStrategy timeReleaseStrategy;
-    public EnemyChooser(EnemyReleaseStrategy enemyReleaseStrategy,TimeReleaseStrategy timeReleaseStrategy)
+    public EnemysChooser(EnemyReleaseStrategy enemyReleaseStrategy, TimeReleaseStrategy timeReleaseStrategy)
     {
         this.enemyReleaseStrategy=enemyReleaseStrategy;
         this.timeReleaseStrategy=timeReleaseStrategy;
@@ -15,14 +18,22 @@ public class EnemyChooser {
 
     public void Start()
     {
-        enemyReleaseStrategy.start;
-        timeReleaseStrategy.start;
+        timeReleaseStrategy.start();
     }
 
-    public Enemy getEnemy()
+    public Enemy getEnemy(Context context)
     {
-
-
-        return null;
+        if(timeReleaseStrategy.ifRelease())
+        {
+            return enemyReleaseStrategy.releaseChoosenEnemy(context);
+        }
+            return null;
     }
+
+    public void putContext(Context context)
+    {
+        this.enemyReleaseStrategy.putContext(context);
+    }
+
+
 }

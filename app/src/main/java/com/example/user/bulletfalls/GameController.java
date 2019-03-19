@@ -7,11 +7,15 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.user.bulletfalls.Activities.GameResult;
 import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.GameSupporters.CollisionTester;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemysChooser;
+import com.example.user.bulletfalls.GameSupporters.GameStrategy;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.EnemyShot;
+import com.example.user.bulletfalls.GameSupporters.MediumTasks.GameSummary;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
+import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
 import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
@@ -173,8 +177,6 @@ public class GameController {
         if(!this.hero.isAlive())
         {
             this.stop();
-
-
         }
     }
     private void enenemysLifeChecking()
@@ -208,29 +210,6 @@ public class GameController {
             }
         }*/
     }
-
-    private void bulletsColisionChecking()
-    {
-        for(int i=0;i<bullets.size();i++)
-        {
-            if(bullets.get(i).isCollisionAble())
-            {
-                for(int j=i+1;j<bullets.size();j++)
-                {
-                    Bullet a=bullets.get(i);
-                    Bullet b=bullets.get(j);
-
-                    if(bullet2bulletColisionChecking(a,b)&&!sameDirectionChecking(a,b))
-                    {
-                        a.setPower(a.getPower()-b.getPower());
-                        b.setPower(b.getPower()-a.getPower());
-                    }
-                }
-            }
-        }
-    }
-
-
     private boolean sameDirectionChecking(Bullet a,Bullet b)
     {
         if((a.getSpeed()>0 &b.getSpeed()>0)||(a.getSpeed()<0&&b.getSpeed()<0))
@@ -245,11 +224,19 @@ public class GameController {
     public void stop()
     {
         timer.cancel();
-        //Show Result
         medium.stopTime();
-        Intent intent= new Intent(gameActivity,Result.class);
-        intent.putExtra("SCORE",score);
+        //Show Result
+        GameStrategy.getInstance().getBountyAssigner().fillBounty(medium,medium.getBounty());
+        UserProfile userProfile= new UserProfile(gameActivity);
+        userProfile.makeOfBounty(medium.getBounty());
+
+        GameSummary.getInstance().setSummary(medium,new HeroSpecyfication(this.hero),"Nowa gra",medium.getBounty());
+
+        Intent intent= new Intent(gameActivity,GameResult.class);
+       // intent.putExtra("SCORE",score);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         gameActivity.startActivity(intent);
+        gameActivity.finish();
 
     }
     public void bullet(Bullet bullet)
@@ -267,14 +254,7 @@ public class GameController {
     public void removeBullet(Bullet bullet)
     {
         this.bullets.remove(bullet);
-        /*if(this.enemyBulletsGarbageCollector.contains(bullet))
-        {
-            this.enemyBulletsGarbageCollector.remove(bullet);
-        }
-        else if(this.heroBulletsGarbageCollector.contains(bullet))
-        {
-            this.heroBulletsGarbageCollector.remove(bullet);
-        }*/
+
     }
     public void removeEnemy(Enemy enemy)
     {
@@ -359,34 +339,9 @@ public class GameController {
     {
         ( (Game) gameActivity).setScoreLabel(text+"");
     }
-   /* private void loadEnemyCollection()
-    {
-        Enemy enemy1= new Enemy(gameActivity,10,20,new Point(0,0),200,200,20,R.drawable.enemy,game,100,20,1,0,10,null,null,null,null,CharacterPositioning.RIGHTRANDOM,new Standard(),"żaden",new Description());
-        Enemy enemy2= new Enemy(gameActivity,10,30,new Point(0,0),200,200,20,R.drawable.rinor,game,200,20,1,0,10,null,null,null,null,CharacterPositioning.RIGHTRANDOM,new Standard(),"żaden",new Description());
-        Enemy enemy3= new Enemy(gameActivity,10,20,new Point(0,0),200,200,20,R.drawable.creature,game,30,20,1,0,10,null,null,null,null,CharacterPositioning.RIGHTRANDOM,new Standard(),"żaden",new Description());
-        Enemy gideon= new Enemy(gameActivity,10,30,new Point(0,0),200,200,20,R.drawable.gideon,game,45,20,1,0,10,null,null,null,null,CharacterPositioning.RIGHTRANDOM,new Standard(),"żaden",new Description());
-        Enemy gnome2= new Enemy(gameActivity,30,10,new Point(0,0),200,200,20,R.drawable.gnome2,game,40,20,1,0,10,null,null,null,null,CharacterPositioning.RIGHTRANDOM,new Standard(),"żaden",new Description());
-        Enemy goblin= new Enemy(gameActivity,10,10,new Point(0,0),200,200,20,R.drawable.goblin,game,100,20,1,0,10,null,null,null,null,CharacterPositioning.RIGHTRANDOM,new Standard(),"żaden",new Description());
-        Enemy pacific= new Enemy(gameActivity,10,100,new Point(0,0),200,200,20,R.drawable.pacific,game,100,20,1,0,10,null,null,null,null,CharacterPositioning.RIGHTRANDOM,new Standard(),"żaden",new Description());
-        Enemy police1= new Enemy(gameActivity,20,2,new Point(0,0),200,200,20,R.drawable.police1,game,500,20,1,0,10,null,null,null,null,CharacterPositioning.RIGHTRANDOM,new Standard(),"żaden",new Description());
 
-        this.enemysCollection.add(enemy1);
-        this.enemysCollection.add(enemy2);
-        this.enemysCollection.add(enemy3);
-        this.enemysCollection.add(gideon);
-        this.enemysCollection.add(gnome2);
-        this.enemysCollection.add(goblin);
-        this.enemysCollection.add(pacific);
-        this.enemysCollection.add(police1);
-        for(Enemy enemy:enemysCollection)
-        {
-            enemy.setBullet(new Bullet("defaultenemybullet",(Game) gameActivity,10,20,null,50,50,20,R.drawable.blue,null,false,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.YES,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10)).clone());
-            bulletEking(enemy.getBullet());
-        }
-    }*/
    private void heroEking(Hero hero)
     {
-       // hero.setController(this);
         hero.setFrame(game);
         hero.setStartingPoint(hero.getPosition());
         bulletEking(hero.getBullet());
@@ -394,7 +349,6 @@ public class GameController {
     }
     private void bulletEking(Bullet bullet)
     {
-       // bullet.setController(this);
         bullet.setFrame(game);
     }
     private static class IgnoreInheritedIntrospector extends JacksonAnnotationIntrospector {

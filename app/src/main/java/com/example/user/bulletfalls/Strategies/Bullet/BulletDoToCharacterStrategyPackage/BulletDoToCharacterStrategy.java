@@ -28,6 +28,7 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 })
 public interface BulletDoToCharacterStrategy {
 
+
     public void doToCharacter(Character character);
 
     public BulletDoToCharacterStrategy clone();

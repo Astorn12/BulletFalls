@@ -6,7 +6,6 @@ import com.example.user.bulletfalls.Bullet;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
-import com.example.user.bulletfalls.Hero;
 import com.example.user.bulletfalls.KlasyPomocnicze.FileSupporter;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
@@ -17,7 +16,7 @@ import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.SummonDam;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Throw;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.TimeDam;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
@@ -51,7 +50,7 @@ public class BulletSet {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+       }
 
 
     }
@@ -66,13 +65,14 @@ public class BulletSet {
         }
         ObjectMapper mapper= new ObjectMapper();
         String s ="";
-        try {
+      try {
             CollectionType t=mapper.getTypeFactory()
-                    .constructCollectionType(List.class, BulletSpecyfication.class);
+                   .constructCollectionType(List.class, BulletSpecyfication.class);
            s= mapper.writerFor(t).writeValueAsString(bd);
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-        }
+       }
 
 
         FileSupporter.WriteToFile(path,context,s);
@@ -148,7 +148,7 @@ public class BulletSet {
         Bullet grendaArmachair=new Bullet("grendaArmchair",context,100,20,null,110,110,20,R.drawable.grendaamchair,null,false,new Throw(45),Shape.RECTANGLE,new NothingDoToCharacter(),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind
         Bullet dam=new Bullet("dam",context,100,20,null,110,110,20,R.drawable.dam,null,true,new Dam(300),Shape.RECTANGLE,new NothingDoToCharacter(),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet timeDam=new Bullet("timedam",context,100,20,null,110,110,20,R.drawable.dam,null,true,new TimeDam(300,100),Shape.RECTANGLE,new NothingDoToCharacter(),Permission.YES,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10));
-        Bullet standard=new Bullet("standard", context,10, 20, null, 50, 50, 20, R.drawable.blue, null, true,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet standard=new Bullet("standard", context,10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet log=new Bullet("log",context,100,20,null,110,110,20,R.drawable.log,null,true,new SummonDam(300),Shape.RECTANGLE,new NothingDoToCharacter(),Permission.NOT,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet red=new Bullet("red", context,10, 20, null, 50, 50, 20, R.drawable.red, null, false,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.NOT,Rarity.UNCOMMON,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet diarm=new Bullet("disarm",context, 10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));

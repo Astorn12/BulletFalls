@@ -1,7 +1,6 @@
-package com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage;
+package com.example.user.bulletfalls.Strategies.PossesStrategyPackage;
 
 import android.content.Context;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
@@ -17,6 +16,6 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
         @JsonSubTypes.Type(value=TimePossesStrategy.class, name = "timepossesstrategy")
 })
 public interface PossesStrategy {
-    public boolean tryToPosses(UserProfile userProfile);
-    public void setPossesFotter(LinearLayout linearLayout, Context context);
+     boolean tryToPosses(UserProfile userProfile);
+     void setPossesFotter(LinearLayout linearLayout, Context context);
 }

@@ -2,7 +2,6 @@
 package com.example.user.bulletfalls.Activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
@@ -15,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.user.bulletfalls.Bullet;
+import com.example.user.bulletfalls.Database.DAO.LevelDao;
 import com.example.user.bulletfalls.Database.DAO.ProfileDao;
 import com.example.user.bulletfalls.Database.DatabaseAdministrator;
 import com.example.user.bulletfalls.Description;
@@ -26,6 +26,11 @@ import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemyR
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemysChooser;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.TimeReleaseStrategyPackage.LinearTimeReleaseStrategy;
 import com.example.user.bulletfalls.GameSupporters.GameStrategy;
+import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.BountyAssigner;
+import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.ConcreteBountyAssigner;
+import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.HunterDecorator;
+import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.TimeBountyDecorator;
+import com.example.user.bulletfalls.GameSupporters.MediumTasks.ArchivCurrencyContainer;
 import com.example.user.bulletfalls.JsonDatabases.AbilitySet;
 import com.example.user.bulletfalls.JsonDatabases.BulletSet;
 import com.example.user.bulletfalls.JsonDatabases.HeroAbilityBulletMapper;
@@ -36,6 +41,7 @@ import com.example.user.bulletfalls.GameController;
 import com.example.user.bulletfalls.Hero;
 import com.example.user.bulletfalls.P2PPackage.P2PConnection;
 import com.example.user.bulletfalls.P2PPackage.P2PGame;
+import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.ProfileActivity.ProfileScreen;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.ShopPackage.Shop;
@@ -43,7 +49,12 @@ import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.Standard;
-import com.example.user.bulletfalls.Strategies.Character.Character.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeed;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -64,14 +75,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ArchivCurrencyContainer archivCurrencyContainer= new ArchivCurrencyContainer();
+        archivCurrencyContainer.add(new Currency("Mystery Coins"),5);
+
+        MoneyNeed moneyNeed= new MoneyNeed(archivCurrencyContainer);
+
+        ObjectMapper objectMapper= new ObjectMapper();
+        Currency currency= new Currency("Mystery Coin");
+        String s;
+        MutablePair<Currency,Integer> mutablePair= new MutablePair<>(currency,8);
+        try {
+             s= objectMapper.writeValueAsString(mutablePair);
+             int x=0;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
         if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)){}
         else {
-         /*   BulletSet.Load(this);//to powinno się znaleźć później tutaj normalnie
-            AbilitySet.Load(this);
-            HeroesSet.Load(this);
-            HeroAbilityBulletMapper.Load(this);
-*/
-
+                HeroesSet.clear();
 
             if (BulletSet.isEmpty()) {
                 BulletSet.AddToDatabaseTest(this);
@@ -79,15 +108,14 @@ public class MainActivity extends AppCompatActivity {
                 BulletSet.clear();
                 BulletSet.Load(this);//to powinno się znaleźć później tutaj normalnie
             }
-            if (AbilitySet.getInstance().isEmpty()) {
+           if (AbilitySet.getInstance().isEmpty()) {
                 AbilitySet.getInstance().AddToDatabaseTest();
                 AbilitySet.getInstance().Save(this);
                 AbilitySet.getInstance().clear();
                 AbilitySet.getInstance().Load(this);
             }
+
             if (HeroesSet.isEmpty()) {
-
-
                 HeroesSet.AddToDatabaseTest(this);
                 HeroesSet.Save(this);
                 HeroesSet.clear();
@@ -100,31 +128,15 @@ public class MainActivity extends AppCompatActivity {
                 HeroAbilityBulletMapper.clear();
                 HeroAbilityBulletMapper.Load(this);
             }
-        }
+
+            }
 
         //ładowanie bazy danych SQLite
         ProfileDao profileDao= new ProfileDao(this);
-        //UserProfile up=profileDao.getById(0);
-      //  up.setName("Oskar");
-       // up.setResource(R.drawable.cartoonmy);
-      //  profileDao.update(up);
-
-      //  CurrencyDao cd= new CurrencyDao(this);
-      //  Currency mysteryCoin= new Currency("Mystery Coin",R.drawable.mysterycoin);
-      //  Currency conifer= new Currency("Conifer symbol",R.drawable.dippercaptree);
-      //  cd.save(mysteryCoin);
-      //  cd.save(conifer);
-
-      //  StockDao sd= new StockDao(this);
-       // sd.save(new MutablePair<Currency, Integer>(mysteryCoin,10));
-       // sd.save(new MutablePair<Currency, Integer>(conifer,20));
+        //this.deleteDatabase("profileDB.db");
         DatabaseAdministrator da=new DatabaseAdministrator(this);
         da.actualization(this);
 
-        //UserProfile userProfile= new ProfileDao(this).getById(1);
-        //userProfile.pay(userProfile.getStock().get(0).left,10);
-        //userProfile.pay(userProfile.getStock().get(0).left,1000);
-        //userProfile.earn(userProfile.getStock().get(1).left,100);
     }
 
 
@@ -145,13 +157,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    {
-
-    }
 
     public void startGame(View view)
     {
-        GameStrategy.getInstance().setStrategies(new EnemysChooser(new RandomEnemyReleaseStrategy(convertToSpecyfication(getDefalultEnemyList())),new LinearTimeReleaseStrategy(200)),R.drawable.fightbackground);
+        BountyAssigner bountyAssigner=
+                new TimeBountyDecorator(
+                new HunterDecorator(
+                new ConcreteBountyAssigner())
+        );
+        GameStrategy.getInstance().setStrategies(new EnemysChooser(new RandomEnemyReleaseStrategy(convertToSpecyfication(getDefalultEnemyList())),new LinearTimeReleaseStrategy(200)),R.drawable.fightbackground,"Walka",bountyAssigner);
         Intent intent = new Intent(this, Game.class);
         this.startActivity(intent);
 
