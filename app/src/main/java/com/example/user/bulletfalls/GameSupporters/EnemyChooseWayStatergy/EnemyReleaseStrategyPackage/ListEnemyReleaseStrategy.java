@@ -2,7 +2,7 @@ package com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.Enemy
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.Enemy;
+import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
 import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
 
 import java.util.LinkedList;

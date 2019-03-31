@@ -1,8 +1,8 @@
 package com.example.user.bulletfalls.Specyfications.Characters;
 
 
-import com.example.user.bulletfalls.Character;
-import com.example.user.bulletfalls.Description;
+import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.ObjectsOfGame.Description;
 import com.example.user.bulletfalls.Enums.CharacterPositioning;
 import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
@@ -20,11 +20,11 @@ import java.util.List;
         include = JsonTypeInfo.As.PROPERTY,
         property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = HeroSpecyfication.class, name = "hero"),
-        @JsonSubTypes.Type(value = EnemySpecyfication.class, name = "enemy")
+        @JsonSubTypes.Type(value = HeroSpecyfication.class, name = "heropecyfication"),
+        @JsonSubTypes.Type(value = EnemySpecyfication.class, name = "enemyspecyfication")
 
 })
-@JsonTypeName("character")
+@JsonTypeName("characterspecyfication")
 public class CharacterSpecyfication extends ViewElementSpecyfication {
 
     int life;
@@ -34,7 +34,7 @@ public class CharacterSpecyfication extends ViewElementSpecyfication {
     BulletSpecyfication bullet;
     //int idBullet;//tutaj zamieniliśmy obiekt bullet na id bullet
     Kind kind;
-    String name;
+
     List<GroupName> groupNames;
     CharacterPositioning characterPositioning;
     public DoToBulletStrategy doToBulletStrategy;
@@ -45,6 +45,7 @@ public class CharacterSpecyfication extends ViewElementSpecyfication {
     String indyvidualHeroMarker;
     String story;
     Description description;
+    int miniature;
 
     public CharacterSpecyfication(Character character) {
         super(character);
@@ -53,7 +54,6 @@ public class CharacterSpecyfication extends ViewElementSpecyfication {
         this.level=character.getLevel();
         this.resistance=character.getResistance();
         this.groupNames =character.getGroupNames();
-        this.name=character.getName();
         this.kind=character.getKind();
         this.characterPositioning=character.getPosition();
         this.bullet=character.getBullet().getJsonBullet();//new JsonBullet(character.getBullet());
@@ -63,6 +63,8 @@ public class CharacterSpecyfication extends ViewElementSpecyfication {
         this.indyvidualHeroMarker=character.getIndyvidualHeroMarker();
         this.story=character.getStory();
         this.description=character.getDescription();
+        this.miniature=character.getMiniature();
+
     }
     public CharacterSpecyfication() {
 
@@ -124,12 +126,7 @@ public class CharacterSpecyfication extends ViewElementSpecyfication {
         this.kind = kind;
     }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
+
 
     public List<GroupName> getGroupNames() {
         return groupNames;
@@ -178,4 +175,11 @@ public class CharacterSpecyfication extends ViewElementSpecyfication {
         this.description = description;
     }
 
+    public int getMiniature() {
+        return miniature;
+    }
+
+    public void setMiniature(int miniature) {
+        this.miniature = miniature;
+    }
 }

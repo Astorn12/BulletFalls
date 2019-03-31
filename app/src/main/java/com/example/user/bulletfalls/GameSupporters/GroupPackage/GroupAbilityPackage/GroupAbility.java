@@ -1,6 +1,6 @@
 package com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupAbilityPackage;
 
-import com.example.user.bulletfalls.Hero;
+import com.example.user.bulletfalls.ObjectsOfGame.Hero;
 
 public interface GroupAbility {
 

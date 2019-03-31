@@ -1,11 +1,9 @@
 package com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage;
 
 
-import com.example.user.bulletfalls.Character;
+import com.example.user.bulletfalls.ObjectsOfGame.Character;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-import java.sql.Time;
 
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;

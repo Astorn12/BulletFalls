@@ -3,11 +3,10 @@ package com.example.user.bulletfalls.Strategies.Abilities;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 
-import com.example.user.bulletfalls.Bullet;
-import com.example.user.bulletfalls.Character;
-import com.example.user.bulletfalls.Game;
+import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
-import com.example.user.bulletfalls.ViewElement;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("supershoot")

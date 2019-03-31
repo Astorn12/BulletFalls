@@ -1,7 +1,7 @@
 package com.example.user.bulletfalls.Strategies.Abilities;
 
-import com.example.user.bulletfalls.Bullet;
-import com.example.user.bulletfalls.Character;
+import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.ObjectsOfGame.Character;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -21,10 +21,10 @@ public class NumberChangeBullet extends ChangeBullet implements Observer {
         super(bullet);
         this.clip=clip;
     }
-    public NumberChangeBullet()
+    /*public NumberChangeBullet()
     {
 
-    }
+    }*/
     @Override
     public void doToCharacter(Character character) {
         this.character=character;

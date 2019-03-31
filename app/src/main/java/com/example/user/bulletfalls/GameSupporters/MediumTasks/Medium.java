@@ -1,13 +1,13 @@
 package com.example.user.bulletfalls.GameSupporters.MediumTasks;
 
-import com.example.user.bulletfalls.Ability;
-import com.example.user.bulletfalls.Bullet;
+import com.example.user.bulletfalls.ObjectsOfGame.Ability;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
+import com.example.user.bulletfalls.ObjectsOfGame.AbilityView;
+import com.example.user.bulletfalls.ObjectsOfGame.WaitAbility;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
 import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
 
-import org.apache.commons.lang3.mutable.Mutable;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.LinkedList;
@@ -19,7 +19,6 @@ public class Medium  {
     List<EnemySpecyfication> pushedEnemys;
     long startTime;
     long endTime;
-
     ArchivContainer<Ability> usedAbilities;
     ArchivContainer<BulletSpecyfication> heroBullets;
     ArchivContainer<EnemyShot> enemyBullets;
@@ -61,9 +60,20 @@ public class Medium  {
         this.hero=hero;
     }
     public void enemyBorning(EnemySpecyfication enemySpecyfication){this.pushedEnemys.add(enemySpecyfication);}
-    public void heroShot(BulletSpecyfication bulletSpecyfication){
-
+    public void heroShot(BulletSpecyfication bulletSpecyfication, List<AbilityView> abilities){
         heroBullets.add(bulletSpecyfication);
+        for(AbilityView av: abilities)
+        {
+            if(av.getAbility().getClass().equals(WaitAbility.class))
+            {
+                WaitAbility wa=(WaitAbility)av.getAbility();
+                if(heroBullets.hasEnought(wa.getWaitedBullet(),wa.getAmount()))
+                {
+                    wa.activate();
+                    av.checkActivation();
+                }
+            }
+        }
     }
     public void enemyShot(EnemyShot enemyShot)
     {

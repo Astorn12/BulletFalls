@@ -2,10 +2,10 @@ package com.example.user.bulletfalls.Specyfications.Bullets;
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.Bullets.RotateBullet;
+import com.example.user.bulletfalls.ObjectsOfGame.RotateBullet;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-@JsonTypeName("rotate")
+@JsonTypeName("rotatebulletspecyfication")
 public class RotateBulletSpecyfication extends BulletSpecyfication{
     int rotationSpeed;
     public RotateBulletSpecyfication()
@@ -30,4 +30,6 @@ public class RotateBulletSpecyfication extends BulletSpecyfication{
     {
         return new RotateBullet(context,this);
     }
+
+
 }

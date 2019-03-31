@@ -2,11 +2,7 @@ package com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.Enemy
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.Enemy;
-
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
 
 public class BossEnemyReleaseStrategy implements EnemyReleaseStrategy {
 

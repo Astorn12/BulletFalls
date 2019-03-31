@@ -39,5 +39,6 @@ dependencies {
     implementation 'org.apache.commons:commons-collections4:4.1'
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation group: 'net.sf.flexjson', name: 'flexjson', version: '2.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }

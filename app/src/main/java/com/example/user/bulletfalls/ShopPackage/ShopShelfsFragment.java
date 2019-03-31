@@ -1,11 +1,9 @@
 package com.example.user.bulletfalls.ShopPackage;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -20,20 +18,19 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.example.user.bulletfalls.Ability;
-import com.example.user.bulletfalls.AbilityView;
-import com.example.user.bulletfalls.Bullet;
+import com.example.user.bulletfalls.ObjectsOfGame.Ability;
+import com.example.user.bulletfalls.ObjectsOfGame.AbilityView;
+import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.FragmentsSlider.SlidingTabLayout;
-import com.example.user.bulletfalls.Hero;
+import com.example.user.bulletfalls.ObjectsOfGame.Hero;
 import com.example.user.bulletfalls.Interfaces.PossesAble;
-import com.example.user.bulletfalls.JsonDatabases.AbilitySet;
-import com.example.user.bulletfalls.JsonDatabases.BulletSet;
-import com.example.user.bulletfalls.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.Database.JsonDatabases.AbilitySet;
+import com.example.user.bulletfalls.Database.JsonDatabases.BulletSet;
+import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeedIndex;
-import com.example.user.bulletfalls.ViewElement;
 
 import java.util.Arrays;
 import java.util.Calendar;

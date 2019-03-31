@@ -1,13 +1,9 @@
 package com.example.user.bulletfalls.ProfileActivity;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.view.animation.GridLayoutAnimationController;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,8 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.BorderSetter;
-import com.example.user.bulletfalls.Database.DAO.LevelDao;
+import com.example.user.bulletfalls.GuiSupporters.BorderSetter;
 import com.example.user.bulletfalls.R;
 
 public class LevelBar {

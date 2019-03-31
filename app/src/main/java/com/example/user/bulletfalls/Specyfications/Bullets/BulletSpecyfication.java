@@ -2,7 +2,8 @@ package com.example.user.bulletfalls.Specyfications.Bullets;
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.Bullet;
+import com.example.user.bulletfalls.GameSupporters.MediumTasks.Named;
+import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
@@ -13,17 +14,18 @@ import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrat
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import java.util.jar.Attributes;
+
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
         property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = RotateBulletSpecyfication.class, name = "rotate"),
-
-
+        @JsonSubTypes.Type(value = RotateBulletSpecyfication.class, name = "rotatebulletspecyfication"),
 })
-@JsonTypeName("bullet")
-public class BulletSpecyfication extends ViewElementSpecyfication {
+@JsonTypeName("bulletspecyfication")
+public class BulletSpecyfication extends ViewElementSpecyfication implements Named {
 
     boolean collisionAble;
 
@@ -116,5 +118,16 @@ public class BulletSpecyfication extends ViewElementSpecyfication {
 
     public void setPossesStrategy(PossesStrategy possesStrategy) {
         this.possesStrategy = possesStrategy;
+    }
+    @Override
+    public boolean equals(Object o)
+    {
+        if(! (o instanceof BulletSpecyfication))
+            return false;
+        if(this.getName().equals(((BulletSpecyfication)o).getName()))
+        {
+            return  true;
+        }
+        return false;
     }
 }

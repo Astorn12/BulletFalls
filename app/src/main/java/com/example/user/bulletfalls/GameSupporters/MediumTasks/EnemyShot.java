@@ -30,8 +30,7 @@ public class EnemyShot {
         }
         else return false;
     }
-
-    public boolean equal(EnemyShot enemyShot)
+    public boolean equals(EnemyShot enemyShot)
     {
         if(enemyShot.bulletSpecyfication.getName().equals(this.bulletSpecyfication.getName())&&enemyShot.getEnemySpecyfication().equals(this.enemySpecyfication)) {
             return true;

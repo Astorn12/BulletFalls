@@ -1,12 +1,12 @@
 package com.example.user.bulletfalls.GameSupporters;
 
-import com.example.user.bulletfalls.Bullet;
-import com.example.user.bulletfalls.Character;
-import com.example.user.bulletfalls.Enemy;
+import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
 import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Hit;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
-import com.example.user.bulletfalls.Hero;
+import com.example.user.bulletfalls.ObjectsOfGame.Hero;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
 

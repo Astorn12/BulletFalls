@@ -1,19 +1,21 @@
 package com.example.user.bulletfalls.Specyfications.Characters;
 
-import com.example.user.bulletfalls.Ability;
-import com.example.user.bulletfalls.BarAbilities;
+import com.example.user.bulletfalls.ObjectsOfGame.Ability;
+import com.example.user.bulletfalls.ObjectsOfGame.BarAbilities;
 import com.example.user.bulletfalls.Enums.Permission;
-import com.example.user.bulletfalls.Hero;
+import com.example.user.bulletfalls.ObjectsOfGame.Hero;
+import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Strategies.Abilities.ChangeBullet;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-@JsonTypeName("hero")
+@JsonTypeName("herospecyfication")
 public class HeroSpecyfication extends CharacterSpecyfication {
     BarAbilities abilities;
     Permission permission;
     int numberOfAbilities;
     PossesStrategy possesStrategy;
+    int tier;
     public HeroSpecyfication(Hero hero)
     {
 
@@ -22,6 +24,7 @@ public class HeroSpecyfication extends CharacterSpecyfication {
         this.permission=hero.getPermission();
         this.numberOfAbilities=hero.getNumberOfAbilities();
         this.possesStrategy=hero.getPossesStrategy();
+        this.tier=hero.getTier();
     }
 
     public BarAbilities getAbilities() {
@@ -68,4 +71,23 @@ public class HeroSpecyfication extends CharacterSpecyfication {
     public void setPossesStrategy(PossesStrategy possesStrategy) {
         this.possesStrategy = possesStrategy;
     }
-}
+
+    public int getTier() {
+        return tier;
+    }
+
+    public void setTier(int tier) {
+        this.tier = tier;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(! (o instanceof HeroSpecyfication))
+            return false;
+        if(this.getName().equals(((HeroSpecyfication)o).getName()))
+        {
+            return  true;
+        }
+        return false;
+    }}

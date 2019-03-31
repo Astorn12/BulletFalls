@@ -4,28 +4,22 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.Ability;
-import com.example.user.bulletfalls.AbilityView;
-import com.example.user.bulletfalls.BorderSetter;
+import com.example.user.bulletfalls.ObjectsOfGame.Ability;
+import com.example.user.bulletfalls.ObjectsOfGame.AbilityView;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.GameSummary;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
-import com.example.user.bulletfalls.Hero;
 import com.example.user.bulletfalls.ProfileActivity.LevelBar;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
-
-import org.w3c.dom.Text;
 
 public class GameResult extends AppCompatActivity {
     HeroSpecyfication hero;

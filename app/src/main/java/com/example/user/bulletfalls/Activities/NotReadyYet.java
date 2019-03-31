@@ -7,13 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.Activities.MainActivity;
-import com.example.user.bulletfalls.Enemy;
 import com.example.user.bulletfalls.R;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
 
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 

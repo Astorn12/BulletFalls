@@ -1,8 +1,6 @@
 package com.example.user.bulletfalls.GameSupporters.MediumTasks;
 
-import com.example.user.bulletfalls.GameSupporters.GameStrategy;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
-import com.example.user.bulletfalls.Hero;
 import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
 
 public class GameSummary {

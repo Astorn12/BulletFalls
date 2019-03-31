@@ -1,9 +1,9 @@
 package com.example.user.bulletfalls.Specyfications.Characters;
 
-import com.example.user.bulletfalls.Enemy;
+import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-@JsonTypeName("enemy")
+@JsonTypeName("enemyspecyfication")
 public class EnemySpecyfication extends CharacterSpecyfication {
 
     int killValue;

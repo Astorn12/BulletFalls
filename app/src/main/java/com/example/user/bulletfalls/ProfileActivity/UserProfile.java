@@ -6,8 +6,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.user.bulletfalls.Ability;
-import com.example.user.bulletfalls.Bullet;
+import com.bumptech.glide.Glide;
+import com.example.user.bulletfalls.ObjectsOfGame.Ability;
+import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
 import com.example.user.bulletfalls.Database.DAO.CurrencyEnum;
 import com.example.user.bulletfalls.Database.DAO.LevelDao;
 import com.example.user.bulletfalls.Database.DAO.ProfileDao;
@@ -15,10 +16,10 @@ import com.example.user.bulletfalls.Database.DAO.StockDao;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.ArchivContainer;
-import com.example.user.bulletfalls.Hero;
-import com.example.user.bulletfalls.JsonDatabases.AbilitySet;
-import com.example.user.bulletfalls.JsonDatabases.BulletSet;
-import com.example.user.bulletfalls.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.ObjectsOfGame.Hero;
+import com.example.user.bulletfalls.Database.JsonDatabases.AbilitySet;
+import com.example.user.bulletfalls.Database.JsonDatabases.BulletSet;
+import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeed;
 import com.example.user.bulletfalls.Strategies.Par;
 
@@ -324,7 +325,8 @@ public class UserProfile {
             TextView tv = new TextView(cont);
 
             ll.setOrientation(LinearLayout.HORIZONTAL);
-            iv.setImageResource(mp.left.getResource());
+
+            Glide.with(this.getContext()).load(mp.left.getResource()).into(iv);
             tv.setText(mp.right + "");
             iv.setLayoutParams(param);
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);

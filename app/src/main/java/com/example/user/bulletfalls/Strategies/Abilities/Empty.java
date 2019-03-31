@@ -1,6 +1,6 @@
 package com.example.user.bulletfalls.Strategies.Abilities;
 
-import com.example.user.bulletfalls.Character;
+import com.example.user.bulletfalls.ObjectsOfGame.Character;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("empty")

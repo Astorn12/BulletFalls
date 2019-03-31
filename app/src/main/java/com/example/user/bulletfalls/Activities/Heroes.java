@@ -17,14 +17,14 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import com.example.user.bulletfalls.Bullet;
-import com.example.user.bulletfalls.ChosenHero;
-import com.example.user.bulletfalls.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.ObjectsOfGame.ChosenHero;
+import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
-import com.example.user.bulletfalls.Hero;
-import com.example.user.bulletfalls.HeroProfile;
+import com.example.user.bulletfalls.ObjectsOfGame.Hero;
+import com.example.user.bulletfalls.ObjectsOfGame.HeroProfile;
 import com.example.user.bulletfalls.KlasyPomocnicze.Dimension;
 import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.R;
@@ -50,6 +50,8 @@ public class Heroes extends AppCompatActivity {
     LinkedList<Hero> heroes;
     TableLayout table;
     List<Hero> list;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,17 +182,14 @@ public class Heroes extends AppCompatActivity {
            i++;
        }
     }
-
     @Override
     public void onPause() {
         super.onPause();
     }
-
     @Override
     public void onStop() {
         super.onStop();
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

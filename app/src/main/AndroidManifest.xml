@@ -31,7 +31,7 @@
             android:name=".Nieużywane.Menu"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Game"
+            android:name=".GameManagement.Game"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.Heroes"
@@ -45,7 +45,7 @@
             android:label="@string/title_activity_p2pgame"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HeroProfile"
+            android:name=".ObjectsOfGame.HeroProfile"
             android:label="@string/title_activity_hero_profile"
             android:screenOrientation="portrait" />
         <activity
@@ -55,13 +55,13 @@
             android:name=".Activities.NotReadyYet"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ChosenHero"
+            android:name=".ObjectsOfGame.ChosenHero"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BulletProfile"
+            android:name=".ObjectsOfGame.BulletProfile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AbilityProfile"
+            android:name=".ObjectsOfGame.AbilityProfile"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity.ProfileScreen"
@@ -69,9 +69,11 @@
         <activity
             android:name=".ShopPackage.Shop"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.GameResult"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".Activities.GameResult"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.GroupHouse"></activity>
     </application>
 
 </manifest>

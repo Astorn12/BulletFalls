@@ -1,6 +1,6 @@
 package com.example.user.bulletfalls.Strategies.Abilities;
 
-import com.example.user.bulletfalls.Character;
+import com.example.user.bulletfalls.ObjectsOfGame.Character;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.Standard;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.Stot;

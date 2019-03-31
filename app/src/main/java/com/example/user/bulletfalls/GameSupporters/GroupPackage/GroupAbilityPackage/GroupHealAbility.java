@@ -1,9 +1,6 @@
 package com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupAbilityPackage;
 
-import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupBoostTable;
-import com.example.user.bulletfalls.Hero;
-
-import org.apache.commons.lang3.NotImplementedException;
+import com.example.user.bulletfalls.ObjectsOfGame.Hero;
 
 public class GroupHealAbility implements GroupAbility {
     @Override

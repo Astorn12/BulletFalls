@@ -31,7 +31,7 @@ public class ArchivContainer<T>  {
         if(include(t)) {
             for(MutablePair<T,Integer> ti:list)
             {
-                if (t.equals(ti.getLeft()))
+                if (compare(t,ti.getLeft()))
                 {
                     ti.setRight(ti.getRight()+1);
                     break;
@@ -46,7 +46,20 @@ public class ArchivContainer<T>  {
     {
         for(MutablePair<T,Integer> tl:list)
         {
-            if(tl.getLeft().equals(t)){
+           /* if(tl.getLeft().equals(t)){
+                return true;
+            }*/
+           if(compare(tl.getLeft(),t))
+               return true;
+        }
+
+        return false;
+    }
+    public boolean hasEnought(T t, int amount)
+    {
+        for(MutablePair<T,Integer> tl:list)
+        {
+            if(compare(tl.getLeft(),t)&&tl.getRight()>=amount){
                 return true;
             }
         }
@@ -83,7 +96,7 @@ public class ArchivContainer<T>  {
     {
         for(MutablePair<T, Integer> mp:this.list)
         {
-            if(mp.getLeft().equals(t)) return mp.getRight();
+            if(compare(mp.getLeft(),t)) return mp.getRight();
         }
         return 0;
     }
@@ -96,6 +109,19 @@ public class ArchivContainer<T>  {
             counter+=mp.getRight();
         }
         return  counter;
+    }
+
+    protected boolean compare(T t1, T t2)
+    {
+        /*if(((Named)t1).getName().equals(((Named)t2).getName()) )
+        {
+            return true;
+        }*/
+        if(t1.equals(t2))
+        {
+            return true;
+        }
+        else return false;
     }
 }
 
