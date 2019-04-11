@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.ObjectsOfGame.Ability;
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.Objects.Ability;
+import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Database.DAO.CurrencyEnum;
 import com.example.user.bulletfalls.Database.DAO.LevelDao;
 import com.example.user.bulletfalls.Database.DAO.ProfileDao;
@@ -16,10 +16,10 @@ import com.example.user.bulletfalls.Database.DAO.StockDao;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.ArchivContainer;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
-import com.example.user.bulletfalls.Database.JsonDatabases.AbilitySet;
-import com.example.user.bulletfalls.Database.JsonDatabases.BulletSet;
-import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.Objects.Hero;
+import com.example.user.bulletfalls.Sets.AbilitySet;
+import com.example.user.bulletfalls.Sets.BulletSet;
+import com.example.user.bulletfalls.Sets.HeroesSet;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeed;
 import com.example.user.bulletfalls.Strategies.Par;
 

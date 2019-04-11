@@ -1,4 +1,4 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 public class Description {
     String description;

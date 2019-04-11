@@ -2,7 +2,7 @@ package com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy;
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
+import com.example.user.bulletfalls.Objects.Enemy;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemyReleaseStrategyPackage.EnemyReleaseStrategy;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.TimeReleaseStrategyPackage.TimeReleaseStrategy;
 

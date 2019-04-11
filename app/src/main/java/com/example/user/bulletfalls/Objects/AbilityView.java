@@ -1,4 +1,4 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.os.Build;
 
 import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Enums.Permission;
-import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.example.user.bulletfalls.Interfaces.PossesAble;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;

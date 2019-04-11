@@ -1,27 +1,38 @@
-package com.example.user.bulletfalls.Database.JsonDatabases;
+package com.example.user.bulletfalls.Sets;
 
 import android.content.Context;
 
 import com.example.user.bulletfalls.Enums.AE;
-import com.example.user.bulletfalls.ObjectsOfGame.Ability;
+import com.example.user.bulletfalls.Enums.BE;
+import com.example.user.bulletfalls.Enums.CharacterPositioning;
+import com.example.user.bulletfalls.Enums.EBeastType;
+import com.example.user.bulletfalls.Enums.GroupName;
+import com.example.user.bulletfalls.Enums.Kind;
+import com.example.user.bulletfalls.Objects.Ability;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.KlasyPomocnicze.FileSupporter;
-import com.example.user.bulletfalls.ObjectsOfGame.WaitAbility;
+import com.example.user.bulletfalls.Objects.Description;
+import com.example.user.bulletfalls.Objects.SummonedBeast;
+import com.example.user.bulletfalls.Objects.WaitAbility;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
-import com.example.user.bulletfalls.Strategies.Abilities.CarpedDiem;
+import com.example.user.bulletfalls.Specyfications.Characters.SummonedBeastSpecyfication;
+import com.example.user.bulletfalls.Strategies.Abilities.CarpetDiem;
 import com.example.user.bulletfalls.Strategies.Abilities.ChangeBullet;
 import com.example.user.bulletfalls.Strategies.Abilities.Empty;
 import com.example.user.bulletfalls.Strategies.Abilities.Heal;
+import com.example.user.bulletfalls.Strategies.Abilities.Summoning.Summon;
 import com.example.user.bulletfalls.Strategies.Abilities.SuperShoot;
 import com.example.user.bulletfalls.Strategies.Abilities.TimeChangeBullet;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.NoneDoToBulletStrategy;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -102,20 +113,40 @@ public class AbilitySet {
         }
         return null;
     }
+    public  Ability getAbility(AE ae)
+    {
+
+        return getAbility(ae.getValue());
+    }
     /*----------------------------------TESTS-----------------------------*/
-    public void AddToDatabaseTest()
+    public void AddToDatabaseTest(Context context)
     {
         //spis dostępnych abilitek:
         // "carpediem","ability","nothing"
-        Ability carpetdiem= new Ability(AE.CARPEDIEM.getValue(),R.drawable.carpetsmall,3000,new CarpedDiem(),Permission.YES,Rarity.RARE,true,new MoneyPossesStrategy("Mystery Coin",10));
-        Ability ability= new Ability(AE.ABILITY.getValue(),R.drawable.heal,10000,new Heal(50),Permission.YES,Rarity.COMMON,false,new MoneyPossesStrategy("Mystery Coin",10));
-        Ability nothing= new Ability("nothing",R.drawable.black,10000,new Empty(),Permission.YES,Rarity.STARTING,false,new MoneyPossesStrategy("Mystery Coin",10));
-        Ability summonLog= new Ability("summonlog",R.drawable.log,10000,new TimeChangeBullet(BulletSet.getBullet("log"),5),Permission.NOT,Rarity.UNCOMMON,false,new MoneyPossesStrategy("Mystery Coin",10));
-        Ability armchairthrow= new Ability("armchairthrow",R.drawable.grendaamchair,10000,new SuperShoot(BulletSet.getBullet("grendaArmchair")),Permission.YES,Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10));
+        Ability carpetdiem= new Ability(AE.CARPEDIEM.getValue(),R.drawable.carpetsmall,3000,new CarpetDiem(),Permission.YES,Rarity.RARE,
+                true,new MoneyPossesStrategy("Mystery Coin",10));
+        Ability ability= new Ability(AE.ABILITY.getValue(),R.drawable.heal,10000,new Heal(50),Permission.YES,Rarity.COMMON,
+                false,new MoneyPossesStrategy("Mystery Coin",10));
+        Ability nothing= new Ability(AE.NOTHING,R.drawable.redx,10000,new Empty(),Permission.YES,Rarity.STARTING,false,
+                new MoneyPossesStrategy("Mystery Coin",10));
+        Ability summonLog= new Ability(AE.SUMMONLOG,R.drawable.log,10000,new TimeChangeBullet(BulletSet.getBullet(BE.LOG),5),
+                Permission.NOT,Rarity.UNCOMMON,false,new MoneyPossesStrategy("Mystery Coin",10));
+        Ability armchairthrow= new Ability(AE.ARMCHAIRTHROW,R.drawable.grendaamchair,10000,new SuperShoot(BulletSet.getBullet(BE.GRENDAARMCHAIR)),
+                Permission.YES,Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10));
+        Ability firstJurnal= new Ability(AE.FIRSTJURNAL,R.drawable.jurnal1,10000,new ChangeBullet(BulletSet.getBullet(BE.FIRSTJURNAL)),
+                Permission.YES,Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10));
+        WaitAbility secondJurnal= new WaitAbility(AE.SECONDJURNAL,R.drawable.jurnal2,0,new ChangeBullet(BulletSet.getBullet(BE.SEONDJURNAL)),
+                Permission.YES,Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10),
+                new BulletSpecyfication(BulletSet.getBullet(BE.FIRSTJURNAL)),5);
+        WaitAbility thirdJurnal= new WaitAbility(AE.THIRDJURNAL,R.drawable.jurnal3,0,new ChangeBullet(BulletSet.getBullet(BE.THIRDJURNAL)),
+                Permission.YES,Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10),
+                new BulletSpecyfication(BulletSet.getBullet(BE.SEONDJURNAL)),10);
 
-        Ability firstJurnal= new Ability("firstjurnal",R.drawable.jurnal1,10000,new ChangeBullet(BulletSet.getBullet("firstjurnal")),Permission.YES,Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10));
-        WaitAbility secondJurnal= new WaitAbility("secondjurnal",R.drawable.jurnal2,new ChangeBullet(BulletSet.getBullet("secondjurnal")),Permission.YES,Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10),new BulletSpecyfication(BulletSet.getBullet("firstjurnal")),5);
-        WaitAbility thirdJurnal= new WaitAbility("thirdjurnal",R.drawable.jurnal3,new ChangeBullet(BulletSet.getBullet("thirdjurnal")),Permission.YES,Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10),new BulletSpecyfication(BulletSet.getBullet("secondjurnal")),10);
+        SummonedBeast gompers= new SummonedBeast(context,10,10,null,200,200,20,R.drawable.goat,
+                null,40,120,2,3,BulletSet.getBullet(BE.RED),"Gomper",Kind.MONSTER,Arrays.asList(GroupName.Animal),
+                CharacterPositioning.HEROSUMMONEDBEAST,new NoneDoToBulletStrategy(),"",new Description(),EBeastType.HERO);
+        Ability firstsummoning= new Ability(AE.FIRSTSUMMON,R.drawable.goat,10000,new Summon((SummonedBeastSpecyfication)gompers.getSpecyfication()),Permission.YES,Rarity.STARTING,false,
+                new MoneyPossesStrategy("Mystery Coin",10));
 
         abilityList.add(carpetdiem);
         abilityList.add(ability);
@@ -125,6 +156,7 @@ public class AbilitySet {
         abilityList.add(firstJurnal);
         abilityList.add(secondJurnal);
         abilityList.add(thirdJurnal);
+        abilityList.add(firstsummoning);
     }
     public  List<Ability> getAbilityListForHero(String heroName)
     {

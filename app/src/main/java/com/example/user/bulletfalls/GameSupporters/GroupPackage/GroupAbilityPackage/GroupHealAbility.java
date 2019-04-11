@@ -1,6 +1,6 @@
 package com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupAbilityPackage;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
+import com.example.user.bulletfalls.Objects.Hero;
 
 public class GroupHealAbility implements GroupAbility {
     @Override

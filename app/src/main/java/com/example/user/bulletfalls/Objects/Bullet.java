@@ -1,9 +1,10 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import android.content.Context;
 import android.graphics.Point;
 import android.widget.FrameLayout;
 
+import com.example.user.bulletfalls.Enums.BE;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
@@ -31,20 +32,13 @@ public class Bullet extends ViewElement implements Comparable, PossesAble {
 
 
     protected boolean collisionAble;
-  //  BulletMoveStrategy bulletMoveStrategy;
-  //  BulletDoToCharacterStrategy bulletDoToCharacterStrategy;
-  //  Shape shape;
+    BulletMoveStrategy bulletMoveStrategy;
+    BulletDoToCharacterStrategy bulletDoToCharacterStrategy;
+    Shape shape;
 
- //   Permission permission;
- //   Rarity rarity;
-  //  PossesStrategy possesStrategy;
-
-    BulletSpecyfication specyfication;
-
-    public void Bullet(BulletSpecyfication specyfication)
-    {
-        this.specyfication=specyfication;
-    }
+    Permission permission;
+    Rarity rarity;
+    PossesStrategy possesStrategy;
 
     public Bullet(String name,Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, boolean collisionAble, BulletMoveStrategy bulletMoveStrategy, Shape shape, BulletDoToCharacterStrategy bulletDoToCharacterStrategy,Permission perm,Rarity rarity,PossesStrategy possesStrategy) {
         super(context, power, speed, startingPoint, width, height, randeringFrequency, imageResource,frame,name);
@@ -57,11 +51,13 @@ public class Bullet extends ViewElement implements Comparable, PossesAble {
         this.rarity=rarity;
         this.possesStrategy=possesStrategy;
 
+    } public Bullet(BE be, Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, boolean collisionAble, BulletMoveStrategy bulletMoveStrategy, Shape shape, BulletDoToCharacterStrategy bulletDoToCharacterStrategy, Permission perm, Rarity rarity, PossesStrategy possesStrategy) {
+        this(be.getValue(), context,  power,  speed,  startingPoint,  width,  height,  randeringFrequency,  imageResource,  frame,  collisionAble,  bulletMoveStrategy,  shape,  bulletDoToCharacterStrategy, perm, rarity, possesStrategy);
     }
 
     public Bullet(Context context, BulletSpecyfication jsonBullet)
     {
-        super(context,jsonBullet,jsonBullet.getName());
+        super(context,jsonBullet);
         this.collisionAble=jsonBullet.isCollisionAble();
         this.bulletMoveStrategy=jsonBullet.getBulletMoveStrategy();
         this.shape=jsonBullet.getShape();

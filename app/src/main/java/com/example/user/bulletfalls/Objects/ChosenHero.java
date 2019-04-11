@@ -1,12 +1,10 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
@@ -29,19 +27,18 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.user.bulletfalls.Activities.GroupHouse;
+import com.example.user.bulletfalls.Enums.AE;
 import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupsContainer;
-import com.example.user.bulletfalls.Database.JsonDatabases.AbilitySet;
-import com.example.user.bulletfalls.Database.JsonDatabases.BulletSet;
-import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.Sets.AbilitySet;
+import com.example.user.bulletfalls.Sets.BulletSet;
+import com.example.user.bulletfalls.Sets.HeroesSet;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.KlasyPomocnicze.Dimension;
 import com.example.user.bulletfalls.KlasyPomocnicze.OnSwipeTouchListener;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -142,10 +139,7 @@ public class ChosenHero extends AppCompatActivity {
                /* f.post(new Runnable() {
                     @Override
                     public void run() {
-
-
                         matchOwnedBullet(chosenHero,bullets);
-
                     }
                 });*/
                 b.getLayoutParams().width=abilityList.getLayoutParams().height;
@@ -165,6 +159,7 @@ public class ChosenHero extends AppCompatActivity {
                             intent.putExtra("name", b.name);
                             home.startActivity(intent);
                         }
+
 
                         @Override
                         public void onClick() {
@@ -230,7 +225,7 @@ public class ChosenHero extends AppCompatActivity {
                                 if (canBeTicked(fl)) {
                                     tickView(fl);
                                     for (int i = 0; i < chosenHero.getAbilities().getAbilities().size(); i++) {
-                                        if (chosenHero.getAbilities().getAbilities().get(i).getName().equals("nothing")) {
+                                        if (chosenHero.getAbilities().getAbilities().get(i).getName().equals(AE.NOTHING.getValue())) {
                                             chosenHero.getAbilities().getAbilities().set(i, av.getAbility());
                                             saveHeroChanges();
                                             break;
@@ -243,7 +238,7 @@ public class ChosenHero extends AppCompatActivity {
                                     cleanFrame(fl);
                                     for (int i = 0; i < chosenHero.getAbilities().getAbilities().size(); i++) {
                                         if (chosenHero.getAbilities().getAbilities().get(i).getName().equals(av.getAbility().getName())) {
-                                            chosenHero.getAbilities().getAbilities().set(i, AbilitySet.getInstance().getAbility("nothing"));
+                                            chosenHero.getAbilities().getAbilities().set(i, AbilitySet.getInstance().getAbility(AE.NOTHING.getValue()));
                                             saveHeroChanges();
                                         }
                                     }

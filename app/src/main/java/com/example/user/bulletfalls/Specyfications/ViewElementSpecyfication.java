@@ -1,13 +1,9 @@
 package com.example.user.bulletfalls.Specyfications;
 
-import android.content.Context;
-import android.graphics.Point;
-import android.widget.FrameLayout;
-
 import com.example.user.bulletfalls.Enums.BulletSpeciality;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Named;
 import com.example.user.bulletfalls.Specyfications.Characters.CharacterSpecyfication;
-import com.example.user.bulletfalls.ObjectsOfGame.ViewElement;
+import com.example.user.bulletfalls.Objects.ViewElement;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -28,28 +24,6 @@ public class ViewElementSpecyfication implements Named {
     int imageResources;
     String name;
 
-
-
-    public ViewElementSpecyfication( int power, int speed, Point startingPoint, int width, final int height, int randeringFrequency, int imageResource,String name) {
-        this.power = power;
-        this.speed = speed;
-        this.startingPoint = startingPoint;
-        this.randeringFrequency = randeringFrequency;
-
-        this.imageResources=imageResource
-        this.imageResources=imageResource;
-
-        this.height = height;
-
-        this.width=(int)((float)height*((float)getDrawable().getIntrinsicWidth()/(float)getDrawable().getIntrinsicHeight()));
-
-
-        this.name=name;
-
-
-    }
-
-
     public ViewElementSpecyfication(ViewElement viewElement)
     {
         this.power=viewElement.getPower();
@@ -60,7 +34,7 @@ public class ViewElementSpecyfication implements Named {
         this.name=viewElement.getName();
     }
 
-    private ViewElementSpecyfication() {
+    public ViewElementSpecyfication() {
     }
 
     public int getPower() {

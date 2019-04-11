@@ -1,6 +1,6 @@
 package com.example.user.bulletfalls.Specyfications.Characters;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
+import com.example.user.bulletfalls.Objects.Enemy;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("enemyspecyfication")
@@ -13,11 +13,7 @@ public class EnemySpecyfication extends CharacterSpecyfication {
 
         this.killValue=enemy.getKillValue();
     }
-    public EnemySpecyfication()
-    {
-
-
-    }
+    private EnemySpecyfication() { }
 
     public int getKillValue() {
         return killValue;

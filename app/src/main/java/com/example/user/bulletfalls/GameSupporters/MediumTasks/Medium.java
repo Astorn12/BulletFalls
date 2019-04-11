@@ -1,9 +1,9 @@
 package com.example.user.bulletfalls.GameSupporters.MediumTasks;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Ability;
+import com.example.user.bulletfalls.Objects.Ability;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
-import com.example.user.bulletfalls.ObjectsOfGame.AbilityView;
-import com.example.user.bulletfalls.ObjectsOfGame.WaitAbility;
+import com.example.user.bulletfalls.Objects.AbilityView;
+import com.example.user.bulletfalls.Objects.WaitAbility;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
 import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;

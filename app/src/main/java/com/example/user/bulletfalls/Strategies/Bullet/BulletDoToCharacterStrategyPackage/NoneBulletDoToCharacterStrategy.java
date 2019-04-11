@@ -1,11 +1,11 @@
 package com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.Objects.Character;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("nothingtodocharacter")
-public class NothingDoToCharacter implements BulletDoToCharacterStrategy {
-    public NothingDoToCharacter(){}
+public class NoneBulletDoToCharacterStrategy implements BulletDoToCharacterStrategy {
+    public NoneBulletDoToCharacterStrategy(){}
     @Override
     public void doToCharacter(Character character) {
 
@@ -13,6 +13,6 @@ public class NothingDoToCharacter implements BulletDoToCharacterStrategy {
 
     @Override
     public BulletDoToCharacterStrategy clone() {
-        return new NothingDoToCharacter();
+        return new NoneBulletDoToCharacterStrategy();
     }
 }

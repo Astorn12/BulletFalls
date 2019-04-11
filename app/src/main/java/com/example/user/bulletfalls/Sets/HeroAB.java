@@ -1,4 +1,8 @@
-package com.example.user.bulletfalls.Database.JsonDatabases;
+package com.example.user.bulletfalls.Sets;
+
+import com.example.user.bulletfalls.Enums.AE;
+import com.example.user.bulletfalls.Enums.BE;
+import com.example.user.bulletfalls.Enums.HE;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,11 +18,17 @@ public class HeroAB {
         this.availlableBullets= new LinkedList<>();
         heroName="";
     }
+
     public  HeroAB(String heroName)
     {
         this.heroName=heroName;
         this.availlableAbilities= new LinkedList<>();
         this.availlableBullets= new LinkedList<>();
+    }
+
+    public  HeroAB(HE he)
+    {
+        this(he.getValue());
     }
     /*-----------------------------Geters & Setters---------------------------*/
     public List<String> getAvaillableAbilities() {
@@ -29,12 +39,30 @@ public class HeroAB {
         this.availlableAbilities = availlableAbilities;
     }
 
+    public void setAvaillableAbilitiesenums(List<AE> availlableAbilities) {
+        List<String> strings= new LinkedList<>();
+        for(AE ae: availlableAbilities)
+        {
+            strings.add(ae.getValue());
+        }
+        setAvaillableAbilities(strings);
+    }
+
     public List<String> getAvaillableBullets() {
         return availlableBullets;
     }
 
     public void setAvaillableBullets(List<String> availlableBullets) {
         this.availlableBullets = availlableBullets;
+    }
+
+    public void setAvaillableBulletsenums(List<BE> availlableBullets) {
+        List<String> strings= new LinkedList<>();
+        for(BE ae: availlableBullets)
+        {
+            strings.add(ae.getValue());
+        }
+        setAvaillableBullets(strings);
     }
 
     public String getHeroName() {
@@ -44,6 +72,4 @@ public class HeroAB {
     public void setHeroName(String heroName) {
         this.heroName = heroName;
     }
-
-
 }

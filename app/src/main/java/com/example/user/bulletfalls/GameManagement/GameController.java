@@ -7,11 +7,12 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.example.user.bulletfalls.ObjectsOfGame.AbilityView;
+import com.example.user.bulletfalls.Objects.Ability;
+import com.example.user.bulletfalls.Objects.AbilityView;
 import com.example.user.bulletfalls.Activities.GameResult;
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
-import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
+import com.example.user.bulletfalls.Objects.Bullet;
+import com.example.user.bulletfalls.Objects.Character;
+import com.example.user.bulletfalls.Objects.Enemy;
 import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.GameSupporters.CollisionTester;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemysChooser;
@@ -20,7 +21,8 @@ import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupsContainer;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.EnemyShot;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.GameSummary;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
+import com.example.user.bulletfalls.Objects.Hero;
+import com.example.user.bulletfalls.Objects.SummonedBeast;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
@@ -61,6 +63,9 @@ public class GameController {
     CollisionTester collisionTester;
     Medium medium;
 
+    LinkedList<SummonedBeast> summonedBeasts;
+    LinkedList<SummonedBeast> beastGarbageCollection;
+
     public GameController(Activity activity, EnemysChooser enemysChooser)
     {
         this.gameActivity=activity;
@@ -79,8 +84,10 @@ public class GameController {
        // loadEnemyCollection();
         this.abilities= new LinkedList<>();
         this.enemysChooser=enemysChooser;
-        collisionTester= new CollisionTester(hero,enemys,bullets);
+        collisionTester= new CollisionTester();
         medium= new Medium();
+        this.summonedBeasts= new LinkedList<>();
+        this.beastGarbageCollection = new LinkedList<>();
     }
 
     public void start()
@@ -97,12 +104,7 @@ public class GameController {
        timer.schedule(new TimerTask() {
            @Override
            public void run() {
-               /*enemyCounter+=1;
-               if(enemyCounter%200==0)
-               {
-                   Enemy enemy1=enemysCollection.get(new Random().nextInt(enemysCollection.size()));
-                   Enemy en=enemy1.clone();
-               }*/
+
                Enemy en= enemysChooser.getEnemy(gameActivity);
                if(en!=null) {
                en.setFrame(game);
@@ -125,7 +127,6 @@ public class GameController {
         tmpFurtka.clear();
         hero.startingMove();
 
-       // System.out.println(heroBullets.size());
         for(Bullet bullet:bullets)
         {
             bullet.move();
@@ -136,7 +137,6 @@ public class GameController {
         {
             this.bullets.add(newHeroBullet);
             medium.heroShot(new BulletSpecyfication(newHeroBullet),abilities);
-            //newHeroBullet.appear();
         }
 
         for(Bullet bullet:bulletsGarbageCollector)
@@ -154,13 +154,60 @@ public class GameController {
                 medium.enemyShot(new EnemyShot(new EnemySpecyfication(enemy),new BulletSpecyfication(newEnemyBullet)));
             }
         }
-        collisionTester.collisionChecking(hero,enemys,bullets,medium);
+
+        beastsAction();
+
+
+        collisionTester.collisionChecking(hero,enemys,bullets,medium,summonedBeasts);
         heroLifeChecking();
         enenemysLifeChecking();
         bulletLifeChecking();
         enemyCleaning();
         bulletCleaning();
+        beastsLifeChecking();
+        beastCleaning();
+
+        summoning();
     }
+
+    private void beastCleaning() {
+        for(SummonedBeast beast: this.beastGarbageCollection)
+        {
+            this.summonedBeasts.remove(beast);
+        }
+        this.beastGarbageCollection.clear();
+    }
+
+    private void beastsLifeChecking() {
+        for(SummonedBeast beast: this.summonedBeasts)
+        {
+            if(!beast.isAlive())
+            {
+                this.beastGarbageCollection.add(beast);
+            }
+        }
+    }
+
+    private void beastsAction() {
+        for(SummonedBeast beast: this.summonedBeasts)
+        {
+            beast.startingMove();
+            Bullet newEnemyBullet= beast.startShooting();
+            if(newEnemyBullet!= null)
+            {
+                this.bullets.add(newEnemyBullet);/** tutaj jeśli chcemy żeby kulki wystrzelone przez zwierzę liczyły się w stosunku dokulek wystrzelonych przez bohatera, to musimy to ustalić*/
+
+                // medium.enemyShot(new EnemyShot(beast.getSpecyfication(),new BulletSpecyfication(newEnemyBullet)));
+            }
+        }
+    }
+
+    private void summoning() {
+        hero.Summon(game,this.summonedBeasts);
+
+    }
+
+
     public void enemyCleaning()
     {
         for(Enemy enemy:enemyGravedigger)
@@ -180,6 +227,7 @@ public class GameController {
             bullets.remove(b);
 
         }
+        bulletsGarbageCollector.clear();
     }
     public void heroLifeChecking()
     {
@@ -210,14 +258,6 @@ public class GameController {
                 bullet.destroy();
             }
         }
-        /*for(Bullet bullet:enemyBullets)
-        {
-            if(bullet.getPower()<=0)
-            {
-                this.enemyBulletsGarbageCollector.add(bullet);
-                bullet.destroy();
-            }
-        }*/
     }
     private boolean sameDirectionChecking(Bullet a,Bullet b)
     {
@@ -232,6 +272,7 @@ public class GameController {
     }
     public void stop()
     {
+        cancelAllAbilityThreads();
         timer.cancel();
         medium.stopTime();
         //Show Result
@@ -247,6 +288,14 @@ public class GameController {
 
         gameActivity.startActivity(intent);
         gameActivity.finish();
+    }
+
+    private void cancelAllAbilityThreads()
+    {
+     for(AbilityView av: this.abilities)
+     {
+         av.getAbility().cancelThread();
+     }
     }
     public void bullet(Bullet bullet)
     {
@@ -387,7 +436,6 @@ public class GameController {
             if(hero.getAbilities().getFirstAbility().isReady()&&hero.getAbilities().getFirstAbility().isActive())
             {
                 hero.getFirstAbility().doToCharacter(hero);
-                System.out.println("Pierwsza abilitka");
                 medium.abilityUse(hero.getSecondAbility());
             }
         }
@@ -398,7 +446,6 @@ public class GameController {
                 if(hero.getAbilities().getSecondAbility().isReady()&&hero.getAbilities().getSecondAbility().isActive())
                 {
                     hero.getSecondAbility().doToCharacter(hero);
-                    System.out.println("Druga abilitka");
                     medium.abilityUse(hero.getSecondAbility());
                 }
             }
@@ -409,7 +456,6 @@ public class GameController {
                 if(hero.getAbilities().getThirdAbility().isReady()&&hero.getAbilities().getThirdAbility().isActive())
                 {
                     hero.getThirdAbility().doToCharacter(hero);
-                    System.out.println("Trzecia abilitka");
                     medium.abilityUse(hero.getThirdAbility());
                 }
             }

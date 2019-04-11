@@ -1,15 +1,16 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import android.content.Context;
 import android.graphics.Point;
 import android.widget.FrameLayout;
 
+import com.example.user.bulletfalls.Enums.BE;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.Specyfications.Bullets.RotateBulletSpecyfication;
-import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
+import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.BulletMoveStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
@@ -27,11 +28,16 @@ public class RotateBullet extends Bullet {
     int startingRotation;
     int rotationMeter;
     public RotateBullet(String name, Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, boolean collisionAble, int rotationSpeed, BulletMoveStrategy bulletMoveStrategy, Shape shape, Permission perm, Rarity rarity, PossesStrategy possesStrategy) {
-        super(name,context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, collisionAble,bulletMoveStrategy,shape,new NothingDoToCharacter(),perm,rarity,possesStrategy);
+        super(name,context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, collisionAble,bulletMoveStrategy,shape,new NoneBulletDoToCharacterStrategy(),perm,rarity,possesStrategy);
         this.rotationSpeed=rotationSpeed;
         construktorEking();
      //   this.matrix=new Matrix();
        // this.setScaleType(ImageView.ScaleType.MATRIX);
+
+    }
+    public RotateBullet(BE be, Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, boolean collisionAble, int rotationSpeed, BulletMoveStrategy bulletMoveStrategy, Shape shape, Permission perm, Rarity rarity, PossesStrategy possesStrategy) {
+        this(be.getValue(),context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, collisionAble,rotationSpeed,bulletMoveStrategy,shape,perm,rarity,possesStrategy);
+
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,37 +8,37 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.user.bulletfalls.Database.JsonDatabases.AbilitySet;
+import com.example.user.bulletfalls.Sets.BulletSet;
 import com.example.user.bulletfalls.KlasyPomocnicze.OnSwipeTouchListener;
 import com.example.user.bulletfalls.R;
 
-public class AbilityProfile extends AppCompatActivity {
-    ImageView abilityView;
-    TextView abilityName;
+public class BulletProfile extends AppCompatActivity {
+    ImageView bulletView;
+    TextView bulletName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ability_profile);
+        setContentView(R.layout.activity_bullet_profile);
 
         Intent intent= getIntent();
         String  name=intent.getStringExtra("name");
-        Ability ability=AbilitySet.getInstance().getAbility(name);
+        Bullet bullet=BulletSet.getBullet(name);
 
-        abilityView=(ImageView)this.findViewById(R.id.futureability);
-        abilityName=(TextView)this.findViewById(R.id.abilityname);
-        abilityView.setImageResource(ability.getImageResources());
-        abilityName.setText(name);
-
-
-        LinearLayout ll= (LinearLayout) this.findViewById(R.id.abilityScreen);
+        bulletView=(ImageView)this.findViewById(R.id.futurebullet);
+        bulletName=(TextView)this.findViewById(R.id.bulletname);
+        bulletView.setImageResource(bullet.getImageResources());
+        bulletName.setText(name);
+        LinearLayout ll= (LinearLayout) this.findViewById(R.id.bulletScreen);
         final Activity home=this;
         ll.setOnTouchListener(new OnSwipeTouchListener(this)
         {
             @Override
-            public void onSwipeDown() {
+            public void onSwipeLeft() {
                 home.finish();
             }
 
         });
+
     }
 }

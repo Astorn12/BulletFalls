@@ -1,9 +1,10 @@
-package com.example.user.bulletfalls.Database.JsonDatabases;
+package com.example.user.bulletfalls.Sets;
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.ObjectsOfGame.RotateBullet;
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.Enums.BE;
+import com.example.user.bulletfalls.Objects.RotateBullet;
+import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
@@ -11,7 +12,7 @@ import com.example.user.bulletfalls.KlasyPomocnicze.FileSupporter;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.Disarm;
-import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
+import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Dam;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.SummonDam;
@@ -112,6 +113,10 @@ public class BulletSet {
         return null;
     }
 
+    public static Bullet getBullet(BE be) {
+        return getBullet(be.getValue());
+    }
+
     public static boolean isEmpty()
     {
         if(bulletList.size()==0) return true;
@@ -148,17 +153,17 @@ public class BulletSet {
 
 /**++++++++++++++++++++++++++++++++++++++++++ General Bullets ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-        Bullet grendaArmachair=new Bullet("grendaArmchair",context,100,20,null,110,110,20,R.drawable.grendaamchair,null,false,new Throw(45),Shape.RECTANGLE,new NothingDoToCharacter(),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind
-        Bullet dam=new Bullet("dam",context,100,20,null,110,110,20,R.drawable.dam,null,true,new Dam(300),Shape.RECTANGLE,new NothingDoToCharacter(),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
-        Bullet timeDam=new Bullet("timedam",context,100,20,null,110,110,20,R.drawable.dam,null,true,new TimeDam(300,100),Shape.RECTANGLE,new NothingDoToCharacter(),Permission.YES,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10));
-        Bullet standard=new Bullet("standard", context,10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));
-        Bullet log=new Bullet("log",context,100,20,null,110,110,20,R.drawable.log,null,true,new SummonDam(300),Shape.RECTANGLE,new NothingDoToCharacter(),Permission.NOT,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10));
-        Bullet red=new Bullet("red", context,10, 20, null, 50, 50, 20, R.drawable.red, null, false,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.NOT,Rarity.UNCOMMON,new MoneyPossesStrategy("Mystery Coin",10));
-        Bullet diarm=new Bullet("disarm",context, 10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
-        Bullet firstJurnal=new Bullet("firstjurnal",context, 10, 20, null, 50, 50, 20, R.drawable.jurnal1, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
-        Bullet secondjurnal=new Bullet("secondjurnal",context, 10, 20, null, 100, 100, 20, R.drawable.jurnal2, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
-        Bullet thirdjurnal=new Bullet("thirdjurnal",context, 10, 20, null, 100, 100, 20, R.drawable.jurnal3, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
-        RotateBullet wendyAxe=new RotateBullet("wendyaxe",context, 10, 20, null, 100, 100, 20,R.drawable.wendyaxe, null, false,20,new Horizontal(),Shape.CIRCLE,Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet grendaArmachair=new Bullet(BE.GRENDAARMCHAIR,context,100,20,null,110,110,20,R.drawable.grendaamchair,null,false,new Throw(45),Shape.RECTANGLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind
+        Bullet dam=new Bullet(BE.DAM,context,100,20,null,110,110,20,R.drawable.dam,null,true,new Dam(300),Shape.RECTANGLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet timeDam=new Bullet(BE.TIMEDAM,context,100,20,null,110,110,20,R.drawable.dam,null,true,new TimeDam(300,100),Shape.RECTANGLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet standard=new Bullet(BE.STANDARD, context,10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet log=new Bullet(BE.LOG,context,100,20,null,110,110,20,R.drawable.log,null,true,new SummonDam(300),Shape.RECTANGLE,new NoneBulletDoToCharacterStrategy(),Permission.NOT,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet red=new Bullet(BE.RED, context,10, 20, null, 50, 50, 20, R.drawable.red, null, false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.NOT,Rarity.UNCOMMON,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet diarm=new Bullet(BE.DISARM,context, 10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet firstJurnal=new Bullet(BE.FIRSTJURNAL,context, 10, 20, null, 50, 50, 20, R.drawable.jurnal1, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet secondjurnal=new Bullet(BE.SEONDJURNAL,context, 10, 20, null, 100, 100, 20, R.drawable.jurnal2, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet thirdjurnal=new Bullet(BE.THIRDJURNAL,context, 10, 20, null, 100, 100, 20, R.drawable.jurnal3, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
+        RotateBullet wendyAxe=new RotateBullet(BE.WENDYAXE,context, 10, 20, null, 100, 100, 20,R.drawable.wendyaxe, null, false,20,new Horizontal(),Shape.CIRCLE,Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
 
 
         bulletList.add(grendaArmachair);

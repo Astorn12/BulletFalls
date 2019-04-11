@@ -1,8 +1,8 @@
 package com.example.user.bulletfalls.Specyfications.Characters;
 
 
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
-import com.example.user.bulletfalls.ObjectsOfGame.Description;
+import com.example.user.bulletfalls.Objects.Character;
+import com.example.user.bulletfalls.Objects.Description;
 import com.example.user.bulletfalls.Enums.CharacterPositioning;
 import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
@@ -21,7 +21,8 @@ import java.util.List;
         property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = HeroSpecyfication.class, name = "heropecyfication"),
-        @JsonSubTypes.Type(value = EnemySpecyfication.class, name = "enemyspecyfication")
+        @JsonSubTypes.Type(value = EnemySpecyfication.class, name = "enemyspecyfication"),
+        @JsonSubTypes.Type(value = SummonedBeastSpecyfication.class, name = "summonedbeastspecyfication")
 
 })
 @JsonTypeName("characterspecyfication")

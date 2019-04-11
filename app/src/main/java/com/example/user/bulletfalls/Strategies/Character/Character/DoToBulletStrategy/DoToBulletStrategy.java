@@ -1,6 +1,6 @@
 package com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.Objects.Bullet;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -9,8 +9,9 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 
 @JsonTypeInfo(use = NAME, include = PROPERTY)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value=Standard.class, name = "standard"),
-        @JsonSubTypes.Type(value=Stot.class, name = "stot")
+        @JsonSubTypes.Type(value=NoneDoToBulletStrategy.class, name = "standard"),
+        @JsonSubTypes.Type(value=Stot.class, name = "stot"),
+        @JsonSubTypes.Type(value=Stot.class, name = "stot"),
 })
 public interface DoToBulletStrategy {
 

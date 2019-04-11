@@ -17,8 +17,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.user.bulletfalls.Enums.Permission;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
-import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.Objects.Hero;
+import com.example.user.bulletfalls.Sets.HeroesSet;
 import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.R;

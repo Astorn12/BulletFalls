@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.R;
 
 public class MyAnimation extends View {

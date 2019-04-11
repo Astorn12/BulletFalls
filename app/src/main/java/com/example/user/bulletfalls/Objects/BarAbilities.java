@@ -1,4 +1,4 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

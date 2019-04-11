@@ -19,9 +19,9 @@ import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.Group;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupsContainer;
 import com.example.user.bulletfalls.GuiSupporters.BorderSetter;
-import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.Sets.HeroesSet;
 import com.example.user.bulletfalls.KlasyPomocnicze.RomeLettersConverter;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
+import com.example.user.bulletfalls.Objects.Hero;
 import com.example.user.bulletfalls.R;
 
 import org.apache.commons.lang3.tuple.MutablePair;

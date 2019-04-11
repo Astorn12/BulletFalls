@@ -5,7 +5,7 @@ public enum BE {
     GRENDAARMCHAIR("Grenda Armchair"),
     DAM("Dam"),
     TIMEDAM("Time Dam"),
-    STANDARD("Standard"),
+    STANDARD("NoneDoToBulletStrategy"),
     LOG("Log"),
     RED("Red"),
     DISARM("Disarm"),

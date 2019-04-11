@@ -17,19 +17,19 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
-import com.example.user.bulletfalls.ObjectsOfGame.ChosenHero;
-import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.Objects.Bullet;
+import com.example.user.bulletfalls.Objects.ChosenHero;
+import com.example.user.bulletfalls.Sets.HeroesSet;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
-import com.example.user.bulletfalls.ObjectsOfGame.HeroProfile;
+import com.example.user.bulletfalls.Objects.Hero;
+import com.example.user.bulletfalls.Objects.HeroProfile;
 import com.example.user.bulletfalls.KlasyPomocnicze.Dimension;
 import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
-import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
+import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeed;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
@@ -67,7 +67,7 @@ public class Heroes extends AppCompatActivity {
        if(hero.getBullet()==null) {
 
            MoneyPossesStrategy moneyPossesStrategy= new MoneyPossesStrategy(Arrays.asList(new MoneyNeed(Arrays.asList(new Par<Currency,Integer>(new Currency("Mystery Coin"),10)))));
-           hero.setBullet(new Bullet("standardherobullet", this.getApplicationContext(),10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.YES,Rarity.STARTING,moneyPossesStrategy));
+           hero.setBullet(new Bullet("standardherobullet", this.getApplicationContext(),10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.STARTING,moneyPossesStrategy));
        }
 
        try {

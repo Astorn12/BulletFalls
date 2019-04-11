@@ -1,6 +1,6 @@
 package com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemyReleaseStrategyPackage;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
+import com.example.user.bulletfalls.Objects.Enemy;
 
 public class BossWithSupportersReleaseStrategy extends BossEnemyReleaseStrategy {
     public BossWithSupportersReleaseStrategy(Enemy boss) {

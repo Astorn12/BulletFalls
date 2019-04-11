@@ -1,8 +1,8 @@
 package com.example.user.bulletfalls.GameSupporters.GroupPackage;
 
 import com.example.user.bulletfalls.Enums.GroupName;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
-import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.Objects.Hero;
+import com.example.user.bulletfalls.Sets.HeroesSet;
 
 public class GoupBoostAssigner {
 

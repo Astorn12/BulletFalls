@@ -1,10 +1,9 @@
 package com.example.user.bulletfalls.Specyfications.Characters;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Ability;
-import com.example.user.bulletfalls.ObjectsOfGame.BarAbilities;
+import com.example.user.bulletfalls.Objects.Ability;
+import com.example.user.bulletfalls.Objects.BarAbilities;
 import com.example.user.bulletfalls.Enums.Permission;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
+import com.example.user.bulletfalls.Objects.Hero;
 import com.example.user.bulletfalls.Strategies.Abilities.ChangeBullet;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 import com.fasterxml.jackson.annotation.JsonTypeName;

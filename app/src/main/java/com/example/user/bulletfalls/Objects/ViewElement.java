@@ -1,4 +1,4 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -126,7 +126,7 @@ public abstract class ViewElement extends android.support.v7.widget.AppCompatIma
 
 
 
-    public ViewElement(Context context, int power, int speed, Point startingPoint, int width, final int height, int randeringFrequency, int imageResource, FrameLayout frame, String name) {
+    public ViewElement(Context context, int power, int speed,Point startingPoint, int width, final int height, int randeringFrequency, int imageResource, FrameLayout frame, String name) {
         super(context);
 
         // this.moveTimer = new Timer();
@@ -147,7 +147,7 @@ public abstract class ViewElement extends android.support.v7.widget.AppCompatIma
 
 
     }
-    public ViewElement(Context context, ViewElementSpecyfication jsonViewElement,String name)
+    public ViewElement(Context context, ViewElementSpecyfication jsonViewElement)
     {
         super(context);
         this.imageResources=jsonViewElement.getImageResources();
@@ -156,7 +156,7 @@ public abstract class ViewElement extends android.support.v7.widget.AppCompatIma
         this.width=jsonViewElement.getWidth();
         this.power=jsonViewElement.getPower();
         this.speed=jsonViewElement.getSpeed();
-        this.name=name;
+        this.name=jsonViewElement.getName();
 
     }
 

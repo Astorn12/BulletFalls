@@ -1,7 +1,7 @@
 package com.example.user.bulletfalls.GameSupporters.GroupPackage;
 
 import com.example.user.bulletfalls.Enums.GroupName;
-import com.example.user.bulletfalls.Database.JsonDatabases.HeroesSet;
+import com.example.user.bulletfalls.Sets.HeroesSet;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 

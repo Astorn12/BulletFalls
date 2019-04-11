@@ -1,10 +1,10 @@
 package com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.Objects.Bullet;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("standard")
-public class Standard implements DoToBulletStrategy {
+public class NoneDoToBulletStrategy implements DoToBulletStrategy {
 
     @Override
     public void doToBullet(Bullet bullet) {

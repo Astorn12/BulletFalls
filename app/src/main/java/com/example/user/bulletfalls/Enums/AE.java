@@ -8,7 +8,8 @@ public enum AE {
     ARMCHAIRTHROW("Armchair Throw"),
     FIRSTJURNAL("firstjurnal"),
     SECONDJURNAL("secondjurnal"),
-    THIRDJURNAL("thirdjurnal");
+    THIRDJURNAL("thirdjurnal"),
+    FIRSTSUMMON("firstsummon");
 
 
     private final String value;

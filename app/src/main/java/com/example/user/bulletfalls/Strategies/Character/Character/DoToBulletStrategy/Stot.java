@@ -1,6 +1,6 @@
 package com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.Objects.Bullet;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("stot")

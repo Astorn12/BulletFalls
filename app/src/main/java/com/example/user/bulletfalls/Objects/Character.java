@@ -1,4 +1,4 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -43,6 +43,7 @@ public abstract class Character extends ViewElement implements Observed {
     @JsonSubTypes({
             @JsonSubTypes.Type(value = Hero.class, name = "hero"),
             @JsonSubTypes.Type(value = Enemy.class, name = "enemy"),
+            @JsonSubTypes.Type(value = SummonedBeast.class, name = "summonedbeast"),
 
     })
     @JsonView(Views.Normal.class)
@@ -86,8 +87,8 @@ public abstract class Character extends ViewElement implements Observed {
     String story;
     Description description;
 
-    public Character(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet bullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description) {
-        super(context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame,name);
+    public Character(Context context, int power, int speed, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet bullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description) {
+        super(context, power, speed, null, width, height, randeringFrequency, imageResource, frame,name);
         this.life=life;
         this.shootingSpeed=shootingSpeed;
         this.shootingCounter=0;
@@ -112,12 +113,13 @@ public abstract class Character extends ViewElement implements Observed {
 
         String miniatureName=getResources().getResourceName(this.getImageResources())+"miniature";
         this.miniature=dc.getDrawableByName(getContext(),miniatureName);
+
     }
    // public Character(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet bullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description) {
    //     this(context,  power,  speed,  startingPoint, width, height, randeringFrequency, imageResource,frame,  life, shootingSpeed,  level, resistance,  bullet, name, kind,  groupNames, position,doToBulletStrategy, indyvidualHeroMarker, description,R.drawable.defaultminiture);
   //  }
-    public Character(Context context, CharacterSpecyfication jsonCharacter,String name) {
-            super(context,jsonCharacter,name);
+    public Character(Context context, CharacterSpecyfication jsonCharacter) {
+            super(context,jsonCharacter);
             this.life=jsonCharacter.getLife();
             this.shootingSpeed=jsonCharacter.getShootingSpeed();
             this.level=jsonCharacter.getLevel();
@@ -133,6 +135,8 @@ public abstract class Character extends ViewElement implements Observed {
             this.story=jsonCharacter.getStory();
             this.description=jsonCharacter.getDescription();
             this.miniature=jsonCharacter.getMiniature();
+            this.position=jsonCharacter.getCharacterPositioning();
+            this.bullet= new Bullet(this.getContext(),jsonCharacter.getBullet());
       }
     private void irrealDefaultSetter()
         {
@@ -189,15 +193,14 @@ public abstract class Character extends ViewElement implements Observed {
     }
     @Override
     public void appear() {
-        //textLife=new TextView(this.getContext());
+
+        textLife=new TextView(this.getContext());
        textLife.setText(this.life+"");
-        //((Game)getContext()).addViewCharacter(this);
-        ((Game)getContext()).addView(this);
-        this.setX(this.startingPoint.x);
-        this.setY(this.startingPoint.y);
-        ((Game)getContext()).addLifeInformation(textLife);
-     //   textLife.setX(this.startingPoint.x-20);
-      //  textLife.setY(this.startingPoint.y+30);
+       ((Game)getContext()).addView(this);
+       setStartingPoint(this.position);
+       this.setX(this.startingPoint.x);
+       this.setY(this.startingPoint.y);
+       ((Game)getContext()).addLifeInformation(textLife);
     }
     @Override
     public ViewElement clone() {
@@ -316,24 +319,30 @@ public abstract class Character extends ViewElement implements Observed {
     public void setGroupNames(List<GroupName> groupNames) {
         this.groupNames = groupNames;
     }
-    abstract public String getJsonString();
     public boolean isAlive() {
         if(this.life<=0)return false;
         else return true;
     }
     public void setStartingPoint(CharacterPositioning position) {
 
+        this.startingPoint=countStartingPoint();
+    }
+
+    public Point countStartingPoint()
+    {
         switch(position)
         {
-            case LEFTTOP: this.startingPoint=new Point(padding,0); break;
-            case LEFTCENTER: this.startingPoint= new Point(padding, frame.getHeight()/2-this.getHeight()/2);break;
-            case LEFTBOTTOM: this.startingPoint= new Point(padding, frame.getHeight()-this.getHeight());break;
-            case LEFTRANDOM: this.startingPoint= new Point(padding, new Random().nextInt(frame.getHeight()-this.getHeight()));break;
-            case RIGHTTOP: this.startingPoint=new Point(frame.getWidth()-this.getHeight()-padding,0);break;
-            case RIGHTCENTER: this.startingPoint= new Point(frame.getWidth()-this.getHeight()-padding, frame.getHeight()/2-this.getHeight()/2);break;
-            case RIGHTBOTTOM: this.startingPoint= new Point(frame.getWidth()-this.getHeight()-padding, frame.getHeight()-this.getHeight());break;
-            case RIGHTRANDOM: this.startingPoint= new Point(frame.getWidth()-this.getHeight()-padding, new Random().nextInt(frame.getHeight()-this.getHeight()));break;
+            case LEFTTOP: return new Point(padding,0);
+            case LEFTCENTER: return new Point(padding, frame.getHeight()/2-this.getHeight()/2);
+            case LEFTBOTTOM: return new Point(padding, frame.getHeight()-this.getHeight());
+            case LEFTRANDOM: return new Point(padding, new Random().nextInt(frame.getHeight()-this.getHeight()));
+            case RIGHTTOP: return new Point(frame.getWidth()-this.getHeight()-padding,0);
+            case RIGHTCENTER: return new Point(frame.getWidth()-this.getHeight()-padding, frame.getHeight()/2-this.getHeight()/2);
+            case RIGHTBOTTOM: return new Point(frame.getWidth()-this.getHeight()-padding, frame.getHeight()-this.getHeight());
+            case RIGHTRANDOM: return new Point(frame.getWidth()-this.width-padding, new Random().nextInt(frame.getHeight()-this.height));
+            case HEROSUMMONEDBEAST: return new Point(frame.getWidth()/2-this.width, new Random().nextInt(frame.getHeight()-this.height));
         }
+        return new Point(0,0);
     }
     public CharacterPositioning getPosition() {
         return position;
@@ -595,4 +604,9 @@ public abstract class Character extends ViewElement implements Observed {
     public int getMiniature() {
         return miniature;
     }
+
+
+
+    public abstract CharacterSpecyfication getSpecyfication();
+
 }

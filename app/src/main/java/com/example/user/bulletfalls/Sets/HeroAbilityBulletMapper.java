@@ -1,7 +1,10 @@
-package com.example.user.bulletfalls.Database.JsonDatabases;
+package com.example.user.bulletfalls.Sets;
 
 import android.content.Context;
 
+import com.example.user.bulletfalls.Enums.AE;
+import com.example.user.bulletfalls.Enums.BE;
+import com.example.user.bulletfalls.Enums.HE;
 import com.example.user.bulletfalls.KlasyPomocnicze.FileSupporter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -92,69 +95,66 @@ public class HeroAbilityBulletMapper {
 
      public static void AddToDatabaseTest(Context context)
      {
-        HeroAB mabel= new HeroAB("Mabel Pines");
-        mabel.setAvaillableAbilities( Arrays.asList("carpediem","summonlog","ability","armchairthrow"));
-        mabel.setAvaillableBullets(Arrays.asList("standard","grendaArmchair","dam","timedam","log","red","disarm"));
+        HeroAB mabel= new HeroAB(HE.MABELPINES);
+        mabel.setAvaillableAbilitiesenums( Arrays.asList(AE.CARPEDIEM,AE.SUMMONLOG,AE.ABILITY,AE.ARMCHAIRTHROW));
+        mabel.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.GRENDAARMCHAIR,BE.DAM,BE.TIMEDAM,BE.LOG,BE.RED,BE.DISARM));
         habList.add(mabel);
 
-         HeroAB dipper= new HeroAB("Dipper Pines");
-         dipper.setAvaillableAbilities( Arrays.asList("nothing","firstjurnal","secondjurnal","thirdjurnal"));
-         dipper.setAvaillableBullets(Arrays.asList("standard","firstjurnal"));
+         HeroAB dipper= new HeroAB(HE.DIPPERPINES);
+         dipper.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.FIRSTJURNAL,AE.SECONDJURNAL,AE.THIRDJURNAL));
+         dipper.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.FIRSTJURNAL));
 
          habList.add(dipper);
 
          HeroAB soos= new HeroAB("Soos Ramirez");
-         soos.setAvaillableAbilities( Arrays.asList("nothing"));
-         soos.setAvaillableBullets(Arrays.asList("standard","dam","red"));
+         soos.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         soos.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.RED,BE.DAM));
          habList.add(soos);
 
          HeroAB stanek= new HeroAB("Stan Pines");
-         stanek.setAvaillableAbilities( Arrays.asList("nothing"));
-         stanek.setAvaillableBullets(Arrays.asList("standard"));
+         stanek.setAvaillableAbilitiesenums( Arrays.asList(AE.FIRSTSUMMON));
+         stanek.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(stanek);
 
          HeroAB wendy= new HeroAB("Wendy Corduroy");
-         wendy.setAvaillableAbilities( Arrays.asList("nothing"));
-         wendy.setAvaillableBullets(Arrays.asList("standard"));
+         wendy.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         wendy.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(wendy);
 
          HeroAB waddles= new HeroAB("Waddles");
-         waddles.setAvaillableAbilities( Arrays.asList("nothing"));
-         waddles.setAvaillableBullets(Arrays.asList("standard"));
+         waddles.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         waddles.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(waddles);
 
          HeroAB grenda= new HeroAB("Grenda");
-         grenda.setAvaillableAbilities( Arrays.asList("nothing"));
-         grenda.setAvaillableBullets(Arrays.asList("standard","grendaArmchair"));
+         grenda.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         grenda.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.GRENDAARMCHAIR));
          habList.add(grenda);
 
          HeroAB loglandgirl= new HeroAB("Log Land Girl");
-         loglandgirl.setAvaillableAbilities( Arrays.asList("nothing"));
-         loglandgirl.setAvaillableBullets(Arrays.asList("standard"));
+         loglandgirl.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         loglandgirl.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(loglandgirl);
 
          HeroAB quentintrembley= new HeroAB("Quentin Trembley");
-         quentintrembley.setAvaillableAbilities( Arrays.asList("nothing"));
-         quentintrembley.setAvaillableBullets(Arrays.asList("standard"));
+         quentintrembley.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         quentintrembley.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(quentintrembley);
 
          HeroAB candy= new HeroAB("Candy Chiu");
-         candy.setAvaillableAbilities( Arrays.asList("nothing"));
-         candy.setAvaillableBullets(Arrays.asList("standard"));
+         candy.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         candy.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(candy);
 
          HeroAB oldmanmcgucket= new HeroAB("Old Man McGucket");
-         oldmanmcgucket.setAvaillableAbilities( Arrays.asList("nothing"));
-         oldmanmcgucket.setAvaillableBullets(Arrays.asList("standard"));
+         oldmanmcgucket.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         oldmanmcgucket.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(oldmanmcgucket);
 
          HeroAB mabelwithgrapplinghook= new HeroAB("Mabel With Grappling Hook");
-         mabelwithgrapplinghook.setAvaillableAbilities( Arrays.asList("nothing"));
-         mabelwithgrapplinghook.setAvaillableBullets(Arrays.asList("standard"));
+         mabelwithgrapplinghook.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         mabelwithgrapplinghook.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(mabelwithgrapplinghook);
-
-
-
 
      }
     public static boolean isEmpty()

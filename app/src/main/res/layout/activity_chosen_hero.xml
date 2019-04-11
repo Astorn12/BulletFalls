@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ObjectsOfGame.ChosenHero"
+    tools:context=".Objects.ChosenHero"
     android:layout_weight="1"
     >
 

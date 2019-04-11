@@ -1,4 +1,4 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -11,13 +11,7 @@ import com.example.user.bulletfalls.GameSupporters.MediumTasks.Named;
 import com.example.user.bulletfalls.Interfaces.Observed;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.example.user.bulletfalls.Interfaces.PossesAble;
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
-import com.example.user.bulletfalls.Strategies.Abilities.CarpedDiem;
-import com.example.user.bulletfalls.Strategies.Abilities.ChangeBullet;
 import com.example.user.bulletfalls.Strategies.Abilities.DoToCharacterStrategy;
-import com.example.user.bulletfalls.Strategies.Abilities.Empty;
-import com.example.user.bulletfalls.Strategies.Abilities.Heal;
-import com.example.user.bulletfalls.Strategies.Abilities.SuperShoot;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,8 +24,6 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
-import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 import static java.lang.Thread.sleep;
 
 
@@ -66,6 +58,7 @@ public class Ability implements Observed, Comparable, PossesAble,Named {
     boolean unique;
     PossesStrategy possesStrategy;
     DoToCharacterStrategy doToCharacterStrategy;
+    AbilityRestorTask task;
 
     public Ability(String name,int imageResources,int renewalTime,DoToCharacterStrategy doToCharacterStrategy,Permission permission,Rarity rarity,boolean unique,PossesStrategy possesStrategy) {
 
@@ -108,7 +101,9 @@ public class Ability implements Observed, Comparable, PossesAble,Named {
             if (renewalTime > 0) {
                 this.setReady(false);
                 AbilityRestorTask art=new AbilityRestorTask();
+                this.task=art;
                 art.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
             }
         }
 
@@ -187,6 +182,12 @@ public class Ability implements Observed, Comparable, PossesAble,Named {
 
 
         return ((Ability)a).rarity.ordinal() > this.rarity.ordinal()? -1:1 ;
+    }
+
+    public void cancelThread() {
+        if(task!=null)
+        this.task.cancel(true);
+
     }
 
     public class AbilityRestorTask extends AsyncTask<Integer,Integer,Boolean> {

@@ -1,7 +1,7 @@
 package com.example.user.bulletfalls.Strategies.Abilities;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.Objects.Bullet;
+import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;

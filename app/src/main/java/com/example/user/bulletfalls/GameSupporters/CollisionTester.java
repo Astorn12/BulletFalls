@@ -1,12 +1,13 @@
 package com.example.user.bulletfalls.GameSupporters;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
-import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
+import com.example.user.bulletfalls.Objects.Bullet;
+import com.example.user.bulletfalls.Objects.Character;
+import com.example.user.bulletfalls.Objects.Enemy;
 import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Hit;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
+import com.example.user.bulletfalls.Objects.Hero;
+import com.example.user.bulletfalls.Objects.SummonedBeast;
 import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
 
@@ -19,21 +20,19 @@ public class CollisionTester {
     List<Bullet> bullets;
     Hero hero;
     List<Enemy> enemys;
+    List<SummonedBeast> summonedBeasts;
 
-
-    public CollisionTester(Hero hero,List<Enemy> enemys,List<Bullet> bullets)
+    public CollisionTester()
     {
-        this.hero=hero;
-        this.enemys=enemys;
-        this.bullets=bullets;
+
     }
 
-
-    public void collisionChecking(Hero hero,List<Enemy> enemys,List<Bullet> bullets,Medium medium )
+    public void collisionChecking(Hero hero, List<Enemy> enemys, List<Bullet> bullets, Medium medium, List<SummonedBeast> summonedBeasts)
     {
         this.hero=hero;
         this.enemys=enemys;
         this.bullets=bullets;
+        this.summonedBeasts=summonedBeasts;
         //sprawdzanie obrażeń usyskanych przez bohatera
         for(Bullet bullet: bullets)
         {
@@ -51,9 +50,21 @@ public class CollisionTester {
                     enemy.doToBullet(bullet);
                 }
             }
+
+            for(SummonedBeast sb:this.summonedBeasts)
+            {
+                if(bullet.getSpeed()<0&&damageToCharacterChecking(sb,bullet)) {
+
+                    int d=bullet.collisionWithCharacterEfect(sb);
+                    //medium.enemyHited(new Hit(new EnemySpecyfication(enemy),new BulletSpecyfication(bullet),d));
+                    sb.doToBullet(bullet);
+                }
+            }
+
         }
-        bulletsColisionChecking();
+
     }
+
 
     private void bulletsColisionChecking()
     {

@@ -1,4 +1,4 @@
-package com.example.user.bulletfalls.ObjectsOfGame;
+package com.example.user.bulletfalls.Objects;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -14,7 +14,8 @@ import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NothingDoToCharacter;
+import com.example.user.bulletfalls.Specyfications.Characters.CharacterSpecyfication;
+import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.DoToBulletStrategy;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
@@ -27,25 +28,25 @@ import java.util.List;
 import java.util.Random;
 @JsonTypeName("enemy")
 public class Enemy extends Character {
-    int frameWidth;
-    int frameHeight;
+    //int frameWidth;
+   // int frameHeight;
     @JsonView(Views.Normal.class)
     int killValue;
     EnemySpecyfication enemySpecyfication;
     public Enemy(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, int killValue, Bullet enemyBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description) {
-        super(context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, life, shootingSpeed,level,resistance,enemyBullet,name,kind, groupNames,position, doToBulletStrategy,indyvidualHeroMarker,description);
+        super(context, power, speed, width, height, randeringFrequency, imageResource, frame, life, shootingSpeed,level,resistance,enemyBullet,name,kind, groupNames,position, doToBulletStrategy,indyvidualHeroMarker,description);
 
-        if(frame!=null) {
+        /*if(frame!=null) {
             this.frameHeight = frame.getHeight();
             this.frameWidth = frame.getWidth();
-        }
+        }*/
         this.killValue=killValue;
         construktorEking();
     }
 
     public Enemy(Context context, EnemySpecyfication jsonEnemy)
     {
-        super(context,jsonEnemy,jsonEnemy.getName());
+        super(context,jsonEnemy);
         this.killValue=jsonEnemy.getKillValue();
         construktorEking();
     }
@@ -54,7 +55,7 @@ public class Enemy extends Character {
     {
         if(bullet==null)
         {
-            bullet= new Bullet("standard",this.getContext(),1,-10,this.getStartingPointForBullet(),50,50,20,R.drawable.blue,this.frame,false,new Horizontal(),Shape.CIRCLE,new NothingDoToCharacter(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind
+            bullet= new Bullet("standard",this.getContext(),1,-10,this.getStartingPointForBullet(),50,50,20,R.drawable.blue,this.frame,false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind
 
         }
         padding=10;
@@ -64,27 +65,17 @@ public class Enemy extends Character {
     @Override
     public void appear()
     {
-        textLife=new TextView(this.getContext());//dodać#######################
-
-        textLife.setText(this.life+"");//dodać###############
-
-        ((Game)getContext()).addView(this);
+        super.appear();
 
 
 
-        ((Game)getContext()).addLifeInformation(textLife);
-        this.setX(frame.getWidth()-this.width);
+        //((Game)getContext()).addLifeInformation(textLife);
         //this.setX(frame.getWidth()-this.width);
-if(frame.getHeight()!=0) {
-    ((Game)getContext()).setY(this,new Random().nextInt((int) (frame.getHeight() - this.height)));
-    //this.setY(new Random().nextInt((int) (frame.getHeight() - this.height)));
-}//this.setY(new Random((int)(frame.getHeight()-100)).nextInt());
-       // System.out.println("początek"+this.getX()+" "+this.getY());
-        //System.out.println("ramka"+this.=);
-       //setX(0);
-        //setY(new Random(200).nextInt());
-      //  this.getLayoutParams().height=height;
-     //   this.getLayoutParams().width=width;
+
+//if(frame.getHeight()!=0) {
+    //((Game)getContext()).setY(this,new Random().nextInt((int) (frame.getHeight() - this.height)));
+
+//}
     }
 
     @Override
@@ -101,33 +92,21 @@ return enemy;
         enemy.textLife= new TextView(context);
         return enemy;
     }
-
+        @Override
     protected void move()
     {
-        uploatLifeView();//dodać################################
-
-            //this.setY(this.getY() + speed);
+        uploatLifeView();
         ((Game)this.getContext()).moveViewElement(this,0,speed);
-        //((Game)this.getContext()).setX(this,(int)(getX()+speed));
         if(this.getY()<0-speed)
         {
-            //setY(0);
             ((Game) this.getContext()).setViewElement(this,(int)this.getX(),0);
             this.speed*=-1;
         }
         else if (getY()>frame.getHeight()-this.getHeight()-speed)
         {
-           // setY(frame.getHeight() - this.getHeight());
-
-           // int i=(int)this.getY();
             ((Game)this.getContext()).setViewElement(this,(int)this.getX(),frame.getHeight() - this.getHeight());
             this.speed*=-1;
-
-
         }
-
-
-
     }
     @Override
     protected Bullet shoot()
@@ -161,7 +140,7 @@ return enemy;
         ((Game)getContext()).removeObject(this);
     }
 
-    public int getFrameWidth() {
+   /* public int getFrameWidth() {
         return frameWidth;
     }
 
@@ -175,7 +154,7 @@ return enemy;
 
     public void setFrameHeight(int frameHeight) {
         this.frameHeight = frameHeight;
-    }
+    }*/
 
     public int getKillValue() {
         return killValue;
@@ -196,7 +175,7 @@ return enemy;
     }
 
     @Override
-    public String getJsonString() {
+    public CharacterSpecyfication getSpecyfication() {
         return null;
     }
 

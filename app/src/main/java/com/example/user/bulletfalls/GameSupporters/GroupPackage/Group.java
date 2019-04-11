@@ -1,11 +1,8 @@
 package com.example.user.bulletfalls.GameSupporters.GroupPackage;
 
-import android.support.v4.util.Pair;
-import android.widget.ImageView;
-
 import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupAbilityPackage.GroupAbility;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
+import com.example.user.bulletfalls.Objects.Hero;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 

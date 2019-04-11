@@ -45,7 +45,7 @@
             android:label="@string/title_activity_p2pgame"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ObjectsOfGame.HeroProfile"
+            android:name=".Objects.HeroProfile"
             android:label="@string/title_activity_hero_profile"
             android:screenOrientation="portrait" />
         <activity
@@ -55,13 +55,13 @@
             android:name=".Activities.NotReadyYet"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ObjectsOfGame.ChosenHero"
+            android:name=".Objects.ChosenHero"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ObjectsOfGame.BulletProfile"
+            android:name=".Objects.BulletProfile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ObjectsOfGame.AbilityProfile"
+            android:name=".Objects.AbilityProfile"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity.ProfileScreen"

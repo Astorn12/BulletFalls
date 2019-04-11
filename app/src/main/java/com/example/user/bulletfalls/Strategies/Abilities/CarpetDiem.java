@@ -1,14 +1,14 @@
 package com.example.user.bulletfalls.Strategies.Abilities;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.Standard;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.NoneDoToBulletStrategy;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.Stot;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import java.util.Random;
 @JsonTypeName("carpeddiem")
-public class CarpedDiem implements DoToCharacterStrategy{
+public class CarpetDiem implements DoToCharacterStrategy{
     @Override
     public void doToCharacter(Character character) {
         Random random = new Random();
@@ -25,7 +25,7 @@ public class CarpedDiem implements DoToCharacterStrategy{
                 break;
             case 3:
                 character.setImageResource(R.drawable.waddles);
-                if(character.getDoToBulletStrategy().getClass().equals(Standard.class))
+                if(character.getDoToBulletStrategy().getClass().equals(NoneDoToBulletStrategy.class))
                 {
                     character.setDoToBulletStrategy(new Stot());
                 }

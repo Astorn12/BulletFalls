@@ -6,7 +6,7 @@ import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupAbilityPack
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupAbilityPackage.GroupIncreaseResistanceAbility;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupAbilityPackage.GroupPowerUpBulletAbility;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupAbilityPackage.NoGroupAbility;
-import com.example.user.bulletfalls.ObjectsOfGame.Hero;
+import com.example.user.bulletfalls.Objects.Hero;
 import com.example.user.bulletfalls.R;
 
 import java.util.Arrays;

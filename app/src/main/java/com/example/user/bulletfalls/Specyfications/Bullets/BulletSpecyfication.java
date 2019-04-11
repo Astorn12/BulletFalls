@@ -3,7 +3,7 @@ package com.example.user.bulletfalls.Specyfications.Bullets;
 import android.content.Context;
 
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Named;
-import com.example.user.bulletfalls.ObjectsOfGame.Bullet;
+import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
@@ -14,8 +14,6 @@ import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrat
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import java.util.jar.Attributes;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -44,6 +42,12 @@ public class BulletSpecyfication extends ViewElementSpecyfication implements Nam
         this.bulletDoToCharacterStrategy = bulletDoToCharacterStrategy;
     }
 
+    public BulletSpecyfication()
+    {
+
+    }
+
+
     public BulletSpecyfication(Bullet bullet) {
         super(bullet);
         this.collisionAble=bullet.isCollisionAble();
@@ -56,10 +60,7 @@ public class BulletSpecyfication extends ViewElementSpecyfication implements Nam
         this.rarity=bullet.getRarity();
         this.possesStrategy=bullet.getPossesStrategy();
     }
-    public BulletSpecyfication()
-    {
 
-    }
     public Bullet getConvertedBullet(Context context)
     {
         return new Bullet(context,this);

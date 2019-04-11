@@ -1,6 +1,6 @@
 package com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.Objects.Character;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("slowdownbullet")

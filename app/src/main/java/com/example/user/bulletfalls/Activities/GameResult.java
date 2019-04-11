@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.ObjectsOfGame.Ability;
-import com.example.user.bulletfalls.ObjectsOfGame.AbilityView;
+import com.example.user.bulletfalls.Objects.Ability;
+import com.example.user.bulletfalls.Objects.AbilityView;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.GameSummary;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;

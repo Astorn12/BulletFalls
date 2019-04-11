@@ -2,7 +2,7 @@ package com.example.user.bulletfalls.Specyfications.Bullets;
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.ObjectsOfGame.RotateBullet;
+import com.example.user.bulletfalls.Objects.RotateBullet;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("rotatebulletspecyfication")
@@ -11,6 +11,7 @@ public class RotateBulletSpecyfication extends BulletSpecyfication{
     public RotateBulletSpecyfication()
     {
         super();
+
     }
     public RotateBulletSpecyfication(RotateBullet rotateBullet)
     {

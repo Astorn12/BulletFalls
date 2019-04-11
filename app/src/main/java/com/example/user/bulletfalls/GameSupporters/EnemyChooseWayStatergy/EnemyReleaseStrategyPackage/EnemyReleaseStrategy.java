@@ -2,7 +2,7 @@ package com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.Enemy
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Enemy;
+import com.example.user.bulletfalls.Objects.Enemy;
 
 public interface EnemyReleaseStrategy {
     Enemy releaseChoosenEnemy(Context context);

@@ -1,7 +1,7 @@
 package com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage;
 
 
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.Objects.Character;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -17,7 +17,7 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
         @JsonSubTypes.Type(value=Stunt.class, name = "stunt"),
         @JsonSubTypes.Type(value=Poison.class, name = "poison"),
         @JsonSubTypes.Type(value=Mix.class, name = "mix"),
-        @JsonSubTypes.Type(value=NothingDoToCharacter.class, name = "nothingtodocharacter"),
+        @JsonSubTypes.Type(value=NoneBulletDoToCharacterStrategy.class, name = "nothingtodocharacter"),
         @JsonSubTypes.Type(value=SlowDownShooting.class, name = "slowdownshooting"),
         @JsonSubTypes.Type(value=TimeSlowDownShooting.class, name = "timeslowdownshooting"),
         @JsonSubTypes.Type(value=BulletWeaken.class, name = "bulletweaken"),

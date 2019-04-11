@@ -3,7 +3,7 @@ package com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrate
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
-import com.example.user.bulletfalls.ObjectsOfGame.Character;
+import com.example.user.bulletfalls.Objects.Character;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import static java.lang.Thread.sleep;
