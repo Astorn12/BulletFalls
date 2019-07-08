@@ -1,35 +1,47 @@
 package com.example.user.bulletfalls.Strategies.PossesStrategyPackage;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.TimeStrategiesPackage.TimeStrategies;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import java.util.Calendar;
-import java.util.Date;
 @JsonTypeName("timepossesstrategy")
 public class TimePossesStrategy implements PossesStrategy {
-    Date dateFrom;
-    Date dateTo;
-    public TimePossesStrategy(Date dateFrom,Date dateTo)
+   // Date dateFrom;
+    //Date dateTo;
+    TimeStrategies timeStrategy;
+    public TimePossesStrategy(TimeStrategies timeStrategy)
     {
-        this.dateFrom=dateFrom;
-        this.dateTo=dateTo;
+        this.timeStrategy=timeStrategy;
+      //  Date date= new Date();
+
+        //this.dateFrom=dateFrom;
+        //this.dateTo=dateTo;
+    }
+    private TimePossesStrategy()
+    {
+
     }
     //możliwosć określenia zdobycia postaci poprzez dzień tygodnia i godzinę
     @Override
     public boolean tryToPosses(UserProfile userProfile) {
 
-        Calendar dateFromc= Calendar.getInstance();
-        dateFromc.setTime(dateFrom);
+        /*Calendar dateFromc= Calendar.getInstance();
+        dateFromc.setDressUpTime(dateFrom);
 
         Calendar dateToc= Calendar.getInstance();
-        dateToc.setTime(dateTo);
+        dateToc.setDressUpTime(dateTo);
 
-        Date now= Calendar.getInstance().getTime();
+        Date now= Calendar.getInstance().getDressUpTime();
         Calendar nowc= Calendar.getInstance();
-        dateFromc.setTime(now);
+        nowc.setDressUpTime(now);
 
         int dayOfWeekFrom=dateFromc.get(Calendar.DAY_OF_WEEK);
         int dayOfWeekTo=dateToc.get(Calendar.DAY_OF_WEEK);
@@ -65,15 +77,40 @@ public class TimePossesStrategy implements PossesStrategy {
                 return true;
             } else return false;
         }
-        return false;
+        return false;*/
+
+        return this.timeStrategy.isInTime();
     }
 
     @Override
     public void setPossesFotter(LinearLayout linearLayout, Context context) {
+        TextView text= new TextView(context);
+        if(this.timeStrategy.isInTime())
+        {
+            text.setText("Dostępna");
+            text.setTextColor(Color.GREEN);
+        }
+        else {
+            text.setText("Niedostępna");
+            text.setTextColor(Color.RED);
+        }
+        LinearLayout isTimeGood= new LinearLayout(context);
+
+        isTimeGood.addView(text);
+        ViewGroup.MarginLayoutParams params=(ViewGroup.MarginLayoutParams) text.getLayoutParams();
+        params.setMargins(0,0,0,0);
+
+        linearLayout.addView(isTimeGood);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+        linearLayout.setGravity(Gravity.CENTER);
+        ViewGroup.MarginLayoutParams params2=(ViewGroup.MarginLayoutParams) linearLayout.getLayoutParams();
+        params2.setMargins(0,0,0,0);
+
+        linearLayout.setGravity(Gravity.CENTER);
 
     }
 
-    public Date getDateFrom() {
+   /* public Date getDateFrom() {
         return dateFrom;
     }
 
@@ -87,5 +124,13 @@ public class TimePossesStrategy implements PossesStrategy {
 
     public void setDateTo(Date dateTo) {
         this.dateTo = dateTo;
+    }*/
+
+    public TimeStrategies getTimeStrategy() {
+        return timeStrategy;
+    }
+
+    public void setTimeStrategy(TimeStrategies timeStrategy) {
+        this.timeStrategy = timeStrategy;
     }
 }

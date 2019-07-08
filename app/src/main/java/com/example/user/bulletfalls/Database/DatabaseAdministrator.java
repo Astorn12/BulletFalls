@@ -6,22 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.user.bulletfalls.Database.DAO.CurrencyDao;
-import com.example.user.bulletfalls.Database.DAO.LevelDao;
-import com.example.user.bulletfalls.Database.DAO.ProfileDao;
-import com.example.user.bulletfalls.Database.DAO.StockDao;
+import com.example.user.bulletfalls.Database.Data.CurrencyRepository;
+import com.example.user.bulletfalls.Database.Data.LevelRepository;
+import com.example.user.bulletfalls.Database.Data.ProfileRepository;
+import com.example.user.bulletfalls.Database.Data.StockRepository;
 import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.ProfileActivity.Level;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.R;
 
-import org.apache.commons.lang3.mutable.Mutable;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class DatabaseAdministrator extends SQLiteOpenHelper {
@@ -72,11 +68,11 @@ public class DatabaseAdministrator extends SQLiteOpenHelper {
         UserProfile userProfile= new UserProfile();
         userProfile.setResource(R.drawable.cartoonmy);
         userProfile.setName("Oskar");
-        LevelDao ld= new LevelDao(context);
+        LevelRepository ld= new LevelRepository(context);
         Level level= ld.getByLevel(1);
         userProfile.setLevel(level);
         userProfile.setExp(0);
-        ProfileDao profileDao= new ProfileDao(context);
+        ProfileRepository profileDao= new ProfileRepository(context);
         profileDao.add(userProfile);
     }
 
@@ -84,7 +80,7 @@ public class DatabaseAdministrator extends SQLiteOpenHelper {
     {
         clearAll();//miejsce ustawienia sandboxa, zakomentowanie oznacza zapisywanie modyfikacji
 
-        LevelDao ld= new LevelDao(context);
+        LevelRepository ld= new LevelRepository(context);
         List<Level> levels =Arrays.asList
                 (new Level(1,10),
                         new Level(2,20),
@@ -113,14 +109,14 @@ public class DatabaseAdministrator extends SQLiteOpenHelper {
                 ld.add(l);
             }
         }
-        ProfileDao profileDao= new ProfileDao(context);
+        ProfileRepository profileDao= new ProfileRepository(context);
 
         //if(!profileDao.hasProfile())
         //{
             profileBegin();
        // }
 
-        CurrencyDao cd= new CurrencyDao(context);
+        CurrencyRepository cd= new CurrencyRepository(context);
         Currency mysteryCoin= new Currency("Mystery Coin",R.drawable.mysterycoin);
         Currency conifer= new Currency("Conifer symbol",R.drawable.dippercaptree);
         //  cd.save(mysteryCoin);
@@ -138,7 +134,7 @@ public class DatabaseAdministrator extends SQLiteOpenHelper {
             }
 
 
-          StockDao sd= new StockDao(context);
+          StockRepository sd= new StockRepository(context);
         MutablePair<Currency,Integer> mysteryCoinStock=new MutablePair<Currency, Integer>(mysteryCoin,50);
         MutablePair<Currency,Integer> coniferStock=new MutablePair<Currency, Integer>(conifer,20);
          List<MutablePair<Currency,Integer>> stockList= Arrays.asList(mysteryCoinStock,coniferStock);

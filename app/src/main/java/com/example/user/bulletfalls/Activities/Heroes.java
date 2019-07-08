@@ -25,10 +25,10 @@ import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.Objects.Hero;
 import com.example.user.bulletfalls.Objects.HeroProfile;
-import com.example.user.bulletfalls.KlasyPomocnicze.Dimension;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
+import com.example.user.bulletfalls.Supporters.Dimension;
 import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeed;
@@ -58,16 +58,16 @@ public class Heroes extends AppCompatActivity {
         setContentView(R.layout.activity_heroes);
         screen=(ScrollView)this.findViewById(R.id.screen);
         table=(TableLayout)this.findViewById(R.id.table);
-        heroes= new LinkedList<>();
+        heroes = new LinkedList<>();
         loadHeroes();
     }
-    private void writeToFile(String data,Context context,Hero hero) {
+    private void writeToFile(String data, Context context, Hero hero) {
       ObjectMapper mapper= new ObjectMapper();
        hero.setDimension(new Dimension(200,200));
        if(hero.getBullet()==null) {
 
            MoneyPossesStrategy moneyPossesStrategy= new MoneyPossesStrategy(Arrays.asList(new MoneyNeed(Arrays.asList(new Par<Currency,Integer>(new Currency("Mystery Coin"),10)))));
-           hero.setBullet(new Bullet("standardherobullet", this.getApplicationContext(),10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.STARTING,moneyPossesStrategy));
+           hero.setBullet(new Bullet("standardherobullet", this.getApplicationContext(),10, 20, null, 50, 50,  R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.STARTING,moneyPossesStrategy));
        }
 
        try {
@@ -75,7 +75,7 @@ public class Heroes extends AppCompatActivity {
            HeroSpecyfication specyfication= new HeroSpecyfication(hero);
            String jsonInString= mapper
                    .writeValueAsString(specyfication);
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("hero.txt", Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("heroSpecyfication.txt", Context.MODE_PRIVATE));
             outputStreamWriter.write(jsonInString);
             outputStreamWriter.close();
         }
@@ -99,7 +99,7 @@ public class Heroes extends AppCompatActivity {
 
         list=HeroesSet.getHeroesList(this);
        int i=0;
-       for( final Hero hero:list)
+       for( final Hero hero :list)
        {
            if(i%3==0) {
               tableRow = new TableRow(this);
@@ -147,7 +147,7 @@ public class Heroes extends AppCompatActivity {
            frameLayout.getLayoutParams().width=p;
 
            final Context context= this;
-           final int  m=heroes.indexOf(hero);
+           final int  m= heroes.indexOf(hero);
            final Hero wsk= hero;
            final Activity ac=this;
            if(hero.getPermission().equals(Permission.YES)|| hero.getPermission().equals(Permission.FORALL)) {

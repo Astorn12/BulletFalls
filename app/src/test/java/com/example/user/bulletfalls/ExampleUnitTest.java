@@ -1,5 +1,8 @@
 package com.example.user.bulletfalls;
 
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.TimePossesStrategy;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.TimeStrategiesPackage.DayOfWeekPossesStrategy;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,5 +16,14 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
+    }
+
+
+    @Test
+    public void week_TimePossesStrategy()
+    {
+        DayOfWeekPossesStrategy strategy= new DayOfWeekPossesStrategy(4);
+
+        assertEquals(1,strategy.howSoon(),0.001);//zajebisteeeeeee1!!!!!!!!!!!!!!!!!!!!!
     }
 }

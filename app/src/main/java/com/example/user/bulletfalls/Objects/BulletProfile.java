@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.user.bulletfalls.Sets.BulletSet;
-import com.example.user.bulletfalls.KlasyPomocnicze.OnSwipeTouchListener;
+import com.example.user.bulletfalls.Supporters.OnSwipeTouchListener;
 import com.example.user.bulletfalls.R;
 
 public class BulletProfile extends AppCompatActivity {
@@ -23,11 +23,11 @@ public class BulletProfile extends AppCompatActivity {
 
         Intent intent= getIntent();
         String  name=intent.getStringExtra("name");
-        Bullet bullet=BulletSet.getBullet(name);
+        Bullet bullet =BulletSet.getBullet(name);
 
-        bulletView=(ImageView)this.findViewById(R.id.futurebullet);
+        this.bulletView =(ImageView)this.findViewById(R.id.futurebullet);
         bulletName=(TextView)this.findViewById(R.id.bulletname);
-        bulletView.setImageResource(bullet.getImageResources());
+        this.bulletView.setImageResource(bullet.getImageResources());
         bulletName.setText(name);
         LinearLayout ll= (LinearLayout) this.findViewById(R.id.bulletScreen);
         final Activity home=this;

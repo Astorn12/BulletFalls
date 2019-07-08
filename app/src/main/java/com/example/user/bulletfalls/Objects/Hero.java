@@ -12,23 +12,24 @@ import com.example.user.bulletfalls.Enums.Kind;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
+import com.example.user.bulletfalls.GameBiznesFunctions.Classes.IClass;
+import com.example.user.bulletfalls.GameBiznesFunctions.Resistance.IResistance;
+import com.example.user.bulletfalls.GameManagement.EyeOnGame;
 import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.example.user.bulletfalls.Interfaces.PossesAble;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Specyfications.Characters.CharacterSpecyfication;
-import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
+import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.CharacterSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
-import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.DoToBulletStrategy;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.AppearActionStrategy.AppearAction;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.CharacterMoveStrategiesPackage.DoToBulletStrategy;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -44,11 +45,11 @@ public class Hero extends Character implements PossesAble,Summoner {
     int numberOfAbilities;
     PossesStrategy possesStrategy;
     int tier;
-    List<SummonedBeast> beastsWaitingToSummon;
+    List<Beast> beastsWaitingToSummon;
+    IClass iClass;
 
-
-    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet heroBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities, String indyvidualHeroMarker, Permission perm, Description description, PossesStrategy possesStrategy,int tier) {
-        super(context, power, speed,  width, height, randeringFrequency, imageResource, frame, life, shootingSpeed,level,resistance,heroBullet,name,kind, groupNames,position,doToBulletStrategy,indyvidualHeroMarker,description);
+    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, IResistance resistance, Bullet heroBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities, String indyvidualHeroMarker, Permission perm, Description description, PossesStrategy possesStrategy, int tier, AppearAction aa,IClass iClass) {
+        super(context, power, speed,  width, height, imageResource, frame, life, shootingSpeed,level,resistance, heroBullet,name,kind, groupNames,position,doToBulletStrategy,indyvidualHeroMarker,description,aa);
         this.touchFlag=false;
         //this.shootingTimer= new Timer();
         // this.gameController= gameController;
@@ -64,14 +65,15 @@ public class Hero extends Character implements PossesAble,Summoner {
         this.possesStrategy=possesStrategy;
         this.tier=tier;
         this.beastsWaitingToSummon= new LinkedList<>();
+        this.iClass=iClass;
     }
 
-    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet heroBullet, HE he, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities, String indyvidualHeroMarker, Permission perm, Description description, PossesStrategy possesStrategy, int tier)
+    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, IResistance resistance, Bullet heroBullet, HE he, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities, String indyvidualHeroMarker, Permission perm, Description description, PossesStrategy possesStrategy, int tier,AppearAction aa,IClass iClass)
         {
-            this(context,power,speed,startingPoint,width,height,randeringFrequency,imageResource,frame,life,shootingSpeed,level,resistance,heroBullet,he.getValue(),kind, groupNames,position,doToBulletStrategy,abilities,indyvidualHeroMarker,perm,description,possesStrategy,1);
+            this(context,power,speed,startingPoint,width,height,imageResource,frame,life,shootingSpeed,level,resistance, heroBullet,he.getValue(),kind, groupNames,position,doToBulletStrategy,abilities,indyvidualHeroMarker,perm,description,possesStrategy,tier,aa,iClass );
         }
-    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet heroBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities, String indyvidualHeroMarker, Permission perm, int numberOfAbilities, Description description, PossesStrategy possesStrategy) {
-        this(context,power,speed,startingPoint,width,height,randeringFrequency,imageResource,frame,life,shootingSpeed,level,resistance,heroBullet,name,kind, groupNames,position,doToBulletStrategy,abilities,indyvidualHeroMarker,perm,description,possesStrategy,1);
+    public Hero(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, IResistance resistance, Bullet heroBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, BarAbilities abilities, String indyvidualHeroMarker, Permission perm, int numberOfAbilities, Description description, PossesStrategy possesStrategy,AppearAction aa,IClass iClass) {
+        this(context,power,speed,startingPoint,width,height,imageResource,frame,life,shootingSpeed,level,resistance, heroBullet,name,kind, groupNames,position,doToBulletStrategy,abilities,indyvidualHeroMarker,perm,description,possesStrategy,1,aa,iClass);
         this.numberOfAbilities=numberOfAbilities;
     }
     private Hero()
@@ -79,23 +81,23 @@ public class Hero extends Character implements PossesAble,Summoner {
         super(null,null);
 
     }
-    public Hero(Context context, HeroSpecyfication jsHero)
+    public Hero(Context context, HeroSpecyfication jsHeroSpecyfication)
     {
-        super(context,jsHero);
+        super(context, jsHeroSpecyfication);
        // this.bullet.setItserf(this);
-        //this.bullet=new Bullet(this.getContext(),jsHero.getBullet());
-        this.bullet=jsHero.getBullet().getConvertedBullet(this.getContext());
+        //this.bullet=new BulletSpecyfication(this.getContext(),jsHeroSpecyfication.getBulletSpecyfication());
+        this.bullet = jsHeroSpecyfication.getBulletSpecyfication().getConvertedBullet(this.getContext());
 
-        if(jsHero.getCharacterPositioning()!=null)
+        if(jsHeroSpecyfication.getCharacterPositioning()!=null)
         {
-            setPosition(jsHero.getCharacterPositioning());
+            setPosition(jsHeroSpecyfication.getCharacterPositioning());
         }
         constructorEking();
-    this.abilities=jsHero.getAbilities();
-    this.permission=jsHero.getPermission();
-    this.numberOfAbilities=jsHero.getNumberOfAbilities();
-    this.possesStrategy=jsHero.getPossesStrategy();
-    this.tier=jsHero.getTier();
+    this.abilities= jsHeroSpecyfication.getAbilities();
+    this.permission= jsHeroSpecyfication.getPermission();
+    this.numberOfAbilities= jsHeroSpecyfication.getNumberOfAbilities();
+    this.possesStrategy= jsHeroSpecyfication.getPossesStrategy();
+    this.tier= jsHeroSpecyfication.getTier();
     this.beastsWaitingToSummon= new LinkedList<>();
     }
     public BarAbilities getAbilities() {
@@ -108,9 +110,9 @@ public class Hero extends Character implements PossesAble,Summoner {
     private void constructorEking()
     {
         this.touchFlag=false;
-        if(this.bullet==null)
+        if(this.bullet ==null)
         {
-            this.bullet= new Bullet("standard",this.getContext(),this.power,20,this.getStartingPointForBullet(),50,50,20,R.drawable.blue,this.frame,false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",40));  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind
+            this.bullet = new Bullet("standard",this.getContext(),this.power,20,this.getStartingPointForBullet(),50,50,R.drawable.blue,this.frame,false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",40));  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind
         }
         this.textLife= new TextView(this.getContext());
 
@@ -149,9 +151,6 @@ public class Hero extends Character implements PossesAble,Summoner {
                     return bullet1;
                 } else return null;
             }
-
-
-
         @Override
         public void born()
         {
@@ -159,11 +158,11 @@ public class Hero extends Character implements PossesAble,Summoner {
 
         }
     @Override
-    public ViewElement clone() {
+    public Dynamic clone() {
         return null;
     }
     @Override
-        protected void move()
+        protected void move(EyeOnGame eyeOnGame)
         {
 
                 //tu powinniśmy jeszcze sprawdzać gdzie będzie postać po następnym przeskoku aby zapobie wychodzeniu postaci za ekran
@@ -207,17 +206,17 @@ public class Hero extends Character implements PossesAble,Summoner {
     }
 
     @JsonIgnore
-    public Ability getFirstAbility()
+    public AbilitySpecyfication getFirstAbility()
     {
         return this.abilities.getFirstAbility();
     }
     @JsonIgnore
-    public Ability getSecondAbility()
+    public AbilitySpecyfication getSecondAbility()
     {
         return this.abilities.getSecondAbility();
     }
     @JsonIgnore
-    public Ability getThirdAbility()
+    public AbilitySpecyfication getThirdAbility()
     {
         return this.abilities.getThirdAbility();
     }
@@ -266,7 +265,7 @@ public class Hero extends Character implements PossesAble,Summoner {
     }
     public Hero changeContext(Context context)
     {
-        Hero hero= new Hero(context,this.power,this.speed,this.startingPoint,this.width,this.height,this.randeringFrequency,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.bullet,this.name,this.kind,this.groupNames,this.position,this.doToBulletStrategy,this.abilities,this.indyvidualHeroMarker,this.permission,this.description,this.possesStrategy,this.getTier());
+        Hero hero = new Hero(context,this.power,this.speed,this.startingPoint,this.width,this.height,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.bullet,this.name,this.kind,this.groupNames,this.position,this.doToBulletStrategy,this.abilities,this.indyvidualHeroMarker,this.permission,this.description,this.possesStrategy,this.getTier(),getAppearAction(),this.iClass);
         hero.setIrrealWidth(this.getIrrealWidth());
         hero.setIrrealHeight(this.getIrrealHeight());
         return hero;
@@ -314,20 +313,34 @@ public class Hero extends Character implements PossesAble,Summoner {
 
 
     @Override
-    public void summon(SummonedBeast beast) {
+    public void summon(Beast beast) {
 
         this.beastsWaitingToSummon.add(beast);
     }
 
-    public void Summon(FrameLayout frame,List<SummonedBeast> summonedBeasts)
+    public void Summon(FrameLayout frame,List<Beast> beasts)
     {
-        for(SummonedBeast beast: this.beastsWaitingToSummon) {
+        for(Beast beast: this.beastsWaitingToSummon) {
             beast.setFrame(frame);
             beast.born();
-            summonedBeasts.add(beast);
+            beasts.add(beast);
         }
         this.beastsWaitingToSummon.clear();
     }
 
+    public List<Beast> getBeastsWaitingToSummon() {
+        return beastsWaitingToSummon;
+    }
 
+    public void setBeastsWaitingToSummon(List<Beast> beastsWaitingToSummon) {
+        this.beastsWaitingToSummon = beastsWaitingToSummon;
+    }
+
+    public IClass getiClass() {
+        return iClass;
+    }
+
+    public void setiClass(IClass iClass) {
+        this.iClass = iClass;
+    }
 }

@@ -1,291 +1,144 @@
 package com.example.user.bulletfalls.Objects;
 
-import android.os.AsyncTask;
-import android.util.Log;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 
-import com.example.user.bulletfalls.Enums.AE;
+import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Enums.Permission;
-import com.example.user.bulletfalls.Enums.Rarity;
-import com.example.user.bulletfalls.GameManagement.GameController;
-import com.example.user.bulletfalls.GameSupporters.MediumTasks.Named;
-import com.example.user.bulletfalls.Interfaces.Observed;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.example.user.bulletfalls.Interfaces.PossesAble;
-import com.example.user.bulletfalls.Strategies.Abilities.DoToCharacterStrategy;
-import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
+import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+/**Klasa podstawowa dla wszystkich kulek herosów, przeciwników i besti   Bullets and Characters*/
+public class Ability extends android.support.v7.widget.AppCompatImageView implements Observer,PossesAble {
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import static java.lang.Thread.sleep;
-
-
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type")
-@JsonSubTypes({
-        @JsonSubTypes.Type(value =WaitAbility.class, name = "waitability"),
-
-})
-@JsonTypeName("ability")
-public class Ability implements Observed, Comparable, PossesAble,Named {
-
-
-    private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
-    private static final int CORE_POOL_SIZE =    CPU_COUNT + 1;
-    private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;
-    private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<Runnable>(128);
-    //GameController controller;
-    int imageResources;
-    int renewalTime;
-    boolean ready;
-    protected boolean active=true;
-    @JsonIgnore
-    int renewalUpdateProgress;
-    @JsonIgnore
-    List<Observer> observers= new LinkedList<>();
-    Permission permission;
-    String name;
-    Rarity rarity;
-    boolean unique;
-    PossesStrategy possesStrategy;
-    DoToCharacterStrategy doToCharacterStrategy;
-    AbilityRestorTask task;
-
-    public Ability(String name,int imageResources,int renewalTime,DoToCharacterStrategy doToCharacterStrategy,Permission permission,Rarity rarity,boolean unique,PossesStrategy possesStrategy) {
-
-        this.imageResources=imageResources;
-        this.doToCharacterStrategy=doToCharacterStrategy;
-        this.ready=true;
-        this.renewalUpdateProgress=100;
-        this.permission=permission;
-        this.name=name;
-        this.rarity=rarity;
-        this.unique=unique;
-        this.possesStrategy=possesStrategy;
-        this.renewalTime=renewalTime;
-
-    }
-    public Ability(AE ae, int imageResources,int renewalTime, DoToCharacterStrategy doToCharacterStrategy, Permission perm, Rarity rarity, boolean unique, PossesStrategy possesStrategy)
-    {
-        this(ae.getValue(),imageResources,renewalTime,doToCharacterStrategy,perm,rarity,unique,possesStrategy);
+    AbilitySpecyfication abilitySpecyfication;
+    public Ability(Context context, AbilitySpecyfication abilitySpecyfication) {
+        super(context);
+        this.abilitySpecyfication = abilitySpecyfication;
+        //this.setImageResource(abilitySpecyfication.getImageResources());
+        Glide.with(context).load(abilitySpecyfication.getImageResources()).into(this);
+        abilitySpecyfication.addObserver(this);
+        this.setBackgroundColor(Color.WHITE);
+        checkActivation();
     }
 
-    public Ability()
-    {
-        this.ready=true;
-        this.renewalUpdateProgress=100;
+    @Override
+    public void update(int progress) {
+        movingBackground(progress);
     }
 
-   // protected void activate()
-    /*{
-        this.active=true;
-    }*/
-
-    public void action(GameController controller)
-    {
-    doToCharacter(controller.getHero());
+    @Override
+    public void announce() {
     }
-    public void doToCharacter(Character character)
+    private void setMovingTransparency(int progress)//zby nie efektywna
     {
-        if(isReady()) {
-            doToCharacterStrategy.doToCharacter(character);
-            if (renewalTime > 0) {
-                this.setReady(false);
-                AbilityRestorTask art=new AbilityRestorTask();
-                this.task=art;
-                art.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        setAlpha(255);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), abilitySpecyfication.getImageResources());
+        bitmap=bitmap.copy( Bitmap.Config.ARGB_8888 , true);
 
+        int relativeX= (int) (bitmap.getHeight()*((float)progress/100));
+        for(int i=0;i<relativeX;i++)
+        {
+            for(int j=0;j<bitmap.getWidth();j++)
+            {
+                int tmp=bitmap.getPixel(i,j);
+
+                bitmap.setPixel(i,j,Color.TRANSPARENT);
             }
         }
-
-
+       this.setImageDrawable(new BitmapDrawable(getResources(), bitmap));
     }
-    public int getImageResources() {
-        return imageResources;
-    }
-
-    public void setImageResources(int imageResources) {
-        this.imageResources = imageResources;
-    }
-
-    public int getRenewalTime() {
-        return renewalTime;
-    }
-
-    public void setRenewalTime(int renewalTime) {
-        this.renewalTime = renewalTime;
-    }
-
-    public DoToCharacterStrategy getDoToCharacterStrategy() {
-        return doToCharacterStrategy;
-    }
-
-    public void setDoToCharacterStrategy(DoToCharacterStrategy doToCharacterStrategy) {
-        this.doToCharacterStrategy = doToCharacterStrategy;
-    }
-    public boolean isReady() {
-        return ready;
-    }
-    public void setReady(boolean ready) {
-        this.ready = ready;
-    }
-
-    public int getRenewalUpdateProgress() {
-        return renewalUpdateProgress;
-    }
-
-    public void setRenewalUpdateProgress(int renewalUpdateProgress) {
-        if(renewalUpdateProgress>=0&&renewalUpdateProgress<=100) {
-            this.renewalUpdateProgress = renewalUpdateProgress;
-        }
-        }
-
-    public void updateRenewalProgress(int alfa)
+    private void movingBackground(int progress)// nie działą
     {
-     setRenewalUpdateProgress(alfa);
-     execute();
-       // executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        int x=(int)((float)this.getHeight()*(float)((100-(float)progress)/100));
+        if(x==0)x=1;
+        Bitmap original = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(original);
+        canvas.drawColor(Color.WHITE);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(Color.BLACK);
+        Paint background= new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(Color.BLACK);
+        canvas.drawBitmap(original,0,0,background);
+        int relativX= (int) (original.getHeight()*((float)progress/100));
+        canvas.drawRect(0,0,original.getWidth(),original.getHeight()-relativX,paint);
+
+        Drawable d = new BitmapDrawable(original);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            this.setBackground(d);
+        }
     }
+
+        public AbilitySpecyfication getAbilitySpecyfication() {
+            return abilitySpecyfication;
+        }
+
+        public void setAbilitySpecyfication(AbilitySpecyfication abilitySpecyfication) {
+            this.abilitySpecyfication = abilitySpecyfication;
+        }
 
     @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        if(observers.contains(observer))
-        {
-            observers.remove(observer);
-        }
-    }
-
-    @Override
-    public void execute() {
-        for(Observer observer:observers)
-        {
-            observer.update(this.renewalUpdateProgress);
-        }
-    }
-
-    @Override
-    public int compareTo(Object a) {
-
-
-        return ((Ability)a).rarity.ordinal() > this.rarity.ordinal()? -1:1 ;
-    }
-
-    public void cancelThread() {
-        if(task!=null)
-        this.task.cancel(true);
-
-    }
-
-    public class AbilityRestorTask extends AsyncTask<Integer,Integer,Boolean> {
-        @Override
-        protected Boolean doInBackground(Integer... integers) {
-            //for(int i=0;i<100;i++)
-           // {
-                try {
-                    for(int i=0;i<100;i++) {
-                        sleep(renewalTime/100);
-                        publishProgress(i);
-                        Log.d("AsyncTask",i+"");
-
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-           // }
-            return null;
-        }
-        @Override
-        protected void onProgressUpdate(Integer... progress) {
-
-            updateRenewalProgress(progress[0]);
-
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-           setReady(true);
-        }
-
-
-    }
-
-    public Permission getPermission() {
-        return permission;
-    }
-
-    public void setPermission(Permission permission) {
-        this.permission = permission;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Ability clone()
-    {
-        //String name,int imageResources,int renewalTime,DoToCharacterStrategy doToCharacterStrategy,Permission perm
-        return new Ability(this.name,this.imageResources,this.renewalTime,this.doToCharacterStrategy,this.permission,this.rarity,this.unique,new MoneyPossesStrategy("Mystery Coin",30));
-    }
-
-    public Rarity getRarity() {
-        return rarity;
-    }
-
-    public void setRarity(Rarity rarity) {
-        this.rarity = rarity;
-    }
-
     public PossesStrategy getPossesStrategy() {
-        return possesStrategy;
+        return abilitySpecyfication.getPossesStrategy();
     }
 
+    @Override
     public void setPossesStrategy(PossesStrategy possesStrategy) {
-        this.possesStrategy = possesStrategy;
+        abilitySpecyfication.setPossesStrategy(possesStrategy);
     }
 
-    public boolean isActive() {
-        return active;
+    @Override
+    public String getName() {
+        return abilitySpecyfication.getName();
     }
 
-    protected void setActive(boolean active) {
-        this.active = active;
+    @Override
+    public void setPermission(Permission permission) {
+        abilitySpecyfication.setPermission(permission);
+    }
+
+    @Override
+    public Permission getPermission() {
+        return abilitySpecyfication.getPermission();
+    }
+
+
+
+    public void checkActivation()
+    {
+        if(this.abilitySpecyfication.isActive())
+        {
+            activate();
+        }
+        else
+        deactivate();
     }
     public void activate()
     {
-        this.active=true;
+        final Ability av=this;
+        //((Game)this.getContext()).clearColorFilter(this);
+        ((Activity)this.getContext()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                av.clearColorFilter();
+            }
+        });
     }
+
+
     public void deactivate()
     {
-        this.active=false;
-    }
-    @Override
-    public boolean equals(Object o)
-    {
-        if(! (o instanceof Ability))
-            return false;
-        if(this.getName().equals(((Ability)o).getName()))
-        {
-            return  true;
-        }
-        return false;
+        int shadow=Color.argb(125, 0, 0, 0);
+        this.setColorFilter(shadow);
+        //this.setBackgroundColor(shadow);
     }
 }
-
-

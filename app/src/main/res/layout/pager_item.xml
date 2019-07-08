@@ -17,10 +17,10 @@
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="0dp"
-            android:layout_height="211dp"
+            android:layout_height="match_parent"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="16dp"
+            android:layout_margin="20dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,8 +46,9 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
+            android:layout_margin="20dp"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="28dp"
             android:layout_marginLeft="28dp"
             android:layout_marginEnd="60dp"
@@ -58,12 +59,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/linearLayout1"
             app:layout_constraintVertical_bias="0.0">
+
             <LinearLayout
                 android:id="@+id/h2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="0.5">
+                android:layout_weight="0.5"
+                android:orientation="vertical">
 
             </LinearLayout>
             <LinearLayout
@@ -77,22 +79,28 @@
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
+
     <ImageView
         android:id="@+id/shelf1"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@android:color/darker_gray" />
+        android:layout_width="320dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@drawable/shelf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <LinearLayout
             android:id="@+id/linearLayout3"
+            android:layout_margin="20dp"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="31dp"
             android:layout_marginLeft="31dp"
             android:layout_marginEnd="60dp"
@@ -123,11 +131,12 @@
 
         <LinearLayout
             android:id="@+id/linearLayout4"
+            android:layout_margin="20dp"
             android:layout_width="0dp"
-            android:layout_height="211dp"
+            android:layout_height="match_parent"
             android:layout_marginEnd="27dp"
             android:layout_marginRight="27dp"
-            android:layout_marginBottom="16dp"
+
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -152,9 +161,10 @@
     </android.support.constraint.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/shelf2"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@android:color/darker_gray"
+        android:layout_width="320dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@drawable/shelf"
+        android:layout_marginBottom="20dp"
         />
 </LinearLayout>

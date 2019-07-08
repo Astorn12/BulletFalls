@@ -8,9 +8,10 @@ import com.example.user.bulletfalls.Enums.BE;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
+import com.example.user.bulletfalls.GameManagement.EyeOnGame;
 import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Interfaces.PossesAble;
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.BulletDoToCharacterStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.BulletMoveStrategy;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
@@ -19,8 +20,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-@JsonTypeName("bullet")
-public class Bullet extends ViewElement implements Comparable, PossesAble {
+@JsonTypeName("bullet1")
+public class Bullet extends Dynamic implements Comparable, PossesAble {
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
             include = JsonTypeInfo.As.PROPERTY,
@@ -40,8 +41,8 @@ public class Bullet extends ViewElement implements Comparable, PossesAble {
     Rarity rarity;
     PossesStrategy possesStrategy;
 
-    public Bullet(String name,Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, boolean collisionAble, BulletMoveStrategy bulletMoveStrategy, Shape shape, BulletDoToCharacterStrategy bulletDoToCharacterStrategy,Permission perm,Rarity rarity,PossesStrategy possesStrategy) {
-        super(context, power, speed, startingPoint, width, height, randeringFrequency, imageResource,frame,name);
+    public Bullet(String name, Context context, int power, int speed, Point startingPoint, int width, int height,  int imageResource, FrameLayout frame, boolean collisionAble, BulletMoveStrategy bulletMoveStrategy, Shape shape, BulletDoToCharacterStrategy bulletDoToCharacterStrategy, Permission perm, Rarity rarity, PossesStrategy possesStrategy) {
+        super(context, power, speed, startingPoint, width, height,  imageResource,frame,name);
         //this.controller=controller;
         this.collisionAble=collisionAble;
         this.bulletMoveStrategy=bulletMoveStrategy;
@@ -52,19 +53,19 @@ public class Bullet extends ViewElement implements Comparable, PossesAble {
         this.possesStrategy=possesStrategy;
 
     } public Bullet(BE be, Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, boolean collisionAble, BulletMoveStrategy bulletMoveStrategy, Shape shape, BulletDoToCharacterStrategy bulletDoToCharacterStrategy, Permission perm, Rarity rarity, PossesStrategy possesStrategy) {
-        this(be.getValue(), context,  power,  speed,  startingPoint,  width,  height,  randeringFrequency,  imageResource,  frame,  collisionAble,  bulletMoveStrategy,  shape,  bulletDoToCharacterStrategy, perm, rarity, possesStrategy);
+        this(be.getValue(), context,  power,  speed,  startingPoint,  width,  height,   imageResource,  frame,  collisionAble,  bulletMoveStrategy,  shape,  bulletDoToCharacterStrategy, perm, rarity, possesStrategy);
     }
 
-    public Bullet(Context context, BulletSpecyfication jsonBullet)
+    public Bullet(Context context, BulletSpecyfication jsonBulletSpecyfication)
     {
-        super(context,jsonBullet);
-        this.collisionAble=jsonBullet.isCollisionAble();
-        this.bulletMoveStrategy=jsonBullet.getBulletMoveStrategy();
-        this.shape=jsonBullet.getShape();
-        this.bulletDoToCharacterStrategy=jsonBullet.getBulletDoToCharacterStrategy();
-        this.permission=jsonBullet.getPermission();
-        this.rarity=jsonBullet.getRarity();
-        this.possesStrategy=jsonBullet.getPossesStrategy();
+        super(context, jsonBulletSpecyfication);
+        this.collisionAble= jsonBulletSpecyfication.isCollisionAble();
+        this.bulletMoveStrategy= jsonBulletSpecyfication.getBulletMoveStrategy();
+        this.shape= jsonBulletSpecyfication.getShape();
+        this.bulletDoToCharacterStrategy= jsonBulletSpecyfication.getBulletDoToCharacterStrategy();
+        this.permission= jsonBulletSpecyfication.getPermission();
+        this.rarity= jsonBulletSpecyfication.getRarity();
+        this.possesStrategy= jsonBulletSpecyfication.getPossesStrategy();
 
 
     }
@@ -81,11 +82,15 @@ public class Bullet extends ViewElement implements Comparable, PossesAble {
          @Override
     public void born()
     {
+       // if(this.startingPoint!=null)
         appear();
-
+       // else System.out.println("Nazwa felernej kulki: "+ this.getName() );
+      //  System.out.println("Born");
+      //  System.out.println(this.getName());
         // startMoving();
     }
-    public void move()
+    @Override
+    public void move(EyeOnGame eyeOnGame)
     {
         Point tmp=bulletMoveStrategy.getQuantum(this.speed,new Point((int)getX(),(int)getY()));
         ((Game)this.getContext()).setPoint(this,new Point((int)this.getX()+tmp.x,(int)getY()-tmp.y));
@@ -105,7 +110,7 @@ public class Bullet extends ViewElement implements Comparable, PossesAble {
     }
     public Bullet clone()
     {
-        Bullet bullet= new Bullet(this.name,this.getContext(),this.power,this.speed,this.startingPoint,this.width,this.height,0,imageResources,this.frame,this.collisionAble,this.bulletMoveStrategy.clone(),this.getShape(),this.bulletDoToCharacterStrategy.clone(),this.permission,this.rarity,new MoneyPossesStrategy("Mystery Coin",40));
+        Bullet bullet = new Bullet(this.name,this.getContext(),this.power,this.speed,this.startingPoint,this.width,this.height,imageResources,this.frame,this.collisionAble,this.bulletMoveStrategy.clone(),this.getShape(),this.bulletDoToCharacterStrategy.clone(),this.permission,this.rarity,new MoneyPossesStrategy("Mystery Coin",40));
 
         return bullet;
     }
@@ -116,7 +121,7 @@ public class Bullet extends ViewElement implements Comparable, PossesAble {
     }
     public int collisionWithCharacterEfect(Character character)
     {
-        int d=character.getDamage(this.power);
+        int d= character.getDamage(this.power);
         this.bulletDoToCharacterStrategy.doToCharacter(character);
         return d;
 
@@ -196,7 +201,7 @@ public class Bullet extends ViewElement implements Comparable, PossesAble {
 
     public Bullet changeContext(Context context)
     {
-        return new Bullet(this.name,context,this.power,this.speed,this.startingPoint,this.width,this.height,0,imageResources,this.frame,this.collisionAble,this.bulletMoveStrategy.clone(),this.getShape(),this.bulletDoToCharacterStrategy.clone(),this.permission,this.rarity,new MoneyPossesStrategy("Mystery Coin",40));
+        return new Bullet(this.name,context,this.power,this.speed,null,this.width,this.height,imageResources,this.frame,this.collisionAble,this.bulletMoveStrategy.clone(),this.getShape(),this.bulletDoToCharacterStrategy.clone(),this.permission,this.rarity,new MoneyPossesStrategy("Mystery Coin",40));
 
     }
 

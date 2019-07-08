@@ -20,9 +20,9 @@ public class MyAnimation extends View {
     private ObjectAnimator animator = new ObjectAnimator();
     private Character character;
     private String animation;
-    public MyAnimation(Context context, AttributeSet attrs, int defStyleAttr,Character character,String name) {
+    public MyAnimation(Context context, AttributeSet attrs, int defStyleAttr, Character character, String name) {
         super(context, attrs, defStyleAttr);
-        this.character=character;
+        this.character = character;
         this.animation=name;
     }
 

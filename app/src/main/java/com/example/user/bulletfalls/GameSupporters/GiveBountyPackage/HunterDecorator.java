@@ -1,7 +1,7 @@
 package com.example.user.bulletfalls.GameSupporters.GiveBountyPackage;
 
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
-import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.EnemySpecyfication;
 
 public class HunterDecorator extends BountyAssignerDecorator {
     public HunterDecorator(BountyAssigner bountyAssigner) {

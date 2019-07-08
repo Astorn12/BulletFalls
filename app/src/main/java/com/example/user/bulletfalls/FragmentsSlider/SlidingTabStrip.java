@@ -162,7 +162,7 @@ class SlidingTabStrip extends LinearLayout {
     }
 
     /**
-     * Set the alpha value of the {@code color} to be the given {@code alpha} value.
+     * ISet the alpha value of the {@code color} to be the given {@code alpha} value.
      */
     private static int setColorAlpha(int color, byte alpha) {
         return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));

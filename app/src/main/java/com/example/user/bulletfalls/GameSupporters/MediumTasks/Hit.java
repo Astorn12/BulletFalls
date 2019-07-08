@@ -1,28 +1,27 @@
 package com.example.user.bulletfalls.GameSupporters.MediumTasks;
 
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
-import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
+abstract public class Hit {
+    long time;
+    int damage;
 
-public class Hit {
-    EnemySpecyfication enemySpecyfication;
-    BulletSpecyfication bulletSpecyfication;
-    int Demage;
-
-    public Hit(EnemySpecyfication enemySpecyfication, BulletSpecyfication bulletSpecyfication, int demage) {
-        this.enemySpecyfication = enemySpecyfication;
-        this.bulletSpecyfication = bulletSpecyfication;
-        Demage = demage;
+    public Hit(long time, int damage) {
+        this.time = time;
+        this.damage=damage;
     }
 
-    public EnemySpecyfication getEnemySpecyfication() {
-        return enemySpecyfication;
+    public long getTime() {
+        return time;
     }
 
-    public BulletSpecyfication getBulletSpecyfication() {
-        return bulletSpecyfication;
+    public void setTime(int time) {
+        this.time = time;
     }
 
-    public int getDemage() {
-        return Demage;
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

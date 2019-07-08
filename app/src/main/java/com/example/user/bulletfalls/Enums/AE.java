@@ -2,15 +2,18 @@ package com.example.user.bulletfalls.Enums;
 
 public enum AE {
     CARPEDIEM("Carpediem"),
-    ABILITY("Ability"),
+    ABILITY("AbilitySpecyfication"),
     NOTHING("Nothing"),
     SUMMONLOG("Summon Log"),
     ARMCHAIRTHROW("Armchair Throw"),
     FIRSTJURNAL("firstjurnal"),
     SECONDJURNAL("secondjurnal"),
     THIRDJURNAL("thirdjurnal"),
-    FIRSTSUMMON("firstsummon");
-
+    FIRSTSUMMON("firstsummon"),
+    THREEDINOSAURS("threedinozaurs"),
+    TIMEMACHINE("timemachine"),
+    FULLCOUNTER("fullcounter"),
+    DINOSUMMON("dinosummon");
 
     private final String value;
 
@@ -22,7 +25,4 @@ public enum AE {
     {
         return this.value;
     }
-
-
-
 }

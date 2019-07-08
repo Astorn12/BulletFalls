@@ -2,8 +2,8 @@ package com.example.user.bulletfalls.Strategies.Abilities;
 
 import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.NoneDoToBulletStrategy;
-import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.Stot;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.CharacterMoveStrategiesPackage.NoneDoToBulletStrategy;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.CharacterMoveStrategiesPackage.Stot;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import java.util.Random;

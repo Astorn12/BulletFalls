@@ -50,7 +50,7 @@ import android.widget.TextView;
 public class SlidingTabLayout extends HorizontalScrollView {
 
     /**
-     * Allows complete control over the colors drawn in the tab layout. Set with
+     * Allows complete control over the colors drawn in the tab layout. ISet with
      * {@link #setCustomTabColorizer(TabColorizer)}.
      */
     public interface TabColorizer {
@@ -104,7 +104,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the custom {@link TabColorizer} to be used.
+     * ISet the custom {@link TabColorizer} to be used.
      *
      * If you only require simple custmisation then you can use
      * {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)} to achieve
@@ -131,7 +131,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the {@link ViewPager.OnPageChangeListener}. When using {@link SlidingTabLayout} you are
+     * ISet the {@link ViewPager.OnPageChangeListener}. When using {@link SlidingTabLayout} you are
      * required to set any {@link ViewPager.OnPageChangeListener} through this method. This is so
      * that the layout can update it's scroll position correctly.
      *
@@ -142,7 +142,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the custom layout to be inflated for the tab views.
+     * ISet the custom layout to be inflated for the tab views.
      *
      * @param layoutResId Layout id to be inflated
      * @param textViewId id of the {@link TextView} in the inflated view

@@ -2,7 +2,7 @@ package com.example.user.bulletfalls.ProfileActivity;
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.Database.DAO.LevelDao;
+import com.example.user.bulletfalls.Database.Data.LevelRepository;
 
 public class Level {
     int number;
@@ -34,7 +34,7 @@ public class Level {
 
     public void update(Context context)
     {
-        LevelDao ld= new LevelDao(context);
+        LevelRepository ld= new LevelRepository(context);
         ld.update(this);
     }
 

@@ -34,7 +34,6 @@ import java.util.List;
 public class Shop extends AppCompatActivity {
 
     List<Hero> stock;
-    //TableLayout tableLayout;
     LinearLayout main;
     PopupWindow popupWindow;
 
@@ -59,35 +58,6 @@ public class Shop extends AppCompatActivity {
 
     }
 
-
-    private void putOnShelf()
-
-    {
-      /*  LinearLayout view1= (LinearLayout) findViewById(R.id.view1);
-        LinearLayout view2= (LinearLayout) findViewById(R.id.view2);
-        LinearLayout view3= (LinearLayout) findViewById(R.id.view3);
-        LinearLayout view4= (LinearLayout) findViewById(R.id.view4);
-        List<LinearLayout> linears= Arrays.asList(view1,view2,view3,view4);
-
-        for(LinearLayout ll : linears)
-        {
-            Hero pointer=stock.get(linears.indexOf(ll));
-            HeroesSet heroesSet= new HeroesSet();
-            if(!heroesSet.ifHasThisHero(pointer))
-            {
-                pointer.setColorFilter(Color.BLACK);
-            }
-            ll.addView(pointer);
-            pointer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT,1));
-            TextView heroName= new TextView(this);
-            heroName.setText(pointer.getName());
-            ll.addView(heroName);
-           heroName.setGravity(Gravity.CENTER_HORIZONTAL);
-            setCost(pointer,ll);
-            addListener(pointer);
-        }*/
-
-    }
 
     private void addListener(final Hero hero)
     {
@@ -151,11 +121,11 @@ public class Shop extends AppCompatActivity {
 
     private void choseStock(int sizeOfStock)
     {
-        List<Hero> heroes=HeroesSet.getHeroesList(this);
+        List<Hero> heroes =HeroesSet.getHeroesList(this);
         Date now= Calendar.getInstance().getTime();
         int day=now.getDay();
         int mod=(int)(heroes.size()/sizeOfStock+0.5);
-        for(int i=0;i<heroes.size();i++)
+        for(int i = 0; i< heroes.size(); i++)
         {
             if((i+day)%mod==0)
             {
@@ -198,7 +168,7 @@ public class Shop extends AppCompatActivity {
         }
     }
 
-    private void setCost(Hero hero,LinearLayout linearLayout)
+    private void setCost(Hero hero, LinearLayout linearLayout)
     {
         hero.getPossesStrategy().setPossesFotter(linearLayout,this);
 

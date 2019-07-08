@@ -21,25 +21,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.Objects.AbilityView;
-import com.example.user.bulletfalls.Objects.Bullet;
+import com.example.user.bulletfalls.Objects.Ability;
 import com.example.user.bulletfalls.Objects.Character;
-import com.example.user.bulletfalls.Objects.Description;
-import com.example.user.bulletfalls.Objects.Enemy;
-import com.example.user.bulletfalls.Enums.CharacterPositioning;
-import com.example.user.bulletfalls.Enums.Permission;
-import com.example.user.bulletfalls.Enums.Rarity;
-import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.GameSupporters.GameStrategy;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
-import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
-import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.NoneDoToBulletStrategy;
-import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
-import com.example.user.bulletfalls.Objects.ViewElement;
+import com.example.user.bulletfalls.Objects.Dynamic;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.BlockingQueue;
@@ -92,37 +79,7 @@ public class Game extends AppCompatActivity {
 
     }
 
-    private List<Enemy> getDefalultEnemyList()
-    {
-        FrameLayout game=(FrameLayout) this.findViewById(R.id.frame);
-        Enemy enemy1= new Enemy(this,10,20,new Point(0,0),200,200,20,R.drawable.enemy,game,100,20,1,0,10,null,"enemy",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy enemy2= new Enemy(this,10,30,new Point(0,0),200,200,20,R.drawable.rinor,game,200,20,1,0,10,null,"Rinor",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy enemy3= new Enemy(this,10,20,new Point(0,0),200,200,20,R.drawable.creature,game,30,20,1,0,10,null,"Creature",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy gideon= new Enemy(this,10,30,new Point(0,0),200,200,20,R.drawable.gideon,game,45,20,1,0,10,null,"Gideon",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy gnome2= new Enemy(this,30,10,new Point(0,0),200,200,20,R.drawable.gnome2,game,40,20,1,0,10,null,"Gnome2",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy goblin= new Enemy(this,10,10,new Point(0,0),200,200,20,R.drawable.goblin,game,100,20,1,0,10,null,"Goblin",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy pacific= new Enemy(this,10,100,new Point(0,0),200,200,20,R.drawable.pacific,game,100,20,1,0,10,null,"Pacific",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy police1= new Enemy(this,20,2,new Point(0,0),200,200,20,R.drawable.police1,game,500,20,1,0,10,null,"Police1",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-
-        List<Enemy> enemysCollection= new LinkedList<>();
-
-        enemysCollection.add(enemy1);
-        enemysCollection.add(enemy2);
-        enemysCollection.add(enemy3);
-        enemysCollection.add(gideon);
-        enemysCollection.add(gnome2);
-        enemysCollection.add(goblin);
-        enemysCollection.add(pacific);
-        enemysCollection.add(police1);
-        for(Enemy enemy:enemysCollection)
-        {
-            enemy.setBullet(new Bullet("defaultenemybullet",this,10,20,null,50,50,20,R.drawable.blue,null,false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10)).clone());
-           enemy.getBullet().setFrame(game);
-        }
-        return  enemysCollection;
-    }
-
-    public void setX(ViewElement vm, int x)
+    public void setX(Dynamic vm, int x)
     {
         try {
         vm.setX(x);
@@ -167,7 +124,7 @@ public class Game extends AppCompatActivity {
     }
 
     /**Methods which are connected with fact that imageViews could be modified only by acticity where they have been puted*/
-    public void addView(final ViewElement viewElement) {
+    public void addView(final Dynamic dynamic) {
 
         runOnUiThread(new Runnable() {
 
@@ -175,9 +132,9 @@ public class Game extends AppCompatActivity {
             public void run() {
 
                 // Stuff that updates the UI
-                frame.addView(viewElement);
-                viewElement.getLayoutParams().height=viewElement.getHeightp();
-                viewElement.getLayoutParams().width=viewElement.getWidthp();
+                frame.addView(dynamic);
+                dynamic.getLayoutParams().height= dynamic.getHeightp();
+                dynamic.getLayoutParams().width= dynamic.getWidthp();
                // viewElement.getLayoutParams().height=viewElement.width*(viewElement.getDrawable().getIntrinsicHeight()/viewElement.getDrawable().getIntrinsicWidth());
 
             }
@@ -202,8 +159,8 @@ public class Game extends AppCompatActivity {
             public void run() {
                 // Stuff that updates the UI
                 frame.addView(viewCharacter);
-                viewCharacter.getLayoutParams().height=viewCharacter.getHeightp();
-                viewCharacter.getLayoutParams().width=viewCharacter.getWidthp();
+                viewCharacter.getLayoutParams().height= viewCharacter.getHeightp();
+                viewCharacter.getLayoutParams().width= viewCharacter.getWidthp();
                 TextView textView= new TextView(getApplicationContext());
 
                 frame.addView(textView);
@@ -213,7 +170,7 @@ public class Game extends AppCompatActivity {
             }
         });
     }
-    public void removeObject(final ViewElement viewElement)
+    public void removeObject(final Dynamic dynamic)
     {
         runOnUiThread(new Runnable() {
 
@@ -221,8 +178,8 @@ public class Game extends AppCompatActivity {
             public void run() {
 
                 // Stuff that updates the UI
-                viewElement.setVisibility(View.GONE);
-                frame.removeView(viewElement);
+                dynamic.setVisibility(View.GONE);
+                frame.removeView(dynamic);
             }
         });
 
@@ -260,7 +217,7 @@ public class Game extends AppCompatActivity {
         });
     }
 
-    public void moveViewElement(final ViewElement viewElement, final int x, final int y)
+    public void moveViewElement(final Dynamic dynamic, final int x, final int y)
     {
 
         runOnUiThread(new Runnable() {
@@ -269,14 +226,14 @@ public class Game extends AppCompatActivity {
             public void run() {
 
                 // Stuff that updates the UI
-                viewElement.setX(viewElement.getX()+x);
-                viewElement.setY(viewElement.getY()+y);
+                dynamic.setX(dynamic.getX()+x);
+                dynamic.setY(dynamic.getY()+y);
             }
         });
 
     }
 
-    public void setViewElement(final ViewElement viewElement, final int x, final int y)
+    public void setViewElement(final Dynamic dynamic, final int x, final int y)
     {
 
         runOnUiThread(new Runnable() {
@@ -285,8 +242,8 @@ public class Game extends AppCompatActivity {
             public void run() {
 
                 // Stuff that updates the UI
-                viewElement.setX(x);
-                viewElement.setY(y);
+                dynamic.setX(x);
+                dynamic.setY(y);
             }
         });
 
@@ -310,23 +267,23 @@ public class Game extends AppCompatActivity {
               //  float y=character.getY();
 
 
-                textLife.setX(character.getX()+character.getWidthp()/2-textLife.getMeasuredWidth()/2);
+                textLife.setX(character.getX()+ character.getWidthp()/2-textLife.getMeasuredWidth()/2);
                 textLife.setY(character.getY()-textLife.getMeasuredHeight());
            //     float a=textLife.getX();
            //     float b=textLife.getY();
             }
         });
     }
-    public void setViewImageMatrix(final Matrix matrix,final ViewElement viewElement)
+    public void setViewImageMatrix(final Matrix matrix,final Dynamic dynamic)
     {
         final Game game=this;
         runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
-                game.removeObject(viewElement);
-                viewElement.setImageMatrix(matrix);
-                game.addView(viewElement);
+                game.removeObject(dynamic);
+                dynamic.setImageMatrix(matrix);
+                game.addView(dynamic);
             }
         });
     }
@@ -353,10 +310,10 @@ public class Game extends AppCompatActivity {
 
     }
 
-    public void setAbilitiesBar(List<AbilityView> abilities)
+    public void setAbilitiesBar(List<Ability> abilities)
     {
 
-        for(AbilityView ability:abilities)
+        for(Ability ability:abilities)
         {
             abilitiesBar.addView(ability);
             ability.getLayoutParams().width=abilitiesBar.getWidth()/abilities.size();
@@ -365,7 +322,7 @@ public class Game extends AppCompatActivity {
         }
     }
 
-    public void setY(ViewElement vm, int y) {
+    public void setY(Dynamic vm, int y) {
         try {
             vm.setY(y);
         }
@@ -375,7 +332,7 @@ public class Game extends AppCompatActivity {
         }
     }
 
-    public void setPoint(final ViewElement vm,final Point point)
+    public void setPoint(final Dynamic vm, final Point point)
     {
         runOnUiThread(new Runnable() {
             @Override
@@ -386,18 +343,29 @@ public class Game extends AppCompatActivity {
         });
 
     }
-    public void changeResource(final ViewElement viewElement,final int resource)
+    public void changeResource(final Dynamic dynamic, final int resource)
     {
         final Game pointer=this;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Glide.with(pointer).load(resource).into(viewElement);
-               //viewElement.setImageResource(resource);
+                //Glide.with(pointer).load(resource).into(viewElement);
+               dynamic.setImageResource(resource);
             }
         });
     }
-    public void changeResourceForAnimation(final ViewElement viewElement,final int resource, final int oldResourse)
+
+    public void rechangeImageAfterAnimation(final Dynamic dynamic, final int resource)
+    {
+        final Game pointer=this;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dynamic.setImageResource(resource);
+            }
+        });
+    }
+    public void changeResourceForAnimation(final Dynamic dynamic, final int resource, final int oldResourse)
     {
         final Game pointer=this;
         runOnUiThread(new Runnable() {
@@ -409,12 +377,12 @@ public class Game extends AppCompatActivity {
                        // .load(oldResourse)
                        // .transition(GenericTransitionOptions.with(resource))
                       //  .into(viewElement);
-                viewElement.setImageResource(resource);
+                dynamic.setImageResource(resource);
 
             }
         });
     }
-    public void changeForegroundForAnimation(final ViewElement viewElement,final int resource)
+    public void changeForegroundForAnimation(final Dynamic dynamic, final int resource)
     {
         final Game pointer=this;
         runOnUiThread(new Runnable() {
@@ -427,7 +395,7 @@ public class Game extends AppCompatActivity {
                 // .transition(GenericTransitionOptions.with(resource))
                 //  .into(viewElement);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    viewElement.setForeground(getResources().getDrawable(resource));
+                    dynamic.setForeground(getResources().getDrawable(resource));
                 }
 
             }
@@ -435,7 +403,7 @@ public class Game extends AppCompatActivity {
     }
 
 
-    public void bigChangeResource(final ViewElement viewElement,final int resource)
+    public void bigChangeResource(final Dynamic dynamic, final int resource)
     {
         runOnUiThread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -447,7 +415,7 @@ public class Game extends AppCompatActivity {
                     @Override
                     protected Integer doInBackground(Integer... params) {
                        drawable[0] = getResources().getDrawable(resource, getApplicationContext().getTheme());
-                       bigChange(viewElement,drawable[0]);
+                       bigChange(dynamic,drawable[0]);
                         return null;
                     }
 
@@ -457,13 +425,13 @@ public class Game extends AppCompatActivity {
         });
     }
 
-    private void bigChange(final ViewElement viewElement, final Drawable drawable)
+    private void bigChange(final Dynamic dynamic, final Drawable drawable)
     {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                // viewElement.setImageDrawable(drawable);
-                viewElement.setImageDrawable(drawable);
+                dynamic.setImageDrawable(drawable);
             }
         });
     }
@@ -489,5 +457,15 @@ public class Game extends AppCompatActivity {
                 imageView.clearColorFilter();
             }
         });
+    }
+
+    public EyeOnGame getEyeOnGame()
+    {
+        return new EyeOnGame(this.controller);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+       // super.onDestroy();
     }
 }

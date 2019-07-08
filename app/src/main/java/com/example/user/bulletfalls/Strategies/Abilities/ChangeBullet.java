@@ -2,7 +2,7 @@ package com.example.user.bulletfalls.Strategies.Abilities;
 
 import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Objects.Character;
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -18,7 +18,7 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 })
 @JsonTypeName("changebullet")
 public class ChangeBullet implements DoToCharacterStrategy{
-    //Bullet bullet;
+    //BulletSpecyfication bulletSpecyfication;
     BulletSpecyfication bulletSpecyfication;
     public ChangeBullet()
     {
@@ -26,7 +26,7 @@ public class ChangeBullet implements DoToCharacterStrategy{
     }
     public ChangeBullet(Bullet bullet)
     {
-        this.bulletSpecyfication=new BulletSpecyfication(bullet);
+        this.bulletSpecyfication =new BulletSpecyfication(bullet);
     }
     @Override
     public void doToCharacter(Character character) {

@@ -34,10 +34,11 @@ import com.example.user.bulletfalls.Sets.AbilitySet;
 import com.example.user.bulletfalls.Sets.BulletSet;
 import com.example.user.bulletfalls.Sets.HeroesSet;
 import com.example.user.bulletfalls.Enums.Rarity;
-import com.example.user.bulletfalls.KlasyPomocnicze.Dimension;
-import com.example.user.bulletfalls.KlasyPomocnicze.OnSwipeTouchListener;
+import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
+import com.example.user.bulletfalls.Supporters.Dimension;
+import com.example.user.bulletfalls.Supporters.OnSwipeTouchListener;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -100,7 +101,7 @@ public class ChosenHero extends AppCompatActivity {
 
         Intent intent= getIntent();
         String name=intent.getStringExtra("heroName");
-        chosenHero= HeroesSet.getHero(name);
+        chosenHero = HeroesSet.getHero(name);
         heroName.setText(chosenHero.name);
         //informationsOfHero.setText(chosenHero.story);
         heroPhoto.setImageResource(chosenHero.getImageResources());
@@ -126,7 +127,7 @@ public class ChosenHero extends AppCompatActivity {
         int i=bulletList.getChildCount();
         if(i==0)
         {
-            for(final Bullet  b: bulletsFromDB)
+            for(final Bullet b: bulletsFromDB)
             {
                 final FrameLayout f= new FrameLayout(this);
                 f.addView(b);
@@ -172,13 +173,15 @@ public class ChosenHero extends AppCompatActivity {
                             chosenHero.setBullet(b);
                             HeroesSet.setBulletForHero(chosenHero.name, b);
                             HeroesSet.Save(home);
-                            writeToFile(home, chosenHero);
+                           // writeToFile(home, chosenHero);
+
 
                             //else b.setForeground(null);
 
                         }
                     });
                 }
+
 
             }}
     }
@@ -187,18 +190,18 @@ public class ChosenHero extends AppCompatActivity {
     private void loadAbilityList()
     {
         final Activity home= this;
-        List<Ability> abilities=AbilitySet.getInstance().getAbilityListForHero(chosenHero.getName());
+        List<AbilitySpecyfication> abilities=AbilitySet.getInstance().getAbilityListForHero(chosenHero.getName());
         Collections.sort(abilities);
-        for(final Ability a : abilities)
+        for(final AbilitySpecyfication a : abilities)
         {
             //a.activate();
             final FrameLayout fl= new FrameLayout(getApplicationContext());
-            final AbilityView av= new AbilityView(this,a);
+            final Ability av= new Ability(this,a);
             fl.addView(av);
             abilityList.addView(fl);
             abilityViews.add(fl);
             setRarityBackground(fl);
-            //setRarityBackground(fl,av.getAbility().getRarity());
+            //setRarityBackground(fl,av.getAbilitySpecyfication().getRarity());
 
             av.getLayoutParams().width=abilityList.getLayoutParams().height;
             av.getLayoutParams().height=abilityList.getLayoutParams().height;
@@ -214,37 +217,37 @@ public class ChosenHero extends AppCompatActivity {
                 @Override
                 public void onSwipeUp() {
                     Intent intent= new Intent(home,AbilityProfile.class);
-                    intent.putExtra("name",a.name);
+                    intent.putExtra("name",a.getName());
                     home.startActivity(intent);
                 }
 
                 @Override
                 public void onClick()
                 {
-                            if(isUnderAbilityLimit(abilityViews,chosenHero.getNumberOfAbilities())) {
+                            if(isUnderAbilityLimit(abilityViews, chosenHero.getNumberOfAbilities())) {
                                 if (canBeTicked(fl)) {
                                     tickView(fl);
                                     for (int i = 0; i < chosenHero.getAbilities().getAbilities().size(); i++) {
                                         if (chosenHero.getAbilities().getAbilities().get(i).getName().equals(AE.NOTHING.getValue())) {
-                                            chosenHero.getAbilities().getAbilities().set(i, av.getAbility());
-                                            saveHeroChanges();
+                                            chosenHero.getAbilities().getAbilities().set(i, av.getAbilitySpecyfication());
+
                                             break;
                                         }
                                     }
                                 }
                             }
                         else {
-                                if(isTicked(fl)) {
+                                if (isTicked(fl)) {
                                     cleanFrame(fl);
                                     for (int i = 0; i < chosenHero.getAbilities().getAbilities().size(); i++) {
-                                        if (chosenHero.getAbilities().getAbilities().get(i).getName().equals(av.getAbility().getName())) {
+                                        if (chosenHero.getAbilities().getAbilities().get(i).getName().equals(av.getAbilitySpecyfication().getName())) {
                                             chosenHero.getAbilities().getAbilities().set(i, AbilitySet.getInstance().getAbility(AE.NOTHING.getValue()));
-                                            saveHeroChanges();
                                         }
                                     }
                                 }
-                        }
+                            }
                     }
+
             });}
         }
     }
@@ -260,10 +263,10 @@ public class ChosenHero extends AppCompatActivity {
         viewElement=((Bullet)f.getChildAt(0));
 
         }
-        else if(f.getChildAt(0).getClass().equals(AbilityView.class))
+        else if(f.getChildAt(0).getClass().equals(Ability.class))
         {
-            rarity=((AbilityView)f.getChildAt(0)).ability.rarity;
-          viewElement=((AbilityView)f.getChildAt(0));
+            rarity=((Ability)f.getChildAt(0)).abilitySpecyfication.getRarity();
+          viewElement=((Ability)f.getChildAt(0));
 
         }
         else
@@ -310,15 +313,15 @@ public class ChosenHero extends AppCompatActivity {
     }
     public boolean canBeTicked(FrameLayout fl)
     {
-        Ability ability =  ((AbilityView) fl.getChildAt(0)).ability;
-        if(ability.unique)
+        AbilitySpecyfication abilitySpecyfication =  ((Ability) fl.getChildAt(0)).abilitySpecyfication;
+        if(abilitySpecyfication.isUnique())
         {
             if(fl.getChildCount()>1)return false;
             else return true;
         }
         else
         {
-            if(fl.getChildCount()>chosenHero.getNumberOfAbilities()) return false;
+            if(fl.getChildCount()> chosenHero.getNumberOfAbilities()) return false;
             else return true;
         }
     }
@@ -363,18 +366,18 @@ public class ChosenHero extends AppCompatActivity {
 
     public void matchOwnedAbilities(Hero hero, List<FrameLayout> abilities)
     {
-     for(Ability a: hero.getAbilities().getAbilities())
+     for(AbilitySpecyfication a: hero.getAbilities().getAbilities())
      {
          for (FrameLayout v:abilities)
          {
-             if (a.getName().equals(((AbilityView)v.getChildAt(0)).ability.getName()))
+             if (a.getName().equals(((Ability)v.getChildAt(0)).abilitySpecyfication.getName()))
              {
                  tickView(v);
              }
          }
      }
     }
-    public void matchOwnedBullet(Hero hero,LinkedList<FrameLayout> bullets)
+    public void matchOwnedBullet(Hero hero, LinkedList<FrameLayout> bullets)
     {
         for(FrameLayout b:bullets)
         {
@@ -404,8 +407,8 @@ public class ChosenHero extends AppCompatActivity {
 
     private void saveHeroChanges()
     {
-        writeToFile(this,chosenHero);
-        HeroesSet.setAbilitiesForHero(chosenHero,chosenHero.getAbilities().getAbilities());
+        writeToFile(this, chosenHero);
+        HeroesSet.setAbilitiesForHero(chosenHero, chosenHero.getAbilities().getAbilities());
         HeroesSet.Save(this);
     }
 
@@ -421,7 +424,7 @@ public class ChosenHero extends AppCompatActivity {
             HeroSpecyfication specyfication= new HeroSpecyfication(hero);
             String jsonInString= mapper
                     .writeValueAsString(specyfication);
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("hero.txt", Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("heroSpecyfication.txt", Context.MODE_PRIVATE));
             outputStreamWriter.write(jsonInString);
             outputStreamWriter.close();
         }
@@ -528,4 +531,11 @@ public class ChosenHero extends AppCompatActivity {
         linearLayout.setBackgroundColor(Color.RED);
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        saveHeroChanges();
+        //System.out.println("Zapisałem zmiany hero");
+        }
 }

@@ -1,14 +1,14 @@
 package com.example.user.bulletfalls.GameSupporters.MediumTasks;
 
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
-import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.EnemySpecyfication;
 
 public class EnemyShot {
-    EnemySpecyfication enemySpecyfication;
+    EnemySpecyfication enemySpecyficationSpecyfication;
     BulletSpecyfication bulletSpecyfication;
 
-    public EnemyShot(EnemySpecyfication enemySpecyfication, BulletSpecyfication bulletSpecyfication) {
-        this.enemySpecyfication = enemySpecyfication;
+    public EnemyShot(EnemySpecyfication enemySpecyficationSpecyfication, BulletSpecyfication bulletSpecyfication) {
+        this.enemySpecyficationSpecyfication = enemySpecyficationSpecyfication;
         this.bulletSpecyfication = bulletSpecyfication;
 
     }
@@ -24,7 +24,7 @@ public class EnemyShot {
 
     public boolean sameEnemy(EnemyShot enemyShot)
     {
-        if(this.enemySpecyfication.equals(enemyShot.getEnemySpecyfication()))
+        if(this.enemySpecyficationSpecyfication.equals(enemyShot.getEnemySpecyficationSpecyfication()))
         {
             return true;
         }
@@ -32,7 +32,7 @@ public class EnemyShot {
     }
     public boolean equals(EnemyShot enemyShot)
     {
-        if(enemyShot.bulletSpecyfication.getName().equals(this.bulletSpecyfication.getName())&&enemyShot.getEnemySpecyfication().equals(this.enemySpecyfication)) {
+        if(enemyShot.bulletSpecyfication.getName().equals(this.bulletSpecyfication.getName())&&enemyShot.getEnemySpecyficationSpecyfication().equals(this.enemySpecyficationSpecyfication)) {
             return true;
         }
         else{
@@ -40,8 +40,8 @@ public class EnemyShot {
         }
     }
 
-    public EnemySpecyfication getEnemySpecyfication() {
-        return enemySpecyfication;
+    public EnemySpecyfication getEnemySpecyficationSpecyfication() {
+        return enemySpecyficationSpecyfication;
     }
 
     public BulletSpecyfication getBulletSpecyfication() {

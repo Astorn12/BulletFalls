@@ -8,9 +8,9 @@ import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Enums.Shape;
-import com.example.user.bulletfalls.KlasyPomocnicze.FileSupporter;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
+import com.example.user.bulletfalls.Supporters.FileSupporter;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.Disarm;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Dam;
@@ -27,18 +27,17 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BulletSet {
+public class BulletSet{
 
 
 
-    static private List<Bullet> bulletList=new LinkedList<>();
+    static private List<Bullet> bulletList =new LinkedList<>();
     final static private String path="bullets.json";
-    public static void Load(Context context)
+    public static void load(Context context)
     {
         List<BulletSpecyfication> bd= new LinkedList<>();
         //BulletListBroker bd= new BulletListBroker();
-   String s=FileSupporter.LoadStrinFromFile(path,context);
-
+        String s=FileSupporter.LoadStrinFromFile(path,context);
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -54,11 +53,9 @@ public class BulletSet {
         } catch (IOException e) {
             e.printStackTrace();
        }
-
-
     }
 
-    public static void Save(Context context)
+    public static void save(Context context)
     {
         List<BulletSpecyfication> bd= new LinkedList<>();
         ///BulletListBroker bd= new BulletListBroker();
@@ -98,6 +95,8 @@ public class BulletSet {
         return ret;
     }
 
+
+
     public static void setBulletList(List<Bullet> bulletList) {
         BulletSet.bulletList = bulletList;
     }
@@ -106,7 +105,7 @@ public class BulletSet {
 //------------------------------------BIZNES METHODS----------------------//
     public static Bullet getBullet(String name)
     {
-        for(Bullet b:bulletList)
+        for(Bullet b: bulletList)
         {
             if(b.getName().equals(name)) return b;
         }
@@ -123,13 +122,13 @@ public class BulletSet {
         else return false;
     }
 
-    public static List<Bullet> getBulletListForHero(String heroName,Context context)
+    public static List<Bullet> getBulletListForHero(String heroName, Context context)
     {
         List<String> strings= HeroAbilityBulletMapper.getStringBulletListForHero(heroName);
         List<Bullet> retur= new LinkedList<>();
         for(String s:strings)
         {
-            for(Bullet b:bulletList)
+            for(Bullet b: bulletList)
             {
                 if(b.getName().equals(s)) retur.add(b);
             }
@@ -159,11 +158,12 @@ public class BulletSet {
         Bullet standard=new Bullet(BE.STANDARD, context,10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet log=new Bullet(BE.LOG,context,100,20,null,110,110,20,R.drawable.log,null,true,new SummonDam(300),Shape.RECTANGLE,new NoneBulletDoToCharacterStrategy(),Permission.NOT,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet red=new Bullet(BE.RED, context,10, 20, null, 50, 50, 20, R.drawable.red, null, false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.NOT,Rarity.UNCOMMON,new MoneyPossesStrategy("Mystery Coin",10));
+        Bullet orange=new Bullet(BE.COUNTERBULLET, context,10, 20, null, 100, 100, 20, R.drawable.biscuit, null, false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.NOT,Rarity.UNCOMMON,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet diarm=new Bullet(BE.DISARM,context, 10, 20, null, 50, 50, 20, R.drawable.blue, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet firstJurnal=new Bullet(BE.FIRSTJURNAL,context, 10, 20, null, 50, 50, 20, R.drawable.jurnal1, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet secondjurnal=new Bullet(BE.SEONDJURNAL,context, 10, 20, null, 100, 100, 20, R.drawable.jurnal2, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
         Bullet thirdjurnal=new Bullet(BE.THIRDJURNAL,context, 10, 20, null, 100, 100, 20, R.drawable.jurnal3, null, false,new Horizontal(),Shape.CIRCLE,new Disarm(2000),Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
-        RotateBullet wendyAxe=new RotateBullet(BE.WENDYAXE,context, 10, 20, null, 100, 100, 20,R.drawable.wendyaxe, null, false,20,new Horizontal(),Shape.CIRCLE,Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
+        RotateBullet wendyAxe=new RotateBullet(BE.WENDYAXE,context, 10, 20, null, 100, 100, R.drawable.wendyaxe, null, false,20,new Horizontal(),Shape.CIRCLE,Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
 
 
         bulletList.add(grendaArmachair);
@@ -177,6 +177,7 @@ public class BulletSet {
         bulletList.add(secondjurnal);
         bulletList.add(thirdjurnal);
         bulletList.add(wendyAxe);
+        bulletList.add(orange);
 
 
     }
@@ -187,12 +188,12 @@ public class BulletSet {
 
     public static void givePermission(Bullet bullet, Context context)
     {
-        for(Bullet b:bulletList)
+        for(Bullet b: bulletList)
         {
             if(b.getName().equals(bullet.getName()))
             {
                 b.setPermission(Permission.YES);
-                Save(context);
+                save(context);
                 break;
             }
         }

@@ -1,12 +1,12 @@
 package com.example.user.bulletfalls.GameSupporters.MediumTasks;
 
-import com.example.user.bulletfalls.Objects.Ability;
+import com.example.user.bulletfalls.Objects.WaitAbilitySpecyfication;
+import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
-import com.example.user.bulletfalls.Objects.AbilityView;
-import com.example.user.bulletfalls.Objects.WaitAbility;
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
-import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
-import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
+import com.example.user.bulletfalls.Objects.Ability;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.EnemySpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -14,29 +14,34 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Medium  {
-    HeroSpecyfication hero;
-    List<EnemySpecyfication> deathEnemyList;
-    List<EnemySpecyfication> pushedEnemys;
+    HeroSpecyfication heroSpecyfication;
+    List<EnemySpecyfication> deathEnemySpecyficationList;
+    List<EnemySpecyfication> pushedEnemySpecyfications;
     long startTime;
     long endTime;
-    ArchivContainer<Ability> usedAbilities;
+    ArchivContainer<AbilitySpecyfication> usedAbilities;
     ArchivContainer<BulletSpecyfication> heroBullets;
     ArchivContainer<EnemyShot> enemyBullets;
-    List<Hit>  enemyHits;
+    List<Hitt>  enemyHits;
     //List<MutablePair<Integer,BulletSpecyfication>> takenDamage;
-    ArchivContainer<BulletSpecyfication> takenDamage;
+   // ArchivContainer<BulletSpecyfication> takenDamage;
+
     Bounty bounty;
+
+    List<HeroHited> hitsFromEnemyToHero;
 
     public Medium()
     {
-        this.deathEnemyList= new LinkedList<>();
-        this.pushedEnemys= new LinkedList<>();
+        this.deathEnemySpecyficationList = new LinkedList<>();
+        this.pushedEnemySpecyfications = new LinkedList<>();
         this.heroBullets= new ArchivContainer<>();
         this.enemyBullets= new ArchivContainer<>();
         this.enemyHits=new LinkedList<>();
         this.usedAbilities= new ArchivContainer<>();
-        takenDamage= new ArchivContainer<>();
+        //takenDamage= new ArchivContainer<>();
+        hitsFromEnemyToHero=new LinkedList<>();
         this.bounty= new Bounty();
+        this.hitsFromEnemyToHero=new LinkedList<>();
     }
 
     public void startTimer()
@@ -55,19 +60,19 @@ public class Medium  {
         }
         return 0;
     }
-    public void heroBorning(HeroSpecyfication hero)
+    public void heroBorning(HeroSpecyfication heroSpecyfication)
     {
-        this.hero=hero;
+        this.heroSpecyfication = heroSpecyfication;
     }
-    public void enemyBorning(EnemySpecyfication enemySpecyfication){this.pushedEnemys.add(enemySpecyfication);}
-    public void heroShot(BulletSpecyfication bulletSpecyfication, List<AbilityView> abilities){
+    public void enemyBorning(EnemySpecyfication enemySpecyficationSpecyfication){this.pushedEnemySpecyfications.add(enemySpecyficationSpecyfication);}
+    public void heroShot(BulletSpecyfication bulletSpecyfication, List<Ability> abilities){
         heroBullets.add(bulletSpecyfication);
-        for(AbilityView av: abilities)
+        for(Ability av: abilities)
         {
-            if(av.getAbility().getClass().equals(WaitAbility.class))
+            if(av.getAbilitySpecyfication().getClass().equals(WaitAbilitySpecyfication.class))
             {
-                WaitAbility wa=(WaitAbility)av.getAbility();
-                if(heroBullets.hasEnought(wa.getWaitedBullet(),wa.getAmount()))
+                WaitAbilitySpecyfication wa=(WaitAbilitySpecyfication)av.getAbilitySpecyfication();
+                if(heroBullets.hasEnought(wa.getWaitedBulletSpecyfication(),wa.getAmount()))
                 {
                     wa.activate();
                     av.checkActivation();
@@ -79,29 +84,37 @@ public class Medium  {
     {
        enemyBullets.add(enemyShot);
     }
-    public void abilityUse(Ability ability)
+    public void abilityUse(AbilitySpecyfication abilitySpecyfication)
     {
-    usedAbilities.add(ability);
+    usedAbilities.add(abilitySpecyfication);
     }
 
-    public void deathOfEnemy(EnemySpecyfication enemySpecyfication)
+    public void deathOfEnemy(EnemySpecyfication enemySpecyficationSpecyfication)
     {
-        this.deathEnemyList.add(enemySpecyfication);
+        this.deathEnemySpecyficationList.add(enemySpecyficationSpecyfication);
     }
 
-    public void enemyHited(Hit hit)
+    public void enemyHited(Hitt hit)
     {
         this.enemyHits.add(hit);
     }
 
     public void takedDamage(MutablePair<Integer,BulletSpecyfication> hit)
     {
-        this.takenDamage.add(hit.getRight(),hit.getLeft());
+       // this.takenDamage.add(hit.getRight(),hit.getLeft());
+        this.hitsFromEnemyToHero.add(new HeroHited(System.currentTimeMillis(),hit.getLeft(),hit.getRight()));
     }
 
     public int getTakenDamage()
     {
-        return this.takenDamage.countAll();
+
+        //return this.takenDamage.countAll();
+        int sum=0;
+        for(HeroHited h: this.hitsFromEnemyToHero)
+        {
+            sum+=h.damage;
+        }
+        return sum;
     }
 
     
@@ -115,15 +128,28 @@ public class Medium  {
     }
     public List<EnemySpecyfication> getKilledEnemys()
     {
-        return this.deathEnemyList;
+        return this.deathEnemySpecyficationList;
     }
 
-    public int getAbilityUseCounter(Ability ability)
+    public int getAbilityUseCounter(AbilitySpecyfication abilitySpecyfication)
     {
-        return this.usedAbilities.getUseCounter(ability);
+        return this.usedAbilities.getUseCounter(abilitySpecyfication);
     }
     public int getShootedByHero()
     {
         return this.heroBullets.countAll();
+    }
+
+    public int timeJumpHeal(long time)
+    {
+        int takenDamage=0;
+        long now=System.currentTimeMillis();
+        for(HeroHited h: this.hitsFromEnemyToHero)
+        {
+            if(now-time<h.time) {
+                takenDamage += h.damage;
+            }
+        }
+        return takenDamage;
     }
 }

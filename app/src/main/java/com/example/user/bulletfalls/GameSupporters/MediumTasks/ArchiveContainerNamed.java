@@ -1,5 +1,7 @@
 package com.example.user.bulletfalls.GameSupporters.MediumTasks;
 
+import com.example.user.bulletfalls.Objects.Named;
+
 import java.util.jar.Attributes;
 
 public class ArchiveContainerNamed extends ArchivContainer<Named> {

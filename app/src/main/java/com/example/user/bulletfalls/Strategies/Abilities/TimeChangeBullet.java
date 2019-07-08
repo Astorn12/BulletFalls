@@ -29,8 +29,8 @@ public class TimeChangeBullet extends ChangeBullet implements Observer {
 
     @Override
     public void doToCharacter(Character character) {
-        this.character=character;
-        this.standardBullet=character.getBullet();
+        this.character = character;
+        this.standardBullet = character.getBullet();
         character.setBullet(this.getBulletSpecyfication());
         character.addObserver(this);
         this.startingTime=System.currentTimeMillis();
@@ -54,14 +54,14 @@ public class TimeChangeBullet extends ChangeBullet implements Observer {
     @Override
     public void announce() {
        // System.out.println(System.currentTimeMillis()-this.startingTime+" > "+actingTime);
-        if(System.currentTimeMillis()-this.startingTime>=this.actingTime&&character!=null)
+        if(System.currentTimeMillis()-this.startingTime>=this.actingTime&& character !=null)
         {
             character.setBullet(this.standardBullet);
             //character.removeObserver(this);
             character.cleanObserver(this);
 
-            character=null;
-            standardBullet=null;
+            character =null;
+            standardBullet =null;
             //this.startingTime=0;
         }
 

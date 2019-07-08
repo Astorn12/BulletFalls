@@ -11,18 +11,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
 import com.example.user.bulletfalls.Objects.Ability;
-import com.example.user.bulletfalls.Objects.AbilityView;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.GameSummary;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
 import com.example.user.bulletfalls.ProfileActivity.LevelBar;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
+import com.example.user.bulletfalls.Supporters.ImageScaler;
 
 public class GameResult extends AppCompatActivity {
-    HeroSpecyfication hero;
+    HeroSpecyfication heroSpecyfication;
     Medium medium;
     String gameName;
     Bounty bounty;
@@ -33,7 +34,7 @@ public class GameResult extends AppCompatActivity {
         /**To trzba jakoś uzyskać z gry*/
         GameSummary gameSummary=GameSummary.getInstance();
         this.medium=gameSummary.getMedium();
-        this.hero=gameSummary.getHeroSpecyfication();
+        this.heroSpecyfication =gameSummary.getHeroSpecyficationSpecyfication();
         this.gameName=gameSummary.getNameOfGame();
         this.bounty=gameSummary.getBounty();
         check();
@@ -55,7 +56,7 @@ public class GameResult extends AppCompatActivity {
         paramsForLevelBar.setMargins(10,10,10,10);
         frameLayout.setLayoutParams(paramsForLevelBar);
         userStatsBar.addView(frameLayout);/**adding level bar*/
-        Glide.with(this).load(hero.getImageResources()).into(fightingHero);
+        Glide.with(this).load(heroSpecyfication.getImageResources()).into(fightingHero);
 
         moneyNumber.setText(bounty.getMoney()+"");
         expText.setText(bounty.getExp()+"pkt");
@@ -71,39 +72,81 @@ public class GameResult extends AppCompatActivity {
     private void addStatistics(LinearLayout stats)
     {
         int size= 16;
-        TextView killed= new TextView(this);
-        killed.setText("Zniszczeni przeciwnicy");
-        killed.setTextSize(size);
-        killed.setGravity(Gravity.CENTER);
+        final int iconsSize=200;
+        LinearLayout l1= new LinearLayout(this);
+        l1.setGravity(Gravity.CENTER);
+        l1.setOrientation(LinearLayout.HORIZONTAL);
 
-        stats.addView(killed);
+        final ImageView fightingdipper=new ImageView(this);
+        fightingdipper.setImageResource(R.drawable.dipperfighting);
+        fightingdipper.setLayoutParams(new LinearLayout.LayoutParams(-1,-2,1));
+        fightingdipper.post(new Runnable() {
+            @Override
+            public void run() {
+
+                new ImageScaler().scaleByHeight(fightingdipper,iconsSize);
+            }
+        });
 
         TextView killedBount= new TextView(this);
         killedBount.setText(medium.getKilledEnemys().size()+"");
         killedBount.setGravity(Gravity.CENTER);
-        stats.addView(killedBount);
+        killedBount.setLayoutParams(new LinearLayout.LayoutParams(-1,-2,1));
+        killedBount.setTextSize(30);
 
-        TextView shoted= new TextView(this);
-        shoted.setText("Wystrzelone kulki");
-        shoted.setTextSize(size);
-        shoted.setGravity(Gravity.CENTER);
-        stats.addView(shoted);
 
+        l1.addView(fightingdipper);
+        l1.addView(killedBount);
+        stats.addView(l1);
+
+
+        LinearLayout l2= new LinearLayout(this);
+        l2.setOrientation(LinearLayout.HORIZONTAL);
+        l2.setGravity(Gravity.CENTER);
+
+        final ImageView dipandmebshootinggnome=new ImageView(this);
+        dipandmebshootinggnome.setImageResource(R.drawable.dipandmebshootedgnome);
+        dipandmebshootinggnome.setLayoutParams(new LinearLayout.LayoutParams(-1,-2,1));
+        dipandmebshootinggnome.post(new Runnable() {
+            @Override
+            public void run() {
+
+                new ImageScaler().scaleByHeight(dipandmebshootinggnome,iconsSize);
+            }
+        });
         TextView shotedBullets=new TextView(this);
         shotedBullets.setText(medium.getShootedByHero()+"");
+        shotedBullets.setTextSize(30);
         shotedBullets.setGravity(Gravity.CENTER);
-        stats.addView(shotedBullets);
+        shotedBullets.setLayoutParams(new LinearLayout.LayoutParams(-1,-2,1));
 
-        TextView taken= new TextView(this);
-        taken.setText("Przyjęte obrażenia");
-        taken.setGravity(Gravity.CENTER);
-        taken.setTextSize(size);
-        stats.addView(taken);
+        l2.addView(dipandmebshootinggnome);
+        l2.addView(shotedBullets);
+        stats.addView(l2);
 
+
+        LinearLayout l3= new LinearLayout(this);
+        l3.setOrientation(LinearLayout.HORIZONTAL);
+        l3.setGravity(Gravity.CENTER);
+        final ImageView demagedDipper=new ImageView(this);
+        demagedDipper.setImageResource(R.drawable.demmageddipper);
+        demagedDipper.setLayoutParams(new LinearLayout.LayoutParams(-1,-2,1));
+        demagedDipper.post(new Runnable() {
+            @Override
+            public void run() {
+                new ImageScaler().scaleByHeight(demagedDipper,iconsSize);
+            }
+        });
         TextView takenDamage=new TextView(this);
         takenDamage.setText(medium.getTakenDamage()+"");
         takenDamage.setGravity(Gravity.CENTER);
-        stats.addView(takenDamage);
+       // takenDamage.setGravity(Gravity.CENTER);
+        takenDamage.setTextSize(30);
+        takenDamage.setLayoutParams(new LinearLayout.LayoutParams(-1,-2,1));
+        l3.addView(demagedDipper);
+        l3.addView(takenDamage);
+
+        stats.addView(l3);
 
         TextView abilitiesText= new TextView(this);
         abilitiesText.setText("Użyte umiejętności specjalne");
@@ -116,22 +159,41 @@ public class GameResult extends AppCompatActivity {
     {
         LinearLayout abilitiesStats= new LinearLayout(this);
         abilitiesStats.setOrientation(LinearLayout.HORIZONTAL);
-        abilitiesStats.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+       // abilitiesStats.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 
-        for(Ability a: hero.getAbilities().getAbilities())
+        for(AbilitySpecyfication a: heroSpecyfication.getAbilities().getAbilities())
         {
-            LinearLayout abilitystats= new LinearLayout(this);
-            abilitystats.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout abilityPlusCount= new LinearLayout(this);
+            abilityPlusCount.setOrientation(LinearLayout.VERTICAL);
 
-            AbilityView abilityView= new AbilityView(this,a);
-            abilitystats.addView(abilityView);
+            Ability ability= new Ability(this,a);
+            //abilityView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+            //abilitystats.addView(abilityView);
 
-            TextView textView= new TextView(this);
-            textView.setText(medium.getAbilityUseCounter(a)+"");
-            abilitystats.addView(textView);
+            FrameLayout frame= new FrameLayout(this);
 
-            abilitiesStats.addView(abilitystats);
+            TextView count= new TextView(this);
+            count.setText(medium.getAbilityUseCounter(a)+"");
+            count.setTextSize(50);
+            count.setAlpha(1);
+            count.setGravity(Gravity.CENTER);
+            //count.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0));
+            //abilitystats.addView(textView);
+
+            //abilitystats.setLayoutParams(new LinearLayout.LayoutParams(0,-2,1));
+            //abilitiesStats.addView(abilitystats);
+            frame.setForegroundGravity(Gravity.CENTER);
+            frame.addView(ability);
+            frame.addView(count);
+
+            frame.setLayoutParams(new LinearLayout.LayoutParams(0,-1,1));
+            frame.setBackgroundColor(Color.BLUE);
+            abilitiesStats.addView(frame);
+           // ability.setLayoutParams(new LinearLayout.LayoutParams(0,-1,1));
+            //abilitiesStats.addView(ability);
         }
+        abilitiesStats.setLayoutParams(new LinearLayout.LayoutParams(-1,-1));
+        abilitiesStats.setBackgroundColor(Color.YELLOW);
         return abilitiesStats;
     }
 }

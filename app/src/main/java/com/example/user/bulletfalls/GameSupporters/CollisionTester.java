@@ -4,12 +4,12 @@ import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.Objects.Enemy;
 import com.example.user.bulletfalls.Enums.Shape;
-import com.example.user.bulletfalls.GameSupporters.MediumTasks.Hit;
+import com.example.user.bulletfalls.GameSupporters.MediumTasks.Hitt;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
 import com.example.user.bulletfalls.Objects.Hero;
-import com.example.user.bulletfalls.Objects.SummonedBeast;
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
-import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
+import com.example.user.bulletfalls.Objects.Beast;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.EnemySpecyfication;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -19,44 +19,44 @@ public class CollisionTester {
 
     List<Bullet> bullets;
     Hero hero;
-    List<Enemy> enemys;
-    List<SummonedBeast> summonedBeasts;
+    List<Enemy> enemies;
+    List<Beast> beasts;
 
     public CollisionTester()
     {
 
     }
 
-    public void collisionChecking(Hero hero, List<Enemy> enemys, List<Bullet> bullets, Medium medium, List<SummonedBeast> summonedBeasts)
+    public void collisionChecking(Hero hero, List<Enemy> enemies, List<Bullet> bullets, Medium medium, List<Beast> beasts)
     {
-        this.hero=hero;
-        this.enemys=enemys;
-        this.bullets=bullets;
-        this.summonedBeasts=summonedBeasts;
+        this.hero = hero;
+        this.enemies = enemies;
+        this.bullets = bullets;
+        this.beasts = beasts;
         //sprawdzanie obrażeń usyskanych przez bohatera
-        for(Bullet bullet: bullets)
+        for(Bullet bullet : bullets)
         {
-            if(bullet.getSpeed()<0&&damageToCharacterChecking(hero,bullet))
-            {   int d=bullet.collisionWithCharacterEfect(hero);
+            if(bullet.getSpeed()<0&&damageToCharacterChecking(hero, bullet))
+            {   int d= bullet.collisionWithCharacterEfect(hero);
                 medium.takedDamage(new MutablePair<Integer, BulletSpecyfication>(d,new BulletSpecyfication(bullet)));
                 hero.doToBullet(bullet);
             }
-            for(Enemy enemy:enemys)
+            for(Enemy enemy : enemies)
             {
-                if(bullet.getSpeed()>0&&damageToCharacterChecking(enemy,bullet)) {
+                if(bullet.getSpeed()>0&&damageToCharacterChecking(enemy, bullet)) {
 
-                    int d=bullet.collisionWithCharacterEfect(enemy);
-                    medium.enemyHited(new Hit(new EnemySpecyfication(enemy),new BulletSpecyfication(bullet),d));
+                    int d= bullet.collisionWithCharacterEfect(enemy);
+                    medium.enemyHited(new Hitt(new EnemySpecyfication(enemy),new BulletSpecyfication(bullet),d));
                     enemy.doToBullet(bullet);
                 }
             }
 
-            for(SummonedBeast sb:this.summonedBeasts)
+            for(Beast sb:this.beasts)
             {
-                if(bullet.getSpeed()<0&&damageToCharacterChecking(sb,bullet)) {
+                if(bullet.getSpeed()<0&&damageToCharacterChecking(sb, bullet)) {
 
-                    int d=bullet.collisionWithCharacterEfect(sb);
-                    //medium.enemyHited(new Hit(new EnemySpecyfication(enemy),new BulletSpecyfication(bullet),d));
+                    int d= bullet.collisionWithCharacterEfect(sb);
+                    //medium.enemyHited(new Hitt(new EnemySpecyfication(enemy),new BulletSpecyfication(bullet),d));
                     sb.doToBullet(bullet);
                 }
             }
@@ -68,15 +68,15 @@ public class CollisionTester {
 
     private void bulletsColisionChecking()
     {
-        for(int i=0;i<bullets.size();i++)
+        for(int i = 0; i< bullets.size(); i++)
         {
           //  if(bullets.get(i).isCollisionAble())
            // {
-                for(int j=i+1;j<bullets.size();j++)
+                for(int j = i+1; j< bullets.size(); j++)
                 {
 
-                    Bullet a=bullets.get(i);
-                    Bullet b=bullets.get(j);
+                    Bullet a= bullets.get(i);
+                    Bullet b= bullets.get(j);
                     if(ifCollisionHappened(a,b)) {
                         if (bullet2bulletColisionChecking(a, b) && !sameDirectionChecking(a, b)) {
                             int tmpPower = a.getPower();
@@ -101,7 +101,7 @@ public class CollisionTester {
           //  }
         }
     }
-    private boolean ifCollisionHappened(Bullet a ,Bullet b)
+    private boolean ifCollisionHappened(Bullet a , Bullet b)
     {
         if(a.isCollisionAble()|| b.isCollisionAble())
         {
@@ -109,7 +109,7 @@ public class CollisionTester {
         }
         return false;
     }
-    private boolean sameDirectionChecking(Bullet a,Bullet b)
+    private boolean sameDirectionChecking(Bullet a, Bullet b)
     {
         if((a.getSpeed()>0 &b.getSpeed()>0)||(a.getSpeed()<0&&b.getSpeed()<0))
         {
@@ -120,7 +120,7 @@ public class CollisionTester {
             return false;
         }
     }
-    private boolean bullet2bulletColisionChecking(Bullet a,Bullet b)
+    private boolean bullet2bulletColisionChecking(Bullet a, Bullet b)
     { if(a.getShape().equals(Shape.CIRCLE)&&b.getShape().equals(Shape.CIRCLE)) {
         if (Math.sqrt(Math.pow(a.getMiddle().x - b.getMiddle().x,2 )+ Math.pow( a.getMiddle().y - b.getMiddle().y,2)) > a.getWidth() / 2 + b.getWidth() / 2) {
             return false;

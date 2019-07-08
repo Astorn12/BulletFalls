@@ -4,7 +4,6 @@ package com.example.user.bulletfalls.Activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -13,14 +12,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.example.user.bulletfalls.Objects.Bullet;
-import com.example.user.bulletfalls.Database.DAO.ProfileDao;
+import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.Database.DatabaseAdministrator;
-import com.example.user.bulletfalls.Objects.Description;
-import com.example.user.bulletfalls.Enums.CharacterPositioning;
-import com.example.user.bulletfalls.Enums.Permission;
-import com.example.user.bulletfalls.Enums.Rarity;
-import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemyReleaseStrategyPackage.RandomEnemyReleaseStrategy;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemysChooser;
 import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.TimeReleaseStrategyPackage.LinearTimeReleaseStrategy;
@@ -32,6 +25,7 @@ import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.TimeBountyD
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.ArchivCurrencyContainer;
 import com.example.user.bulletfalls.Sets.AbilitySet;
 import com.example.user.bulletfalls.Sets.BulletSet;
+import com.example.user.bulletfalls.Sets.EnemySet;
 import com.example.user.bulletfalls.Sets.HeroAbilityBulletMapper;
 import com.example.user.bulletfalls.Sets.HeroesSet;
 import com.example.user.bulletfalls.Objects.Enemy;
@@ -44,12 +38,8 @@ import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.ProfileActivity.ProfileScreen;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.ShopPackage.Shop;
-import com.example.user.bulletfalls.Specyfications.Characters.EnemySpecyfication;
-import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
-import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
-import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.NoneDoToBulletStrategy;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.EnemySpecyfication;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeed;
-import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -61,13 +51,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public TextView scoreLabel;
-
     FrameLayout frame;
     Hero hero;
-    LinkedList<Enemy> enemys;
-
+    LinkedList<Enemy> enemies;
     private GameController controller;
-
     private final int MEMORY_ACCESS=5;
 
     @Override
@@ -94,15 +81,15 @@ public class MainActivity extends AppCompatActivity {
                 AbilitySet.getInstance().clear();
             if (BulletSet.isEmpty()) {
                 BulletSet.AddToDatabaseTest(this);
-                BulletSet.Save(this);
+                BulletSet.save(this);
                 BulletSet.clear();
-                BulletSet.Load(this);//to powinno się znaleźć później tutaj normalnie
+                BulletSet.load(this);//to powinno się znaleźć później tutaj normalnie
             }
            if (AbilitySet.getInstance().isEmpty()) {
                 AbilitySet.getInstance().AddToDatabaseTest(this);
-                AbilitySet.getInstance().Save(this);
+                AbilitySet.getInstance().save(this);
                 AbilitySet.getInstance().clear();
-                AbilitySet.getInstance().Load(this);
+                AbilitySet.getInstance().load(this);
             }
             if (HeroesSet.isEmpty()) {
                 HeroesSet.AddToDatabaseTest(this);
@@ -117,12 +104,19 @@ public class MainActivity extends AppCompatActivity {
                 HeroAbilityBulletMapper.Load(this);
             }
 
+
             }
+        EnemySet enemySet= new EnemySet(this);
+
+
+        enemySet.load();
         //ładowanie bazy danych SQLite
-        ProfileDao profileDao= new ProfileDao(this);
+
         //this.deleteDatabase("profileDB.db");
         DatabaseAdministrator da=new DatabaseAdministrator(this);
+
         da.actualization(this);
+        //ProfileRepository profileDao= new ProfileRepository(this);
 
     }
     @Override
@@ -153,27 +147,27 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    private List<EnemySpecyfication> convertToSpecyfication(List<Enemy> enemys)
+    private List<EnemySpecyfication> convertToSpecyfication(List<Enemy> enemies)
     {
-        List<EnemySpecyfication> enemySpecyfications= new LinkedList<>();
-        for(Enemy enemy: enemys)
+        List<EnemySpecyfication> enemySpecyficationSpecyfications = new LinkedList<>();
+        for(Enemy enemy : enemies)
         {
-            enemySpecyfications.add(new EnemySpecyfication(enemy));
+            enemySpecyficationSpecyfications.add(new EnemySpecyfication(enemy));
         }
-        return enemySpecyfications;
+        return enemySpecyficationSpecyfications;
     }
     private List<Enemy> getDefalultEnemyList()
     {
-        FrameLayout game=(FrameLayout) this.findViewById(R.id.frame);
-        Enemy enemy1= new Enemy(this,10,20,new Point(0,0),200,200,20,R.drawable.enemy,game,100,20,1,0,10,null,"enemy",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy enemy2= new Enemy(this,10,30,new Point(0,0),200,200,20,R.drawable.rinor,game,200,20,1,0,10,null,"Rinor",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy enemy3= new Enemy(this,10,20,new Point(0,0),200,200,20,R.drawable.creature,game,30,20,1,0,10,null,"Creature",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy gideon= new Enemy(this,10,30,new Point(0,0),200,200,20,R.drawable.gideon,game,45,20,1,0,10,null,"Gideon",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy gnome2= new Enemy(this,30,10,new Point(0,0),200,200,20,R.drawable.gnome2,game,40,20,1,0,10,null,"Gnome2",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy goblin= new Enemy(this,10,10,new Point(0,0),200,200,20,R.drawable.goblin,game,100,20,1,0,10,null,"Goblin",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy pacific= new Enemy(this,10,100,new Point(0,0),200,200,20,R.drawable.pacific,game,100,20,1,0,10,null,"Pacific",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        Enemy police1= new Enemy(this,20,2,new Point(0,0),200,200,20,R.drawable.police1,game,500,20,1,0,10,null,"Police1",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description());
-        List<Enemy> enemysCollection= new LinkedList<>();
+        /*FrameLayout game=(FrameLayout) this.findViewById(R.id.frame);
+        EnemySpecyfication enemy1= new EnemySpecyfication(this,10,20,new Point(0,0),200,200,20,R.drawable.enemy,game,100,20,1,0,10,null,"enemy",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
+        EnemySpecyfication enemy2= new EnemySpecyfication(this,10,30,new Point(0,0),200,200,20,R.drawable.rinor,game,200,20,1,0,10,null,"Rinor",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
+        EnemySpecyfication enemy3= new EnemySpecyfication(this,10,20,new Point(0,0),200,200,20,R.drawable.creature,game,30,20,1,0,10,null,"Creature",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
+        EnemySpecyfication gideon= new EnemySpecyfication(this,10,30,new Point(0,0),200,200,20,R.drawable.gideon,game,45,20,1,0,10,null,"Gideon",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
+        EnemySpecyfication gnome2= new EnemySpecyfication(this,30,10,new Point(0,0),200,200,20,R.drawable.gnome2,game,40,20,1,0,10,null,"Gnome2",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
+        EnemySpecyfication goblin= new EnemySpecyfication(this,10,10,new Point(0,0),200,200,20,R.drawable.goblin,game,100,20,1,0,10,null,"Goblin",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
+        EnemySpecyfication pacific= new EnemySpecyfication(this,10,100,new Point(0,0),200,200,20,R.drawable.pacific,game,100,20,1,0,10,null,"Pacific",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
+        EnemySpecyfication police1= new EnemySpecyfication(this,20,2,new Point(0,0),200,200,20,R.drawable.police1,game,500,20,1,0,10,null,"Police1",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
+        List<EnemySpecyfication> enemysCollection= new LinkedList<>();
         enemysCollection.add(enemy1);
         enemysCollection.add(enemy2);
         enemysCollection.add(enemy3);
@@ -182,12 +176,14 @@ public class MainActivity extends AppCompatActivity {
         enemysCollection.add(goblin);
         enemysCollection.add(pacific);
         enemysCollection.add(police1);
-        for(Enemy enemy:enemysCollection)
+        for(EnemySpecyfication enemy:enemysCollection)
         {
-            enemy.setBullet(new Bullet("defaultenemybullet",this,10,20,null,50,50,20,R.drawable.blue,null,false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10)).clone());
-            enemy.getBullet().setFrame(game);
+            enemy.setBulletSpecyfication(new BulletSpecyfication("defaultenemybullet",this,10,20,null,50,50,20,R.drawable.blue,null,false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10)).clone());
+            enemy.getBulletSpecyfication().setFrame(game);
         }
-        return  enemysCollection;
+        return  enemysCollection;*/
+        EnemySet set= new EnemySet(this);
+        return set.getAll();
     }
     public void chooseHero(View view) {
         Intent intent = new Intent(this, Heroes.class);

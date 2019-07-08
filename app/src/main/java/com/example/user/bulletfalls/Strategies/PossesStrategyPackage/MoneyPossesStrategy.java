@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.user.bulletfalls.Database.DAO.CurrencyDao;
-import com.example.user.bulletfalls.Database.DAO.ProfileDao;
+import com.example.user.bulletfalls.Database.Data.CurrencyRepository;
+import com.example.user.bulletfalls.Database.Data.ProfileRepository;
 import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.Strategies.Par;
@@ -62,7 +62,7 @@ public class MoneyPossesStrategy implements PossesStrategy {
     public void setPossesFotter(LinearLayout linearLayout, Context context) {
 
         linearLayout.setGravity(Gravity.CENTER);
-        linearLayout.setBackgroundColor(Color.BLUE);
+
         if(!MoneyNeedIndex.getInstance().active) {
             for (MoneyNeed mn : this.moneyNeeds) {
                 if (moneyNeeds.indexOf(mn) != 0) {
@@ -109,17 +109,17 @@ public class MoneyPossesStrategy implements PossesStrategy {
 
     private LinearLayout moneyCurrencyIntToLayout(Currency currencyy,int amount,Context context)
     {
-        ProfileDao profileDao= new ProfileDao(context);
+        ProfileRepository profileDao= new ProfileRepository(context);
         UserProfile userProfile=profileDao.getById(0);
 
         ImageView currencyImage= new ImageView(context);
-        CurrencyDao cd= new CurrencyDao(context);
+        CurrencyRepository cd= new CurrencyRepository(context);
         Currency currency=cd.getCurrency(currencyy.getName());
         currencyImage.setImageResource(currency.getResource());
         TextView cost= new TextView(context);
         cost.setText(amount+"");
 
-        CurrencyDao currencyDao= new CurrencyDao(context);
+        CurrencyRepository currencyDao= new CurrencyRepository(context);
 
         if(userProfile.hasMoney(currencyDao.getCurrency(currency.getName()),amount))
         {
@@ -141,7 +141,7 @@ public class MoneyPossesStrategy implements PossesStrategy {
         cost.setGravity(Gravity.CENTER_VERTICAL);
         footer.addView(cost);
         cost.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,1));
-        footer.setBackgroundColor(Color.WHITE);
+
 
         footer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,1));
 

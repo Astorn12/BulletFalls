@@ -11,7 +11,7 @@ public class Empty implements DoToCharacterStrategy {
     @Override
     public void doToCharacter(Character character) {
 
-       // character.powerAnimation();
+        character.powerAnimation("empty");
     }
 
 

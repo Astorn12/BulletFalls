@@ -4,5 +4,5 @@ import com.example.user.bulletfalls.Objects.Hero;
 
 public interface GroupAbility {
 
-    void boostHero(int boost,Hero hero);
+    void boostHero(int boost, Hero hero);
 }

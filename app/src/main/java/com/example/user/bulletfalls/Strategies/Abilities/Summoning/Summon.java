@@ -4,37 +4,37 @@ import android.content.Context;
 
 import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.Objects.Hero;
-import com.example.user.bulletfalls.Objects.SummonedBeast;
-import com.example.user.bulletfalls.Specyfications.Characters.SummonedBeastSpecyfication;
+import com.example.user.bulletfalls.Objects.Beast;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.BeastSpecyfication;
 import com.example.user.bulletfalls.Strategies.Abilities.DoToCharacterStrategy;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("summon")
     public  class Summon implements DoToCharacterStrategy {
-        SummonedBeastSpecyfication summonedBeastSpecyfication;
+        BeastSpecyfication beastSpecyficationSpecyfication;
 
     private Summon(){}
 
-    public Summon(SummonedBeastSpecyfication summonedBeast) {
-        this.summonedBeastSpecyfication = summonedBeast;
+    public Summon(BeastSpecyfication beastSpecyfication) {
+        this.beastSpecyficationSpecyfication = beastSpecyfication;
     }
 
     @Override
     public void doToCharacter(Character character) {
-        ((Hero)character).summon(getBeast(character.getContext()));
+        ((Hero) character).summon(getBeast(character.getContext()));
 
     }
 
-    public  SummonedBeast getBeast(Context context)
+    public Beast getBeast(Context context)
     {
-        return new SummonedBeast(context,this.summonedBeastSpecyfication);
+        return new Beast(context,this.beastSpecyficationSpecyfication);
     }
 
-    public SummonedBeastSpecyfication getSummonedBeastSpecyfication() {
-        return summonedBeastSpecyfication;
+    public BeastSpecyfication getBeastSpecyficationSpecyfication() {
+        return beastSpecyficationSpecyfication;
     }
 
-    public void setSummonedBeastSpecyfication(SummonedBeastSpecyfication summonedBeastSpecyfication) {
-        this.summonedBeastSpecyfication = summonedBeastSpecyfication;
+    public void setBeastSpecyficationSpecyfication(BeastSpecyfication beastSpecyficationSpecyfication) {
+        this.beastSpecyficationSpecyfication = beastSpecyficationSpecyfication;
     }
 }

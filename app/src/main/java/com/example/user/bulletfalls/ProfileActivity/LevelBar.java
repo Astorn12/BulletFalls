@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.GuiSupporters.BorderSetter;
+import com.example.user.bulletfalls.Supporters.GuiSupporters.BorderSetter;
 import com.example.user.bulletfalls.R;
 
 public class LevelBar {
@@ -61,11 +61,15 @@ public class LevelBar {
         final RelativeLayout v2= new RelativeLayout(context);
 
         this.bar.addView(v1);
-        v1.setBackgroundColor(Color.YELLOW);
+        v1.setBackgroundColor(Color.rgb(235,122,50));
         this.bar.addView(v2);
+
         BorderSetter borderSetter= new BorderSetter(2,Color.BLACK);
+        BorderSetter borderSetter2= new BorderSetter(3,Color.rgb(230,203,72));
+
+        borderSetter2.setBorder(this.bar);
         borderSetter.setBorder(this.bar);
-        v2.setBackgroundColor(Color.BLUE);
+        v2.setBackgroundColor(Color.rgb(238,234,235));
 
         frame.getLayoutParams().width=400;
 

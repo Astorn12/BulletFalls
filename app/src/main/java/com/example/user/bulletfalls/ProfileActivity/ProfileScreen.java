@@ -1,23 +1,17 @@
 package com.example.user.bulletfalls.ProfileActivity;
 
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.Database.DAO.ProfileDao;
-import com.example.user.bulletfalls.Database.DAO.StockDao;
 import com.example.user.bulletfalls.R;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class ProfileScreen extends AppCompatActivity {
@@ -55,7 +49,7 @@ public class ProfileScreen extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         layoutParam.setMargins(5,10,10,5);
-        //StockDao sd= new StockDao(this);
+        //StockRepository sd= new StockRepository(this);
         UserProfile userProfile= new UserProfile(this);
         //List<MutablePair<Currency,Integer>> list = sd.getAll();
         List<MutablePair<Currency,Integer>> list = userProfile.getStock();

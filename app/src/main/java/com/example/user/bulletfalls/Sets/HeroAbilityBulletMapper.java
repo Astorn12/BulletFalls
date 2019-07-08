@@ -5,7 +5,7 @@ import android.content.Context;
 import com.example.user.bulletfalls.Enums.AE;
 import com.example.user.bulletfalls.Enums.BE;
 import com.example.user.bulletfalls.Enums.HE;
-import com.example.user.bulletfalls.KlasyPomocnicze.FileSupporter;
+import com.example.user.bulletfalls.Supporters.FileSupporter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
@@ -26,7 +26,7 @@ public class HeroAbilityBulletMapper {
 
 
 
-    /*-----------------------------Load & Save---------------------------*/
+    /*-----------------------------load & save---------------------------*/
     public static void Load(Context context)
     {
         String s=FileSupporter.LoadStrinFromFile(path,context);
@@ -112,12 +112,12 @@ public class HeroAbilityBulletMapper {
          habList.add(soos);
 
          HeroAB stanek= new HeroAB("Stan Pines");
-         stanek.setAvaillableAbilitiesenums( Arrays.asList(AE.FIRSTSUMMON));
+         stanek.setAvaillableAbilitiesenums( Arrays.asList(AE.FIRSTSUMMON,AE.FULLCOUNTER));
          stanek.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(stanek);
 
          HeroAB wendy= new HeroAB("Wendy Corduroy");
-         wendy.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         wendy.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.TIMEMACHINE));
          wendy.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(wendy);
 
@@ -137,7 +137,7 @@ public class HeroAbilityBulletMapper {
          habList.add(loglandgirl);
 
          HeroAB quentintrembley= new HeroAB("Quentin Trembley");
-         quentintrembley.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         quentintrembley.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.DINOSUMMON));
          quentintrembley.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(quentintrembley);
 

@@ -6,36 +6,36 @@ import android.os.Handler;
 import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.GameManagement.Game;
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("supershoot")
 public class SuperShoot implements DoToCharacterStrategy{
-    BulletSpecyfication bullet;
+    BulletSpecyfication bulletSpecyfication;
     String name;
     public SuperShoot(Bullet bullet)
     {
-        this.bullet=new BulletSpecyfication(bullet);
+        this.bulletSpecyfication =new BulletSpecyfication(bullet);
 
     }
     public SuperShoot(){}
     @Override
     public void doToCharacter(Character character) {
 
-        AnimationDrawable a=character.superShootAnimation();
+        AnimationDrawable a= character.superShootAnimation();
         if(a!=null)
-     checkIfAnimationDoner(character.superShootAnimation(),character);
+     checkIfAnimationDoner(character.superShootAnimation(), character);
         else superShoot(character);
 
 
     }
 
-    public BulletSpecyfication getBullet() {
-        return bullet;
+    public BulletSpecyfication getBulletSpecyfication() {
+        return bulletSpecyfication;
     }
 
-    public void setBullet(BulletSpecyfication bullet) {
-        this.bullet = bullet;
+    public void setBulletSpecyfication(BulletSpecyfication bulletSpecyfication) {
+        this.bulletSpecyfication = bulletSpecyfication;
     }
 
     private void checkIfAnimationDoner(AnimationDrawable anim, final Character character){
@@ -46,7 +46,7 @@ public class SuperShoot implements DoToCharacterStrategy{
         h.postDelayed(new Runnable(){
             public void run(){
                 if (a.getCurrent() != a.getFrame(a.getNumberOfFrames() - 1)){
-                    checkIfAnimationDoner(a,character);
+                    checkIfAnimationDoner(a, character);
                 } else{
                 superShoot(character);
                 }
@@ -56,12 +56,12 @@ public class SuperShoot implements DoToCharacterStrategy{
 
     public void superShoot(Character character)
     {
-        Bullet bulletn=bullet.getConvertedBullet(character.getContext()).clone();
+        Bullet bulletn= bulletSpecyfication.getConvertedBullet(character.getContext()).clone();
         bulletn.setStartingPoint(character.getStartingPointForBullet());
         character.execute();
         bulletn.born();
         bulletn.setFrame(character.getFrame());
-        ((Game)character.getContext()).getController().addBullet(bulletn);
+        ((Game) character.getContext()).getController().addBullet(bulletn);
         character.setShootAble(true);
         character.setMoveAble(true);
     }

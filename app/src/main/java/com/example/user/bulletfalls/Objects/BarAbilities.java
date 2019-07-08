@@ -1,5 +1,6 @@
 package com.example.user.bulletfalls.Objects;
 
+import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Arrays;
@@ -8,16 +9,16 @@ import java.util.List;
 
 public class BarAbilities {
 
-    List<Ability> abilities;
+    List<AbilitySpecyfication> abilities;
     //GameController controller;
-    public BarAbilities(Ability ability1,Ability ability2,Ability ability3)
+    public BarAbilities(AbilitySpecyfication abilitySpecyfication1, AbilitySpecyfication abilitySpecyfication2, AbilitySpecyfication abilitySpecyfication3)
     {
-        this.abilities= Arrays.asList(ability1.clone(),ability2.clone(),ability3.clone());
+        this.abilities= Arrays.asList(abilitySpecyfication1.clone(), abilitySpecyfication2.clone(), abilitySpecyfication3.clone());
     }
-    public BarAbilities(List<Ability> abs)
+    public BarAbilities(List<AbilitySpecyfication> abs)
     {
         abilities= new LinkedList<>();
-        for(Ability a: abs)
+        for(AbilitySpecyfication a: abs)
         {
             abilities.add(a.clone());
         }
@@ -28,27 +29,27 @@ public class BarAbilities {
     {
 
     }
-    public List<Ability> getAbilities()
+    public List<AbilitySpecyfication> getAbilities()
     {
         return abilities;
     }
     @JsonIgnore
-    public Ability getFirstAbility()
+    public AbilitySpecyfication getFirstAbility()
     {
         return abilities.get(0);
     }
     @JsonIgnore
-    public Ability getSecondAbility()
+    public AbilitySpecyfication getSecondAbility()
     {
         return abilities.get(1);
     }
     @JsonIgnore
-    public Ability getThirdAbility()
+    public AbilitySpecyfication getThirdAbility()
     {
         return abilities.get(2);
     }
 
-    public Ability getAbility(int i)//wartość i jest wartością z punktu widzenia użytkownika czyli pierwsza abilitka traktowana jest jako numer 1 a nie 0
+    public AbilitySpecyfication getAbility(int i)//wartość i jest wartością z punktu widzenia użytkownika czyli pierwsza abilitka traktowana jest jako numer 1 a nie 0
     {
         return abilities.get(i-1);
     }

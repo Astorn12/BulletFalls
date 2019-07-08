@@ -7,9 +7,10 @@ import android.widget.FrameLayout;
 import com.example.user.bulletfalls.Enums.BE;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
+import com.example.user.bulletfalls.GameManagement.EyeOnGame;
 import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Enums.Shape;
-import com.example.user.bulletfalls.Specyfications.Bullets.RotateBulletSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.RotateBulletSpecyfication;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage.NoneBulletDoToCharacterStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.BulletMoveStrategy;
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
@@ -27,16 +28,16 @@ public class RotateBullet extends Bullet {
    // Matrix matrix;
     int startingRotation;
     int rotationMeter;
-    public RotateBullet(String name, Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, boolean collisionAble, int rotationSpeed, BulletMoveStrategy bulletMoveStrategy, Shape shape, Permission perm, Rarity rarity, PossesStrategy possesStrategy) {
-        super(name,context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, collisionAble,bulletMoveStrategy,shape,new NoneBulletDoToCharacterStrategy(),perm,rarity,possesStrategy);
+    public RotateBullet(String name, Context context, int power, int speed, Point startingPoint, int width, int height,  int imageResource, FrameLayout frame, boolean collisionAble, int rotationSpeed, BulletMoveStrategy bulletMoveStrategy, Shape shape, Permission perm, Rarity rarity, PossesStrategy possesStrategy) {
+        super(name,context, power, speed, startingPoint, width, height,  imageResource, frame, collisionAble,bulletMoveStrategy,shape,new NoneBulletDoToCharacterStrategy(),perm,rarity,possesStrategy);
         this.rotationSpeed=rotationSpeed;
         construktorEking();
      //   this.matrix=new Matrix();
        // this.setScaleType(ImageView.ScaleType.MATRIX);
 
     }
-    public RotateBullet(BE be, Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, boolean collisionAble, int rotationSpeed, BulletMoveStrategy bulletMoveStrategy, Shape shape, Permission perm, Rarity rarity, PossesStrategy possesStrategy) {
-        this(be.getValue(),context, power, speed, startingPoint, width, height, randeringFrequency, imageResource, frame, collisionAble,rotationSpeed,bulletMoveStrategy,shape,perm,rarity,possesStrategy);
+    public RotateBullet(BE be, Context context, int power, int speed, Point startingPoint, int width, int height,  int imageResource, FrameLayout frame, boolean collisionAble, int rotationSpeed, BulletMoveStrategy bulletMoveStrategy, Shape shape, Permission perm, Rarity rarity, PossesStrategy possesStrategy) {
+        this(be.getValue(),context, power, speed, startingPoint, width, height,  imageResource, frame, collisionAble,rotationSpeed,bulletMoveStrategy,shape,perm,rarity,possesStrategy);
 
 
     }
@@ -65,7 +66,7 @@ public class RotateBullet extends Bullet {
     }
 
     @Override
-    public void move()
+    public void move(EyeOnGame eyeOnGame)
     {
         ((Game)this.getContext()).setX(this,(int)(getX()+speed));
         rotate();
@@ -118,7 +119,7 @@ public class RotateBullet extends Bullet {
     @Override
     public RotateBullet clone()
     {
-        return new RotateBullet(this.getName(),this.getContext(),this.power,this.speed,this.getStartingPoint(),this.width,this.height,0,imageResources,this.frame,this.collisionAble,this.rotationSpeed,new Horizontal(),this.getShape(),this.getPermission(),Rarity.STARTING,this.getPossesStrategy());
+        return new RotateBullet(this.getName(),this.getContext(),this.power,this.speed,this.getStartingPoint(),this.width,this.height,imageResources,this.frame,this.collisionAble,this.rotationSpeed,new Horizontal(),this.getShape(),this.getPermission(),Rarity.STARTING,this.getPossesStrategy());
     }
 
     public int getRotationMeter() {
@@ -164,7 +165,7 @@ public class RotateBullet extends Bullet {
             finalDamage=(int)((float)finalDamage/2);
         }
         finalDamage+=rotationSpeed;
-        System.out.println("Obrazenia zadane przez sikiere: "+finalDamage);
+
         character.getDamage(finalDamage);
         return finalDamage;
     }

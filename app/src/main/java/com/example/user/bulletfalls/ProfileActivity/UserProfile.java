@@ -7,12 +7,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.Objects.Ability;
+import com.example.user.bulletfalls.Database.Data.StockRepository;
+import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
 import com.example.user.bulletfalls.Objects.Bullet;
-import com.example.user.bulletfalls.Database.DAO.CurrencyEnum;
-import com.example.user.bulletfalls.Database.DAO.LevelDao;
-import com.example.user.bulletfalls.Database.DAO.ProfileDao;
-import com.example.user.bulletfalls.Database.DAO.StockDao;
+import com.example.user.bulletfalls.Database.Data.CurrencyEnum;
+import com.example.user.bulletfalls.Database.Data.LevelRepository;
+import com.example.user.bulletfalls.Database.Data.ProfileRepository;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.ArchivContainer;
@@ -61,7 +61,7 @@ public class UserProfile {
 
     public void load(Context context)
     {
-        ProfileDao fd= new ProfileDao(context);
+        ProfileRepository fd= new ProfileRepository(context);
         UserProfile temporary=fd.getById(1);
         this.name=temporary.getName();
         this.level=temporary.getLevel();
@@ -220,9 +220,9 @@ public class UserProfile {
 
     private void save(Context context)
     {
-        ProfileDao pd= new ProfileDao(context);
+        ProfileRepository pd= new ProfileRepository(context);
         pd.update(this);
-        StockDao sd= new StockDao(context);
+        StockRepository sd= new StockRepository(context);
         sd.update(this.stock);
     }
 
@@ -261,12 +261,12 @@ public class UserProfile {
         }
         return false;
     }
-    public boolean buy(Ability ability)
+    public boolean buy(AbilitySpecyfication abilitySpecyfication)
     {
-        if(ability.getPossesStrategy().tryToPosses(this))
+        if(abilitySpecyfication.getPossesStrategy().tryToPosses(this))
         {
-            ability.setPermission(Permission.YES);
-            AbilitySet.getInstance().givePermission(ability,context);
+            abilitySpecyfication.setPermission(Permission.YES);
+            AbilitySet.getInstance().givePermission(abilitySpecyfication,context);
             return true;
         }
         return false;
@@ -281,8 +281,8 @@ public class UserProfile {
         while(this.exp+e>=level.getRequiredXp())
         {
             e=this.exp+e-level.getRequiredXp();
-            LevelDao levelDao= new LevelDao(context);
-            this.level=levelDao.getNextLevel(this.level);
+            LevelRepository levelRepository = new LevelRepository(context);
+            this.level= levelRepository.getNextLevel(this.level);
             this.exp=0;
         }
 

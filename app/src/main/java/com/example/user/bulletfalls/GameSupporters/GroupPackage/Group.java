@@ -41,7 +41,7 @@ public class Group {
 
     public void boost(Hero hero)
     {
-        groupAbility.boostHero(boostTable.getBoostCount(name),hero);
+        groupAbility.boostHero(boostTable.getBoostCount(name), hero);
     }
 
 

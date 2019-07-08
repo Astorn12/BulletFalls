@@ -2,9 +2,8 @@ package com.example.user.bulletfalls.ProfileActivity;
 
 import android.content.Context;
 
-import com.example.user.bulletfalls.Database.DAO.CurrencyDao;
-import com.example.user.bulletfalls.Database.DAO.CurrencyEnum;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.example.user.bulletfalls.Database.Data.CurrencyRepository;
+import com.example.user.bulletfalls.Database.Data.CurrencyEnum;
 
 
 public class Currency {
@@ -28,7 +27,7 @@ public class Currency {
     public Currency (CurrencyEnum currencyEnum,Context context)
     {
         this(currencyEnum);
-        CurrencyDao currencyDao= new CurrencyDao(context);
+        CurrencyRepository currencyDao= new CurrencyRepository(context);
         this.resource=currencyDao.getCurrency(this.name).getResource();
 
     }
@@ -44,14 +43,14 @@ public class Currency {
     public Currency (String name,Context context)
     {
         this(name);
-        CurrencyDao currencyDao= new CurrencyDao(context);
+        CurrencyRepository currencyDao= new CurrencyRepository(context);
         this.resource=currencyDao.getCurrency(this.name).getResource();
 
     }
 
     public void loadImageRessource(Context context)
     {
-        CurrencyDao currencyDao= new CurrencyDao(context);
+        CurrencyRepository currencyDao= new CurrencyRepository(context);
         this.resource=currencyDao.getCurrency(this.name).getResource();
     }
 

@@ -3,6 +3,7 @@ package com.example.user.bulletfalls.ShopPackage;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -18,8 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
 import com.example.user.bulletfalls.Objects.Ability;
-import com.example.user.bulletfalls.Objects.AbilityView;
 import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.FragmentsSlider.SlidingTabLayout;
@@ -58,7 +59,6 @@ public class ShopShelfsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_shop_shelfs, container, false);
     }
 
@@ -82,6 +82,9 @@ public class ShopShelfsFragment extends Fragment {
         // it's PagerAdapter set.
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
+
+        //mSlidingTabLayout.get
+
         main= (FrameLayout) view.findViewById(R.id.main);
 
 
@@ -92,16 +95,17 @@ public class ShopShelfsFragment extends Fragment {
 
     class SamplePagerAdapter extends PagerAdapter {
         List<Hero> stock;
-        List<Ability> abilityStock;
+        List<AbilitySpecyfication> abilitySpecyficationStock;
         List<Bullet> bulletStock;
         public SamplePagerAdapter()
         {
             stock= new LinkedList<>();
-            abilityStock=new LinkedList<>();
-            bulletStock= new LinkedList<>();
+            abilitySpecyficationStock =new LinkedList<>();
+            bulletStock = new LinkedList<>();
 
             choseStock(4);
             popupWindow= new PopupWindow();
+
         }
         /**
          * @return the number of pages to display
@@ -174,6 +178,10 @@ public class ShopShelfsFragment extends Fragment {
             LinearLayout view2= (LinearLayout) view.findViewById(R.id.linearLayout2);
             LinearLayout view3= (LinearLayout) view.findViewById(R.id.linearLayout3);
             LinearLayout view4= (LinearLayout) view.findViewById(R.id.linearLayout4);
+            view1.setGravity(Gravity.CENTER);
+            view2.setGravity(Gravity.CENTER);
+            view3.setGravity(Gravity.CENTER);
+            view4.setGravity(Gravity.CENTER);
             return Arrays.asList(view1,view2,view3,view4);
         }
 
@@ -194,22 +202,22 @@ public class ShopShelfsFragment extends Fragment {
                     ((LinearLayout) ll.getChildAt(0)).addView(heroName);
                     heroName.setGravity(Gravity.CENTER_HORIZONTAL);
                     if(pointer.getClass().equals(Hero.class)) {
-                        Hero hero=(Hero)pointer;
+                        Hero hero =(Hero)pointer;
                         heroName.setText(hero.getName());
                         setCost(hero, footer);
                         addListener(footer, hero);
                     }else if(pointer.getClass().equals(Bullet.class)){
-                        Bullet bullet= (Bullet)pointer;
+                        Bullet bullet = (Bullet)pointer;
                         heroName.setText(bullet.getName());
                         setCost(bullet, footer);
-                        addListener(footer,bullet);
+                        addListener(footer, bullet);
 
-                    }else if(pointer.getClass().equals(Ability.class)){
-                        AbilityView abilityView= (AbilityView)pointer;
+                    }else if(pointer.getClass().equals(AbilitySpecyfication.class)){
+                        Ability ability = (Ability)pointer;
 
-                        heroName.setText(abilityView.getName());
-                        setCost(abilityView, footer);
-                        addListener(footer, abilityView);
+                        heroName.setText(ability.getName());
+                        setCost(ability, footer);
+                        addListener(footer, ability);
                     }
                     //ll.addView(heroName);
 
@@ -248,7 +256,7 @@ public class ShopShelfsFragment extends Fragment {
             List<LinearLayout> linears= getSelfs(view);
             for(LinearLayout ll : linears) {
                 int index=linears.indexOf(ll);
-                if(index<bulletStock.size()) {
+                if(index< bulletStock.size()) {
                     LinearLayout footer = (LinearLayout) ll.getChildAt(1);
                     LinearLayout header = (LinearLayout) ll.getChildAt(0);
                     footer.setGravity(Gravity.CENTER);
@@ -270,11 +278,11 @@ public class ShopShelfsFragment extends Fragment {
             List<LinearLayout> linears= getSelfs(view);
             for(LinearLayout ll : linears) {
                 int index=linears.indexOf(ll);
-                if(index<abilityStock.size()) {
+                if(index< abilitySpecyficationStock.size()) {
                     LinearLayout footer = (LinearLayout) ll.getChildAt(1);
                     footer.setGravity(Gravity.CENTER);
-                    Ability ability = abilityStock.get(linears.indexOf(ll));
-                    AbilityView pointer = new AbilityView(getContext(), ability);
+                    AbilitySpecyfication abilitySpecyfication = abilitySpecyficationStock.get(linears.indexOf(ll));
+                    Ability pointer = new Ability(getContext(), abilitySpecyfication);
                     pointer.setColorFilter(Color.BLACK);
                     ((LinearLayout) ll.getChildAt(0)).addView(pointer);
                     pointer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
@@ -326,7 +334,8 @@ public class ShopShelfsFragment extends Fragment {
             private void choseHeroes(int sizeOfStock)
             {
                 List<Hero>heroeList=HeroesSet.getHeroesList(getContext());
-                List<Hero> heroes= new LinkedList<>();
+
+                List<Hero> heroes = new LinkedList<>();
                 for(Hero h:heroeList)
                 {
                     if(h.getPermission().equals(Permission.NOT))
@@ -349,10 +358,10 @@ public class ShopShelfsFragment extends Fragment {
             }
             private void  choseAbilities(int sizeOfStock)
             {
-                List<Ability>abilitieList=AbilitySet.getInstance().getAbilityList();
+                List<AbilitySpecyfication>abilitieList=AbilitySet.getInstance().getAbilitySpecyficationList();
 
-                List<Ability> abilities= new LinkedList<>();
-                for(Ability a:abilitieList)
+                List<AbilitySpecyfication> abilities= new LinkedList<>();
+                for(AbilitySpecyfication a:abilitieList)
                 {
                     if(a.getPermission().equals(Permission.NOT))
                     {
@@ -365,7 +374,7 @@ public class ShopShelfsFragment extends Fragment {
                         int n=getId(abilities.size());
                         if (n<abilities.size()) {
 
-                            abilityStock.add(abilities.get(n));
+                            abilitySpecyficationStock.add(abilities.get(n));
                             abilities.remove(n);
                             i--;
                         }
@@ -374,9 +383,9 @@ public class ShopShelfsFragment extends Fragment {
             }
             private void choseBullets(int sizeOfStock)
             {
-                List<Bullet>bulletList=BulletSet.getBulletList(getContext());
-                List<Bullet> bullets= new LinkedList<>();
-                for(Bullet b:bulletList)
+                List<Bullet> bulletList =BulletSet.getBulletList(getContext());
+                List<Bullet> bullets = new LinkedList<>();
+                for(Bullet b: bulletList)
                 {
                     if(b.getPermission().equals(Permission.NOT))
                     {
@@ -450,9 +459,9 @@ public class ShopShelfsFragment extends Fragment {
                         {
                         }
                     }
-                    else if( hero.getClass().equals(AbilityView.class))
+                    else if( hero.getClass().equals(Ability.class))
                     {
-                        if(userProfile.buy(((AbilityView) hero).getAbility()))
+                        if(userProfile.buy(((Ability) hero).getAbilitySpecyfication()))
                         {
                         }
                     }

@@ -4,7 +4,7 @@ import com.example.user.bulletfalls.Objects.Hero;
 
 public class GroupHealAbility implements GroupAbility {
     @Override
-    public void boostHero(int boost,Hero hero) {
+    public void boostHero(int boost, Hero hero) {
 
     }
 }

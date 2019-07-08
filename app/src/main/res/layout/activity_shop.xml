@@ -5,22 +5,24 @@
     android:id="@+id/shopmain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/norefund"
+
     android:fillViewport="true"
     android:orientation="vertical"
     tools:context=".ShopPackage.Shop"
+    android:background="#909090"
     tools:layout_editor_absoluteY="81dp">
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="#909090"
         >
     <LinearLayout
         android:id="@+id/wallet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@color/colorAccent">
+        >
     </LinearLayout>
     </HorizontalScrollView>
 

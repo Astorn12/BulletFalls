@@ -27,8 +27,8 @@ public class NumberChangeBullet extends ChangeBullet implements Observer {
     }*/
     @Override
     public void doToCharacter(Character character) {
-        this.character=character;
-        this.standardBullet=character.getBullet();
+        this.character = character;
+        this.standardBullet = character.getBullet();
         character.setBullet(this.getBulletSpecyfication());
         character.addObserver(this);
         this.currentAmunition=clip;
@@ -51,14 +51,14 @@ public class NumberChangeBullet extends ChangeBullet implements Observer {
        @Override
     public void announce() {
         this.currentAmunition--;
-        if(currentAmunition<=0&&character!=null)
+        if(currentAmunition<=0&& character !=null)
         {
             character.setBullet(this.standardBullet);
             //character.removeObserver(this);
             character.cleanObserver(this);
 
-            character=null;
-            standardBullet=null;
+            character =null;
+            standardBullet =null;
         }
 
     }

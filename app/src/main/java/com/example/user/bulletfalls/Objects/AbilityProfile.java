@@ -9,7 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.user.bulletfalls.Sets.AbilitySet;
-import com.example.user.bulletfalls.KlasyPomocnicze.OnSwipeTouchListener;
+import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
+import com.example.user.bulletfalls.Supporters.OnSwipeTouchListener;
 import com.example.user.bulletfalls.R;
 
 public class AbilityProfile extends AppCompatActivity {
@@ -22,11 +23,11 @@ public class AbilityProfile extends AppCompatActivity {
 
         Intent intent= getIntent();
         String  name=intent.getStringExtra("name");
-        Ability ability=AbilitySet.getInstance().getAbility(name);
+        AbilitySpecyfication abilitySpecyfication =AbilitySet.getInstance().getAbility(name);
 
         abilityView=(ImageView)this.findViewById(R.id.futureability);
         abilityName=(TextView)this.findViewById(R.id.abilityname);
-        abilityView.setImageResource(ability.getImageResources());
+        abilityView.setImageResource(abilitySpecyfication.getImageResources());
         abilityName.setText(name);
 
 

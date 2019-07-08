@@ -15,15 +15,18 @@ import android.widget.TextView;
 import com.example.user.bulletfalls.Enums.CharacterPositioning;
 import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.Enums.Kind;
+import com.example.user.bulletfalls.GameBiznesFunctions.Resistance.IResistance;
+import com.example.user.bulletfalls.GameManagement.EyeOnGame;
 import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Interfaces.Observed;
 import com.example.user.bulletfalls.Interfaces.Observer;
-import com.example.user.bulletfalls.KlasyPomocnicze.Dimension;
-import com.example.user.bulletfalls.KlasyPomocnicze.DrawableConverter;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.CharacterSpecyfication;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.AppearActionStrategy.AppearAction;
+import com.example.user.bulletfalls.Supporters.Dimension;
+import com.example.user.bulletfalls.Supporters.DrawableConverter;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Specyfications.Bullets.BulletSpecyfication;
-import com.example.user.bulletfalls.Specyfications.Characters.CharacterSpecyfication;
-import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.DoToBulletStrategy;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.CharacterMoveStrategiesPackage.DoToBulletStrategy;
 import com.example.user.bulletfalls.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -35,7 +38,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Character extends ViewElement implements Observed {
+public abstract class Character extends Dynamic implements Observed {
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
             include = JsonTypeInfo.As.PROPERTY,
@@ -43,7 +46,7 @@ public abstract class Character extends ViewElement implements Observed {
     @JsonSubTypes({
             @JsonSubTypes.Type(value = Hero.class, name = "hero"),
             @JsonSubTypes.Type(value = Enemy.class, name = "enemy"),
-            @JsonSubTypes.Type(value = SummonedBeast.class, name = "summonedbeast"),
+            @JsonSubTypes.Type(value = Beast.class, name = "beast"),
 
     })
     @JsonView(Views.Normal.class)
@@ -53,8 +56,7 @@ public abstract class Character extends ViewElement implements Observed {
     int shootingCounter;
     @JsonView(Views.Normal.class)
     int level;
-    @JsonView(Views.Normal.class)
-    int resistance;
+    IResistance resistance;
      TextView textLife;
     @JsonView(Views.Normal.class)
     Bullet bullet;
@@ -86,9 +88,10 @@ public abstract class Character extends ViewElement implements Observed {
     boolean immune=false;
     String story;
     Description description;
-
-    public Character(Context context, int power, int speed, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet bullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description) {
-        super(context, power, speed, null, width, height, randeringFrequency, imageResource, frame,name);
+    List<Integer> dressUps;
+    AppearAction appearAction;
+    public Character(Context context, int power, int speed, int width, int height, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, IResistance resistance, Bullet bullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description,AppearAction appearAction) {
+        super(context, power, speed, null, width, height,  imageResource, frame,name);
         this.life=life;
         this.shootingSpeed=shootingSpeed;
         this.shootingCounter=0;
@@ -96,8 +99,8 @@ public abstract class Character extends ViewElement implements Observed {
         this.resistance=resistance;
         textLife=new TextView(this.getContext());
 
-        if(bullet!=null)this.bullet=bullet;
-        else {//bullet= new Bullet(this.getContext(),1,20,this.getStartingPointForBullet(),50,50,20,R.drawable.blue,this.frame,this.controller);  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind}
+        if(bullet !=null)this.bullet = bullet;
+        else {//bullet= new BulletSpecyfication(this.getContext(),1,20,this.getStartingPointForBullet(),50,50,20,R.drawable.blue,this.frame,this.controller);  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind}
         }
         this.name=name;
         this.kind=kind;
@@ -113,30 +116,33 @@ public abstract class Character extends ViewElement implements Observed {
 
         String miniatureName=getResources().getResourceName(this.getImageResources())+"miniature";
         this.miniature=dc.getDrawableByName(getContext(),miniatureName);
-
+        this.dressUps= new LinkedList<>();
+        this.appearAction=appearAction;
     }
-   // public Character(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, Bullet bullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description) {
+   // public CharacterSpecyfication(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, int resistance, BulletSpecyfication bullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description) {
    //     this(context,  power,  speed,  startingPoint, width, height, randeringFrequency, imageResource,frame,  life, shootingSpeed,  level, resistance,  bullet, name, kind,  groupNames, position,doToBulletStrategy, indyvidualHeroMarker, description,R.drawable.defaultminiture);
   //  }
-    public Character(Context context, CharacterSpecyfication jsonCharacter) {
-            super(context,jsonCharacter);
-            this.life=jsonCharacter.getLife();
-            this.shootingSpeed=jsonCharacter.getShootingSpeed();
-            this.level=jsonCharacter.getLevel();
-            this.resistance=jsonCharacter.getResistance();
-            this.groupNames =jsonCharacter.getGroupNames();
-            this.name=jsonCharacter.getName();
-            this.kind=jsonCharacter.getKind();
-            this.doToBulletStrategy=jsonCharacter.getDoToBulletStrategy();
+    public Character(Context context, CharacterSpecyfication jsonCharacterSpecyfication) {
+            super(context, jsonCharacterSpecyfication);
+            this.life= jsonCharacterSpecyfication.getLife();
+            this.shootingSpeed= jsonCharacterSpecyfication.getShootingSpeed();
+            this.level= jsonCharacterSpecyfication.getLevel();
+            this.resistance= jsonCharacterSpecyfication.getResistance();
+            this.groupNames = jsonCharacterSpecyfication.getGroupNames();
+            this.name= jsonCharacterSpecyfication.getName();
+            this.kind= jsonCharacterSpecyfication.getKind();
+            this.doToBulletStrategy= jsonCharacterSpecyfication.getDoToBulletStrategy();
             construktorEking();
-            this.irrealHeight=jsonCharacter.getIrrealHeight();
-            this.irrealWidth=jsonCharacter.getIrrealWidth();
-            this.indyvidualHeroMarker=jsonCharacter.getIndyvidualHeroMarker();
-            this.story=jsonCharacter.getStory();
-            this.description=jsonCharacter.getDescription();
-            this.miniature=jsonCharacter.getMiniature();
-            this.position=jsonCharacter.getCharacterPositioning();
-            this.bullet= new Bullet(this.getContext(),jsonCharacter.getBullet());
+            this.irrealHeight= jsonCharacterSpecyfication.getIrrealHeight();
+            this.irrealWidth= jsonCharacterSpecyfication.getIrrealWidth();
+            this.indyvidualHeroMarker= jsonCharacterSpecyfication.getIndyvidualHeroMarker();
+
+            this.description= jsonCharacterSpecyfication.getDescription();
+            this.miniature= jsonCharacterSpecyfication.getMiniature();
+            this.position= jsonCharacterSpecyfication.getCharacterPositioning();
+            this.bullet = new Bullet(this.getContext(), jsonCharacterSpecyfication.getBulletSpecyfication());
+            this.dressUps= new LinkedList<>();
+            setAppearAction(jsonCharacterSpecyfication.getAppearAction());
       }
     private void irrealDefaultSetter()
         {
@@ -150,13 +156,13 @@ public abstract class Character extends ViewElement implements Observed {
             textLife=new TextView(this.getContext());
 
         }
-        public void startingMove()
+        public void startingMove(EyeOnGame eyeOnGame)
         {
             if(isMoveAble())
-            move();
+            move(eyeOnGame);
         }
     @Override
-    protected void move() {
+    protected void move(EyeOnGame eyeOnGame) {
 
     }
     public Bullet startShooting() {
@@ -176,16 +182,15 @@ public abstract class Character extends ViewElement implements Observed {
         }
     }
     public void lostLife(int x) {
-        if(resistance<x)
-        this.life-=(x-this.resistance);
+
+        this.life-=this.resistance.reduce(x);
         lifeChecking();
     }
     public int getDamage(int damage) {
         int d=0;
         if(!immune) {
-            d = damage - this.resistance;
-            if(d<5)d=5;/** Rezystancja działa, ale nie może obniżyć wartośći obrażeń poniżej poziomu 5 pkt*/
-            this.life -= d;
+            d=this.resistance.reduce(damage);
+            this.life -=d;
         }
             lifeChecking();
 
@@ -201,9 +206,10 @@ public abstract class Character extends ViewElement implements Observed {
        this.setX(this.startingPoint.x);
        this.setY(this.startingPoint.y);
        ((Game)getContext()).addLifeInformation(textLife);
+       this.appearAction.action((Game)getContext());
     }
     @Override
-    public ViewElement clone() {
+    public Dynamic clone() {
         return null;
     }
     public void uploatLifeView() {
@@ -221,18 +227,18 @@ public abstract class Character extends ViewElement implements Observed {
     public void setLevel(int level) {
         this.level = level;
     }
-    public int getResistance() {
+    public IResistance getResistance() {
         return resistance;
     }
     @JsonView(Views.Normal.class)
-    public void setResistance(int resistance) {
+    public void setResistance(IResistance resistance) {
         this.resistance = resistance;
     }
     public void boostResistance(int boost){
-        if(boost>0)
-        this.resistance+=boost;}
-    public void suppressResistance(int suppress){this.resistance-=suppress;
-    if(resistance<0)resistance=0;}
+        this.resistance.boost(boost);}
+    public void suppressResistance(int suppress){
+        this.resistance.suppress(suppress);
+    }
     public Bullet getBullet() {
         return bullet;
     }
@@ -243,7 +249,7 @@ public abstract class Character extends ViewElement implements Observed {
     @JsonIgnore
     public void setBullet(BulletSpecyfication bulletSpecyfication)
     {
-        this.bullet= new Bullet(this.getContext(),bulletSpecyfication);
+        this.bullet = new Bullet(this.getContext(), bulletSpecyfication);
         this.bullet.setFrame(this.getFrame());
     }
     public int getLife(){return this.life;}
@@ -265,12 +271,9 @@ public abstract class Character extends ViewElement implements Observed {
     }
     public void healAnimation()
     {
-        // Start the animation (looped playback by default).
         int oldId=this.getImageResources();
         int w= this.getLayoutParams().width;
         int h=this.getLayoutParams().height;
-        //((Game) this.getContext()).changeResourceForAnimation(this,R.drawable.heal_animation,oldId);
-       // ((Game) this.getContext()).changeResourceForAnimation(this,R.drawable.heal_animation,oldId);
         ((Game) this.getContext()).changeForegroundForAnimation(this,R.drawable.heal_animation);
 
         //AnimationDrawable heal=(AnimationDrawable)this.getDrawable();
@@ -370,16 +373,32 @@ public abstract class Character extends ViewElement implements Observed {
         this.cleanList.removeAll(cleanList);
 
     }
-    public void powerAnimation()//kod do czyszczenia, działa
-    {
-        int sp = this.speed;
-        this.speed = 0;
-        int oldId = this.getImageResources();
 
+    private String createAnimationString(String marker)
+    {
         String animation = this.name;
         animation = animation.replaceAll("\\s+", "");
         animation = animation.toLowerCase();
-        animation += "_animation";
+        animation+="_"+marker;
+        animation += "_animation";/**ustalanie strinaga animacji konwencja NAZWA BOHATERA+ _animation*/
+
+        return animation;
+    }
+    /** w przypadku wywoływania animacji przez zdarzenia w grze, do power animation będzie kodładany marker zdarzenia
+     * np na otrzymanie obrażań hero będzie reagował złapaniem się za brzuch, marker będzie wtedy może brzmień "shooted" postrzelony
+     * wtedy wywołujemy animację np na tremblina tremblin_shooted_animation
+     *
+     * Gdy aminacja wywoływana jest przez abulitkę, abilitka ma swoją nazwę wtedy marker może przyjmować wartość nazwy abilitki
+     * np znowu dla tremblina zostła wywołana abilitka z własnym markerem RandomSummon, wtedy aminacja będzie miała nazwę, tremblin_randomsummon_animation
+     * */
+    public void powerAnimation(String marker)
+    {
+        int sp = this.speed;/**zapisywanie orginalnej prędkości*/
+        this.speed = 0;/**zatrzymywanie postaci*/
+        int oldId = this.getImageResources();/**orginalny wygląd characteru*/
+
+
+        String animationName=createAnimationString(marker);/**nazwa animacji w folderze drawabl*/
 
         BitmapFactory.Options dimensions = new BitmapFactory.Options();
         dimensions.inJustDecodeBounds = true;
@@ -387,33 +406,39 @@ public abstract class Character extends ViewElement implements Observed {
 
         int h1;
         int w1;
+        /** Tutaj chodzi o jakieś te przekreśty z wielkością obrazka gdy jest animacja że on powinien być gorszej jakości
+         * żeby się płynnie ładowało*/
         if (irrealWidth != 0 && irrealHeight != 0) {
             h1 = this.irrealHeight;
             w1 = this.irrealWidth;
         } else {
             h1 = this.getDrawable().getIntrinsicHeight();
             w1 = this.getDrawable().getIntrinsicWidth();
+            System.out.println(this.getDrawable().getIntrinsicHeight());
         }
         Dimension oldDimension = new Dimension(getLayoutParams().width, getLayoutParams().height);
-
-        int id = this.getResources().getIdentifier(animation, "drawable", this.getContext().getPackageName());
+        /**sprawdzienie czy istnieje taka animacja*/
+        int id = this.getResources().getIdentifier(animationName, "drawable", this.getContext().getPackageName());
         if (id != 0)
         {
         ((Game) this.getContext()).changeResourceForAnimation(this, id, oldId);
 
-        AnimationDrawable trembley = (AnimationDrawable) this.getDrawable();
-
-        int ha = trembley.getFrame(1).getIntrinsicHeight();
-        int wa = trembley.getFrame(1).getIntrinsicWidth();
+        AnimationDrawable animation = (AnimationDrawable) this.getDrawable();
+            System.out.println(this.getDrawable().getIntrinsicHeight());
+        int ha = animation.getFrame(1).getIntrinsicHeight();
+        int wa = animation.getFrame(1).getIntrinsicWidth();
+           // System.out.println("Wymiary animacji: "+ this.getLayoutParams().width +" "+ this.getLayoutParams().height);
+            //System.out.println("Wymiary animacji: "+ w1+" "+ h1);
 
         int realwa = wa * this.getLayoutParams().width / w1;
         int realha = ha * this.getLayoutParams().height / h1;
-
+            System.out.println(this.getDrawable().getIntrinsicHeight());
         this.getLayoutParams().width = realwa;
         this.getLayoutParams().height = realha;
 
-        trembley.start();
-        checkIfAnimationDone(trembley, sp, oldId, oldDimension);
+        animation.start();
+        checkIfAnimationDone(animation, sp, oldId, oldDimension);
+            System.out.println(this.getDrawable().getIntrinsicHeight());
     }
     }
     protected AnimationDrawable CharacterAnimation(String animationName)
@@ -461,18 +486,17 @@ public abstract class Character extends ViewElement implements Observed {
         final AnimationDrawable a = anim;
         int timeBetweenChecks = 300;
         Handler h = new Handler();
-        final ViewElement i=this;
+        final Dynamic i=this;
         h.postDelayed(new Runnable(){
             public void run(){
                 if (a.getCurrent() != a.getFrame(a.getNumberOfFrames() - 1)){
                     checkIfAnimationDone(a,oldSpeed,id,dimension);
                 } else{
-                    // Toast.makeText(getContext(), "ANIMATION DONE!", Toast.LENGTH_SHORT).show();
                     speed=oldSpeed;
                     getLayoutParams().width=dimension.getWidth();
                     getLayoutParams().height=dimension.getHeight();
+                    ((Game) getContext()).rechangeImageAfterAnimation(i,id);
 
-                    ((Game) getContext()).changeResource(i,id);
                 }
             }
         }, timeBetweenChecks);
@@ -481,7 +505,7 @@ public abstract class Character extends ViewElement implements Observed {
         final AnimationDrawable a = anim;
         int timeBetweenChecks = 300;
         Handler h = new Handler();
-        final ViewElement i=this;
+        final Dynamic i=this;
         h.postDelayed(new Runnable(){
             public void run(){
                 if (a.getCurrent() != a.getFrame(a.getNumberOfFrames() - 1)){
@@ -592,11 +616,11 @@ public abstract class Character extends ViewElement implements Observed {
     }
 
     public boolean isFromGroup(GroupName groupName)
-    {
+    {if(this.groupNames!=null){
         for(GroupName g:this.groupNames)
         {
             if(g.equals(groupName))return true;
-        }
+        }}
 
         return false;
     }
@@ -609,4 +633,48 @@ public abstract class Character extends ViewElement implements Observed {
 
     public abstract CharacterSpecyfication getSpecyfication();
 
+    public void dressUp(int dress)
+    {
+        this.changeImageResource(dress);
+        this.dressUps.add(dress);
+    }
+
+    public void strip(int dress)
+    {
+        if(this.dressUps.get(this.dressUps.size()-1)==dress)
+          // if(this.getImageResources()==dress)
+           {
+
+               this.dressUps.remove(this.dressUps.indexOf(dress));
+               if(this.dressUps.size()>0)
+               {
+               int lastSeasonDress=this.dressUps.get(this.dressUps.size()-1);
+               if(this.getImageResources()==lastSeasonDress){
+                   /**nic nie trzeba zmieniać*/
+               }else {
+                   this.changeImageResource(lastSeasonDress);/**trzeba się zastanowaić czy nie change image resource*/
+               }}else/**to oznacza że tylko my zmieniliśmy dress bohatera i powinniśmy go teraz cofnąć*/
+               {
+                   this.changeImageResource(this.imageResources);
+               }
+           }else{//to oznacza że ktoś zrobił nam nakładkę przemiany i po prostu nasze wygasła w trakcie
+               this.dressUps.remove(this.dressUps.indexOf(dress));
+           }
+
+    }
+    public TextView getTextLife()
+    {
+        return this.textLife;
+    }
+
+    public AppearAction getAppearAction() {
+        return appearAction;
+    }
+    protected void setAppearAction(AppearAction appearAction) {
+        this.appearAction = appearAction;
+    }
+    public void changeAppearAction(AppearAction appearAction)
+    {
+        setAppearAction(appearAction);
+    }
 }

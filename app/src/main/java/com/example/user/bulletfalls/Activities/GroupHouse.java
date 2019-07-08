@@ -18,9 +18,9 @@ import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.Group;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupsContainer;
-import com.example.user.bulletfalls.GuiSupporters.BorderSetter;
+import com.example.user.bulletfalls.Supporters.GuiSupporters.BorderSetter;
 import com.example.user.bulletfalls.Sets.HeroesSet;
-import com.example.user.bulletfalls.KlasyPomocnicze.RomeLettersConverter;
+import com.example.user.bulletfalls.Supporters.RomeLettersConverter;
 import com.example.user.bulletfalls.Objects.Hero;
 import com.example.user.bulletfalls.R;
 

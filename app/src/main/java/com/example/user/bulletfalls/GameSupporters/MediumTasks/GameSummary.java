@@ -1,12 +1,12 @@
 package com.example.user.bulletfalls.GameSupporters.MediumTasks;
 
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
-import com.example.user.bulletfalls.Specyfications.Characters.HeroSpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
 
 public class GameSummary {
     private static GameSummary gameSummary= new GameSummary();
     Medium medium;
-    HeroSpecyfication heroSpecyfication;
+    HeroSpecyfication heroSpecyficationSpecyfication;
     String nameOfGame;
     Bounty bounty;
     private GameSummary(){}
@@ -16,16 +16,16 @@ public class GameSummary {
         return gameSummary;
     }
 
-    public void setSummary(Medium medium, HeroSpecyfication hero,String nameOfGame,Bounty bounty)
+    public void setSummary(Medium medium, HeroSpecyfication heroSpecyfication, String nameOfGame, Bounty bounty)
     {
         this.medium=medium;
         this.nameOfGame= nameOfGame;
-        this.heroSpecyfication=hero;
+        this.heroSpecyficationSpecyfication = heroSpecyfication;
         this.bounty=bounty;
     }
 
-    public HeroSpecyfication getHeroSpecyfication() {
-        return heroSpecyfication;
+    public HeroSpecyfication getHeroSpecyficationSpecyfication() {
+        return heroSpecyficationSpecyfication;
     }
 
     public String getNameOfGame() {
