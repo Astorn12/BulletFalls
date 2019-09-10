@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.user.bulletfalls.Objects.Ability;
 import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.GameSupporters.GameStrategy;
+import com.example.user.bulletfalls.Objects.Item;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Objects.Dynamic;
 
@@ -142,6 +143,9 @@ public class Game extends AppCompatActivity {
 
     }
 
+
+
+
     public void addLifeInformation(final TextView textView)
     {
         runOnUiThread(new Runnable() {
@@ -171,6 +175,21 @@ public class Game extends AppCompatActivity {
         });
     }
     public void removeObject(final Dynamic dynamic)
+    {
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Stuff that updates the UI
+                dynamic.setVisibility(View.GONE);
+                frame.removeView(dynamic);
+            }
+        });
+
+    }
+
+    public void removeObject(final ImageView dynamic)
     {
         runOnUiThread(new Runnable() {
 
@@ -343,6 +362,18 @@ public class Game extends AppCompatActivity {
         });
 
     }
+
+    public void setPoint(final ImageView vm, final Point point)
+    {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                vm.setX(point.x);
+                vm.setY(point.y);
+            }
+        });
+
+    }
     public void changeResource(final Dynamic dynamic, final int resource)
     {
         final Game pointer=this;
@@ -468,4 +499,5 @@ public class Game extends AppCompatActivity {
         super.onStop();
        // super.onDestroy();
     }
+
 }

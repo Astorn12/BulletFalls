@@ -28,9 +28,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Nieużywane.Menu"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".GameManagement.Game"
             android:screenOrientation="portrait" />
         <activity

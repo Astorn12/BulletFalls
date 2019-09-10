@@ -1,6 +1,7 @@
 package com.example.user.bulletfalls.GameSupporters.MediumTasks;
 
 import com.example.user.bulletfalls.Objects.WaitAbilitySpecyfication;
+import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
 import com.example.user.bulletfalls.Objects.Ability;
@@ -151,5 +152,9 @@ public class Medium  {
             }
         }
         return takenDamage;
+    }
+
+    public void registerItem(Currency currency) {
+        this.bounty.addItem(currency);
     }
 }

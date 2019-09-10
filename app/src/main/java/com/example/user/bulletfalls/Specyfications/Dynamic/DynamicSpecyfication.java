@@ -41,6 +41,7 @@ public class DynamicSpecyfication extends DisplayedSpecyfication {
         this.speed = speed;
         //this.width = width;
         this.height = height;
+        //this.width=30;
     }
 
     protected DynamicSpecyfication() {

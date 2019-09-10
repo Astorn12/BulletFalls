@@ -13,6 +13,7 @@ public class ImageScaler {
         imageView.setAdjustViewBounds(true);
     }
 
+
     public  void scaleByHeight(ImageView imageView,int height)
     {
         imageView.getLayoutParams().height=height;
@@ -20,4 +21,15 @@ public class ImageScaler {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setAdjustViewBounds(true);
     }
+
+    public  void scaleByHeight(ImageView imageView)
+    {
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT));
+        //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        //imageView.setAdjustViewBounds(true);
+    }
+
+
+
+
 }

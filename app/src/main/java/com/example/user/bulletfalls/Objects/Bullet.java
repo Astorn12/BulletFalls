@@ -97,7 +97,6 @@ public class Bullet extends Dynamic implements Comparable, PossesAble {
         if(getX()+getWidth()>frame.getWidth()||getX()<0||getY()+getHeight()>frame.getHeight()||getY()<0)
         {
             this.power=0;
-
         }
     }
     public void outOfScreenChecking()

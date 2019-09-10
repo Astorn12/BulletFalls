@@ -1,5 +1,8 @@
 package com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage;
 
+import android.widget.LinearLayout;
+
+import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Objects.Character;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -29,6 +32,15 @@ public class Mix implements BulletDoToCharacterStrategy{
     public BulletDoToCharacterStrategy clone() {
         return null;
     }
+
+    @Override
+    public void showOwnDescription(LinearLayout linearLayout) {
+        for(BulletDoToCharacterStrategy b:this.bulletAbilityList)
+        {
+            b.showOwnDescription(linearLayout);
+        }
+    }
+
     public List<BulletDoToCharacterStrategy> getBulletAbilityList() {
         return bulletAbilityList;
     }

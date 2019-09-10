@@ -28,15 +28,22 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.user.bulletfalls.Activities.GroupHouse;
 import com.example.user.bulletfalls.Enums.AE;
+import com.example.user.bulletfalls.Enums.BE;
 import com.example.user.bulletfalls.Enums.GroupName;
+import com.example.user.bulletfalls.Enums.Permission;
+import com.example.user.bulletfalls.Enums.Shape;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupsContainer;
 import com.example.user.bulletfalls.Sets.AbilitySet;
 import com.example.user.bulletfalls.Sets.BulletSet;
 import com.example.user.bulletfalls.Sets.HeroesSet;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
+import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.RotateBulletSpecyfication;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
+import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 import com.example.user.bulletfalls.Supporters.Dimension;
+import com.example.user.bulletfalls.Supporters.GuiSupporters.SupporterBackground;
 import com.example.user.bulletfalls.Supporters.OnSwipeTouchListener;
 import com.example.user.bulletfalls.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,6 +65,8 @@ public class ChosenHero extends AppCompatActivity {
     Hero chosenHero;
     LinkedList <FrameLayout> abilityViews= new LinkedList<>();
     LinkedList <FrameLayout> bullets= new LinkedList<>();
+    ImageView before;
+    ImageView next;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @SuppressLint("ClickableViewAccessibility")
@@ -71,6 +80,9 @@ public class ChosenHero extends AppCompatActivity {
         informationsOfHero=(LinearLayout) this.findViewById(R.id.informationohero);
         informationsOfHero.setBackgroundColor(Color.WHITE);
         informationsOfHero.setAlpha(0.5f);
+        //SupporterBackground supporterBackground= new SupporterBackground();
+       // supporterBackground.setTextViewBackground();
+
         bulletList=(LinearLayout) this.findViewById(R.id.bulletlist);
         abilityList=(LinearLayout)this.findViewById(R.id.abilitylist);
         final LinearLayout heroFrame=(LinearLayout) this.findViewById(R.id.heroFrame);
@@ -116,7 +128,78 @@ public class ChosenHero extends AppCompatActivity {
         });
         setHeroInfo();
         fillGroups();
+
+        before=(ImageView)this.findViewById(R.id.before);
+        next=(ImageView)this.findViewById(R.id.next);
+        final Activity ac=this;
+        before.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Hero newHero= getBeforeHero();
+                if(!newHero.equals(chosenHero))
+                {
+                    chosenHero=newHero;
+                heroName.setText(chosenHero.getName());
+                setHeroInfo();
+                Glide.with(ac)
+                        .load(chosenHero.getImageResources())
+                        .into(heroPhoto);
+                fillGroups();
+            }}
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Hero newHero = getNextHero();
+
+                if (!newHero.equals(chosenHero)) {
+                    chosenHero = newHero;
+                    heroName.setText(chosenHero.getName());
+                    setHeroInfo();
+                    Glide.with(ac)
+                            .load(chosenHero.getImageResources())
+                            .into(heroPhoto);
+                    fillGroups();
+                }
+            }
+        });
     }
+
+    private Hero getNextHero() {
+        List<Hero> markedList= HeroesSet.getMarkedList(this,chosenHero.getIndyvidualHeroMarker());
+
+        for(Hero h:markedList)
+        {
+            if(h.getName().equals(chosenHero.getName()))
+            {
+                if(markedList.indexOf(h)+1<markedList.size())
+                {
+                    return markedList.get(markedList.indexOf(h)+1);
+                }
+                else return markedList.get(0);
+            }
+        }
+        return null;
+    }
+
+    private Hero getBeforeHero() {
+        List<Hero> markedList= HeroesSet.getMarkedList(this,chosenHero.getIndyvidualHeroMarker());
+        for(Hero h:markedList)
+        {
+            if(h.getName().equals(chosenHero.getName()))
+            {
+                if(markedList.indexOf(h)-1>=0)
+                {
+                    return markedList.get(markedList.indexOf(h)-1);
+                }
+                else return markedList.get(markedList.size()-1);
+            }
+        }
+        return null;
+    }
+
+
     //load all availlable bullets, putting into viewlist and setting click listeners to each item
     @SuppressLint("ClickableViewAccessibility")
     private void loadBulletList()
@@ -127,8 +210,9 @@ public class ChosenHero extends AppCompatActivity {
         int i=bulletList.getChildCount();
         if(i==0)
         {
-            for(final Bullet b: bulletsFromDB)
+            for(int j=0;j<bulletsFromDB.size();j++)
             {
+                final Bullet b= bulletsFromDB.get(j);
                 final FrameLayout f= new FrameLayout(this);
                 f.addView(b);
                 BulletSet bulletSet= new BulletSet();
@@ -164,9 +248,6 @@ public class ChosenHero extends AppCompatActivity {
 
                         @Override
                         public void onClick() {
-                            //    System.out.println("onClick");
-
-
                             changeRestForegroundToNull(bullets);
 
                             tickView(f);
@@ -440,6 +521,7 @@ public class ChosenHero extends AppCompatActivity {
 
     private void setHeroInfo()
     {
+        informationsOfHero.removeAllViews();
         int fontSize=20;
         TextView t1= new TextView(this);
         t1.setText("HP ");
@@ -460,7 +542,7 @@ public class ChosenHero extends AppCompatActivity {
         t2.setTextSize(fontSize);
         t2.setGravity(Gravity.CENTER_HORIZONTAL);
         TextView i2= new TextView(this);
-        i2.setText(chosenHero.getResistance()+"");
+        i2.setText(chosenHero.getResistance().toString()+"");
         i2.setTextSize(fontSize);
         i2.setGravity(Gravity.CENTER_HORIZONTAL);
         LinearLayout l2= new LinearLayout(this);
@@ -498,12 +580,21 @@ public class ChosenHero extends AppCompatActivity {
         informationsOfHero.addView(l2);
         informationsOfHero.addView(l3);
         informationsOfHero.addView(l4);
+        i1.setTextColor(Color.BLACK);
+        i2.setTextColor(Color.BLACK);
+        i3.setTextColor(Color.BLACK);
+        i4.setTextColor(Color.BLACK);
+        t1.setTextColor(Color.BLACK);
+        t2.setTextColor(Color.BLACK);
+        t3.setTextColor(Color.BLACK);
+        t4.setTextColor(Color.BLACK);
         //informationsOfHero.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 
     public void fillGroups()
     {
         LinearLayout linearLayout= (LinearLayout) findViewById(R.id.groups);
+        linearLayout.removeAllViews();
         GroupsContainer gc= new GroupsContainer();
         for(final GroupName g: chosenHero.getGroupNames())
         {
@@ -528,7 +619,7 @@ public class ChosenHero extends AppCompatActivity {
             if(id==0) imageView.setColorFilter(Color.BLUE);
             linearLayout.addView(imageView);
         }
-        linearLayout.setBackgroundColor(Color.RED);
+        //linearLayout.setBackgroundColor(Color.RED);
 
     }
 

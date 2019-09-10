@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
 import com.example.user.bulletfalls.Objects.Ability;
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
@@ -21,6 +22,8 @@ import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
 import com.example.user.bulletfalls.Supporters.ImageScaler;
+
+import org.apache.commons.lang3.tuple.MutablePair;
 
 public class GameResult extends AppCompatActivity {
     HeroSpecyfication heroSpecyfication;
@@ -46,7 +49,7 @@ public class GameResult extends AppCompatActivity {
         LinearLayout archiveStats=( LinearLayout)findViewById(R.id.staty);
         LinearLayout exp=(LinearLayout) findViewById(R.id.exp);
         LinearLayout money=(LinearLayout) findViewById(R.id.money);
-        LinearLayout items=(LinearLayout) findViewById(R.id.items);
+        LinearLayout items=(LinearLayout) findViewById(R.id.bonuty);
         TextView moneyNumber=(TextView) findViewById(R.id.moneyNumber);
         TextView expText=(TextView) findViewById(R.id.exptext);
         LevelBar levelBar= new LevelBar(this);
@@ -63,7 +66,32 @@ public class GameResult extends AppCompatActivity {
         expText.setTextColor(Color.YELLOW);
         addWallet(userStatsBar);/**dodawanie wallet*/
         addStatistics(archiveStats);
+        fillItems(items);
     }
+
+    private void fillItems(LinearLayout items) {
+        System.out.println("Ilość itemów wypadniętych "+ this.bounty.getItemsList().size());
+        for(int i=0;i< this.bounty.getItemsList().size();i++)
+        {
+            LinearLayout horizontal= new LinearLayout(this);
+            ImageView currencyView= new ImageView(this);
+            currencyView.setImageResource(this.bounty.getItemsList().get(i).left.getResource());
+            TextView amount= new TextView(this);
+            amount.setText(this.bounty.getItemsList().getList().get(i).right+"");
+            horizontal.setOrientation(LinearLayout.HORIZONTAL);
+            horizontal.addView(currencyView);
+            horizontal.addView(amount);
+            items.addView(horizontal);
+            System.out.println("Dodaje item");
+        }
+        if (this.bounty.getItemsList().size()==0)
+        {
+            ImageView blindEye= new ImageView(this);
+            blindEye.setImageResource(R.drawable.blindeye);
+            items.addView(blindEye);
+        }
+    }
+
     private void addWallet(LinearLayout linearLayout)
     {
         UserProfile userProfile= new UserProfile(this);

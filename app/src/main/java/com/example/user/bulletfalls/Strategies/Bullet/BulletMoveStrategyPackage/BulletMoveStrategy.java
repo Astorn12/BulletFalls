@@ -2,6 +2,7 @@ package com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage
 
 
 import android.graphics.Point;
+import android.widget.ImageView;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -17,6 +18,7 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 })
 public interface BulletMoveStrategy {
 
-    public Point getQuantum(int speed,Point current);
-    public BulletMoveStrategy clone();
+     Point getQuantum(int speed,Point current);
+     BulletMoveStrategy clone();
+      String describe();
 }

@@ -60,4 +60,10 @@ public class Resistance implements IResistance {
     public void setBottom(int bottom) {
         this.bottom = bottom;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.resistantValue+" to "+ this.bottom;
+    }
 }

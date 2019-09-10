@@ -26,4 +26,9 @@ public class Horizontal implements BulletMoveStrategy {
     public BulletMoveStrategy clone() {
         return new Horizontal();
     }
+
+    @Override
+    public String describe() {
+        return "Horizontal";
+    }
 }

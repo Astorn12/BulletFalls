@@ -15,6 +15,7 @@ import com.example.user.bulletfalls.GameBiznesFunctions.Resistance.IResistance;
 import com.example.user.bulletfalls.GameManagement.EyeOnGame;
 import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Interfaces.Observer;
+import com.example.user.bulletfalls.ProfileActivity.Currency;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.CharacterSpecyfication;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.EnemySpecyfication;
@@ -22,6 +23,7 @@ import com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrateg
 import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.AppearActionStrategy.AppearAction;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.CharacterMoveStrategiesPackage.DoToBulletStrategy;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.DropStrategy.Drop;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.MoveStrategyPackage.CharacterMoveStrategy;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 import com.example.user.bulletfalls.Views;
@@ -38,7 +40,11 @@ public class Enemy extends Character {
     int killValue;
     EnemySpecyfication enemySpecyficationSpecyfication;
     CharacterMoveStrategy moveStrategy;
-    public Enemy(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, IResistance resistance, int killValue, Bullet enemyBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description, CharacterMoveStrategy moveStrategy, AppearAction aa) {
+    Drop drop;
+
+
+
+    public Enemy(Context context, int power, int speed, Point startingPoint, int width, int height, int randeringFrequency, int imageResource, FrameLayout frame, int life, int shootingSpeed, int level, IResistance resistance, int killValue, Bullet enemyBullet, String name, Kind kind, List<GroupName> groupNames, CharacterPositioning position, DoToBulletStrategy doToBulletStrategy, String indyvidualHeroMarker, Description description, CharacterMoveStrategy moveStrategy, AppearAction aa,Drop drop) {
         super(context, power, speed, width, height,  imageResource, frame, life, shootingSpeed,level,resistance, enemyBullet,name,kind, groupNames,position, doToBulletStrategy,indyvidualHeroMarker,description,aa);
 
         /*if(frame!=null) {
@@ -48,6 +54,7 @@ public class Enemy extends Character {
         this.killValue=killValue;
         construktorEking();
         this.moveStrategy=moveStrategy;
+        this.drop=drop;
     }
 
     public Enemy(Context context, EnemySpecyfication jsonEnemySpecyfication)
@@ -56,6 +63,7 @@ public class Enemy extends Character {
         this.killValue= jsonEnemySpecyfication.getKillValue();
         this.moveStrategy= jsonEnemySpecyfication.getMoveStrategy();
         construktorEking();
+        this.drop=jsonEnemySpecyfication.getDrop();
     }
     @Override
     protected void construktorEking()
@@ -73,21 +81,18 @@ public class Enemy extends Character {
     public void appear()
     {
         super.appear();
-
-
-
         //((Game)getContext()).addLifeInformation(textLife);
         //this.setX(frame.getWidth()-this.width);
 
 //if(frame.getHeight()!=0) {
-    //((Game)getContext()).setY(this,new Random().nextInt((int) (frame.getHeight() - this.height)));
+    //((Game)getContext()).setY(this,new RandomRaiser().nextInt((int) (frame.getHeight() - this.height)));
 
 //}
     }
 
     @Override
     public Enemy clone() {
-Enemy enemy = new Enemy(this.getContext(),this.power,this.speed,this.startingPoint,this.width,this.height,0,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance.clone(),this.killValue,this.bullet,this.name,this.kind,this.groupNames,this.position,this.doToBulletStrategy,"żaden",this.description,this.moveStrategy,this.appearAction);
+Enemy enemy = new Enemy(this.getContext(),this.power,this.speed,this.startingPoint,this.width,this.height,0,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance.clone(),this.killValue,this.bullet,this.name,this.kind,this.groupNames,this.position,this.doToBulletStrategy,"żaden",this.description,this.moveStrategy,this.appearAction,this.drop);
 
         enemy.textLife=new TextView(this.getContext());
 return enemy;
@@ -95,7 +100,7 @@ return enemy;
 
     public Enemy changeContext(Context context)
     {
-        Enemy enemy = new Enemy(context,this.power,this.speed,this.startingPoint,this.width,this.height,0,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.killValue,this.bullet,this.name,this.kind,this.groupNames,this.position,this.doToBulletStrategy,"żaden",this.description,this.moveStrategy,getAppearAction());
+        Enemy enemy = new Enemy(context,this.power,this.speed,this.startingPoint,this.width,this.height,0,this.imageResources,this.frame,this.life,this.shootingSpeed,this.level,this.resistance,this.killValue,this.bullet,this.name,this.kind,this.groupNames,this.position,this.doToBulletStrategy,"żaden",this.description,this.moveStrategy,getAppearAction(),this.drop);
         enemy.textLife= new TextView(context);
         return enemy;
     }
@@ -148,12 +153,15 @@ return enemy;
     public Point getStartingPointForBullet() {
         return new Point((int)getX(),(int)(getY()+getHeight()/2));
     }
-
+    public Point getStartingPointForItem() {
+        return new Point((int)getX(),(int)(getY()+getHeight()/2));
+    }
     @Override
     public void died() {
        // controller.removeEnemy(this);
         ((Game)getContext()).removeLifeText(this.textLife);
         ((Game)getContext()).removeObject(this);
+        itemDrop(((Game) getContext()).getEyeOnGame());
     }
 
    /* public int getFrameWidth() {
@@ -222,6 +230,23 @@ return enemy;
 
     public void setMoveStrategy(CharacterMoveStrategy moveStrategy) {
         this.moveStrategy = moveStrategy;
+    }
+
+    public void itemDrop(EyeOnGame eyeOnGame)
+    {
+
+        Currency currency= this.drop.drop();
+        if(currency!=null) {
+            eyeOnGame.itemDrop(currency, this.getStartingPointForItem());
+
+        }
+        }
+    public Drop getDrop() {
+        return drop;
+    }
+
+    public void setDrop(Drop drop) {
+        this.drop = drop;
     }
 }
 

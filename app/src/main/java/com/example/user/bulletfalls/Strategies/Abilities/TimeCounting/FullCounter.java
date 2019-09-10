@@ -1,6 +1,7 @@
 package com.example.user.bulletfalls.Strategies.Abilities.TimeCounting;
 
 import android.graphics.Point;
+import android.widget.LinearLayout;
 
 import com.example.user.bulletfalls.Enums.BE;
 import com.example.user.bulletfalls.GameManagement.Game;
@@ -10,7 +11,10 @@ import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.Sets.BulletSet;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Strategies.Abilities.DoToCharacterStrategy;
+import com.example.user.bulletfalls.Strategies.Abilities.PositioningSupporters.MultiBulletPositioner;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import java.util.List;
 
 @JsonTypeName("fullcounter")
 
@@ -56,7 +60,18 @@ public class FullCounter implements DoToCharacterStrategy {
 
         int numberOfBullets= damageToCounter/bulletPower;
         System.out.println("Number of bullets: "+numberOfBullets );
-        if(numberOfBullets>0) {
+
+        MultiBulletPositioner m= new MultiBulletPositioner();
+
+        /*for(Bullet b: m.steadilyVerticalPositioning(bs,numberOfBullets,character))
+        {
+            b.born();
+            gc.addBullet(b);
+        }*/
+        character.launchMultiBullets(m.steadilyVerticalPositioning(bs,numberOfBullets,character));
+
+
+       /* if(numberOfBullets>0) {
 
 
             int gameScreenHight = character.getFrame().getHeight();
@@ -68,14 +83,22 @@ public class FullCounter implements DoToCharacterStrategy {
                 position+=jump;
 
                 clone.setStartingPoint(new Point(character.getStartingPointForBullet().x, position));
-                System.out.println("Felerna jest rejestrowana");
-                if(clone.getStartingPoint()==null) System.out.println("Jednak równa się null");
                 clone.born();
                 gc.addBullet(clone);
-                System.out.println(i);
+
             }
-            System.out.println("End of bullet summoning");
-        }
+
+        }*/
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public void setAdditionalDescription(LinearLayout linearLayout) {
+
     }
 
     public int getBulletPower() {

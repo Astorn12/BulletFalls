@@ -1,6 +1,7 @@
 package com.example.user.bulletfalls.Objects;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.widget.FrameLayout;
 
@@ -28,11 +29,14 @@ public class Beast extends Character {
         super(context, power, speed,  width, height,  imageResource, frame, life, shootingSpeed, level, resistance, bullet, name, kind, groupNames, position, doToBulletStrategy, indyvidualHeroMarker, description,aa);
 
         this.eBeastType=eBeastType;
+
+
     }
 
     public Beast(Context context, BeastSpecyfication sbs) {
         super(context, sbs);
         this.eBeastType=sbs.geteBeastType();
+
     }
 
     @Override
@@ -121,5 +125,8 @@ public class Beast extends Character {
     {
         super.born();
         this.moveAble=true;
+        this.setImageResource(this.getImageResources());
+        this.setBackgroundColor(Color.GREEN);
+        //this.setImageResources(this.getImageResources());
     }
 }

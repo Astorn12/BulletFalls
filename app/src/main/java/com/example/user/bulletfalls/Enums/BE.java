@@ -13,6 +13,7 @@ public enum BE {
     SEONDJURNAL("Second Jurnal"),
     THIRDJURNAL("Third Jurnal"),
     COUNTERBULLET("Counter Bullet"),
+    INCREASINGBULLET("Incresing Bullet"),
     WENDYAXE("Wendy Axe");
 
     private final String value;

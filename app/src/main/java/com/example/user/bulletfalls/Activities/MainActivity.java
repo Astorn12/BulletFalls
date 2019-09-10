@@ -24,6 +24,7 @@ import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.HunterDecor
 import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.TimeBountyDecorator;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.ArchivCurrencyContainer;
 import com.example.user.bulletfalls.Sets.AbilitySet;
+import com.example.user.bulletfalls.Sets.BeastsSet;
 import com.example.user.bulletfalls.Sets.BulletSet;
 import com.example.user.bulletfalls.Sets.EnemySet;
 import com.example.user.bulletfalls.Sets.HeroAbilityBulletMapper;
@@ -84,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
                 BulletSet.save(this);
                 BulletSet.clear();
                 BulletSet.load(this);//to powinno się znaleźć później tutaj normalnie
+            }
+            if (BeastsSet.getInstance().isEmpty()) {
+                BeastsSet.getInstance().AddToDatabaseTest(this);
+                BeastsSet.getInstance().save(this);
+                BeastsSet.getInstance().clear();
+                BeastsSet.getInstance().load(this);
             }
            if (AbilitySet.getInstance().isEmpty()) {
                 AbilitySet.getInstance().AddToDatabaseTest(this);

@@ -7,6 +7,10 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.user.bulletfalls.Enums.BE;
+import com.example.user.bulletfalls.Enums.Permission;
+import com.example.user.bulletfalls.Enums.Rarity;
+import com.example.user.bulletfalls.GameManagement.Items.ItemsController;
 import com.example.user.bulletfalls.Objects.Ability;
 import com.example.user.bulletfalls.Activities.GameResult;
 import com.example.user.bulletfalls.Objects.Bullet;
@@ -22,12 +26,15 @@ import com.example.user.bulletfalls.GameSupporters.MediumTasks.GameSummary;
 import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
 import com.example.user.bulletfalls.Objects.Hero;
 import com.example.user.bulletfalls.Objects.Beast;
+import com.example.user.bulletfalls.Objects.Item;
+import com.example.user.bulletfalls.Objects.RotateBullet;
 import com.example.user.bulletfalls.ProfileActivity.UserProfile;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Sets.EnemySet;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.EnemySpecyfication;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
+import com.example.user.bulletfalls.Strategies.Bullet.BulletMoveStrategyPackage.Horizontal;
+import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
@@ -54,6 +61,8 @@ public class GameController {
     LinkedList<Enemy> removeAfterMutation;
 
     LinkedList<Hero> heroesCollection;
+
+    ItemsController itemsController;
     //LinkedList<EnemySpecyfication> enemysCollection;
     List<Ability> abilities;
     Hero hero;
@@ -91,12 +100,16 @@ public class GameController {
         this.beasts = new LinkedList<>();
         this.beastGarbageCollection = new LinkedList<>();
         this.removeAfterMutation=new LinkedList<>();
-
+        this.itemsController= new ItemsController(this.game);
     }
 
     public void start() {
         setScoreLabel(score + "");
         hero = getChoosenHero();
+        if(hero.getBullet().getName().equals(BE.WENDYAXE.getValue())) {
+            hero.setBullet(new RotateBullet(BE.WENDYAXE,this.gameActivity, 10, 20, null, 100, 100,  R.drawable.wendyaxe, game, false,1,new Horizontal(),Shape.RECTANGLE,Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10)));
+
+        }
         hero.born();
         medium.heroBorning(new HeroSpecyfication(hero));
         abilitysLoading();
@@ -107,7 +120,7 @@ public class GameController {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Enemy ex=new EnemySet(game.getContext()).getEnemy("Shmebullock");
+
                 Enemy en = enemysChooser.getEnemy(gameActivity);
                 if(en!=null)
                 bornEnemy(en);
@@ -121,7 +134,7 @@ public class GameController {
         if (en != null) {
             en.setFrame(game);
             enemies.add(en);
-            en.appear();
+            en.born();
             medium.enemyBorning(new EnemySpecyfication(en));
         }
     }
@@ -147,7 +160,9 @@ public class GameController {
             bullets.remove(bullet);
         }
         bulletsGarbageCollector.removeAll(bulletsGarbageCollector);
-        for (Enemy enemy : enemies) {
+       // for (Enemy enemy : enemies) {
+        for (int i=0;i<enemies.size();i++) {
+            Enemy enemy= enemies.get(i);
             enemy.startingMove(new EyeOnGame(this));
 
             Bullet newEnemyBullet = enemy.startShooting();
@@ -170,6 +185,7 @@ public class GameController {
         beastCleaning();
 
         summoning();
+        itemsController.moveItems();
     }
 
     private void beastCleaning() {
@@ -188,20 +204,24 @@ public class GameController {
     }
 
     private void beastsAction() {
+
         for (Beast beast : this.beasts) {
             beast.startingMove(new EyeOnGame(this));
+
+
             Bullet newEnemyBullet = beast.startShooting();
             if (newEnemyBullet != null) {
                 this.bullets.add(newEnemyBullet);/** tutaj jeśli chcemy żeby kulki wystrzelone przez zwierzę liczyły się w stosunku dokulek wystrzelonych przez bohatera, to musimy to ustalić*/
 
                 // medium.enemyShot(new EnemyShot(beast.getSpecyfication(),new BulletSpecyfication(newEnemyBullet)));
             }
+
+
         }
     }
 
     private void summoning() {
-        hero.Summon(game, this.beasts);
-
+             hero.Summon(game, this.beasts);
     }
 
 
@@ -398,6 +418,10 @@ public class GameController {
         bullet.setFrame(game);
     }
 
+    public void removeItem(Item itemView) {
+        this.itemsController.removeItem(itemView);
+    }
+
     private static class IgnoreInheritedIntrospector extends JacksonAnnotationIntrospector {
         @Override
         public boolean hasIgnoreMarker(final AnnotatedMember m) {
@@ -424,7 +448,7 @@ public class GameController {
             public void onClick(View v) {
                 if (hero.getAbilities().getFirstAbility().isReady() && hero.getAbilities().getFirstAbility().isActive()) {
                     hero.getFirstAbility().doToCharacter(hero);
-                    medium.abilityUse(hero.getSecondAbility());
+                    medium.abilityUse(hero.getFirstAbility());
                 }
             }
         });
@@ -453,6 +477,7 @@ public class GameController {
 
     public void addBullet(Bullet bullet) {
         //this.bullets.add(bullet);
+        bullet.setFrame(game);
         tmpFurtka.add(bullet);
         medium.heroShot(new BulletSpecyfication(bullet), abilities);
     }

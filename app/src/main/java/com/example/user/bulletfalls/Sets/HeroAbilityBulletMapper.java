@@ -96,7 +96,7 @@ public class HeroAbilityBulletMapper {
      public static void AddToDatabaseTest(Context context)
      {
         HeroAB mabel= new HeroAB(HE.MABELPINES);
-        mabel.setAvaillableAbilitiesenums( Arrays.asList(AE.CARPEDIEM,AE.SUMMONLOG,AE.ABILITY,AE.ARMCHAIRTHROW));
+        mabel.setAvaillableAbilitiesenums( Arrays.asList(AE.CARPEDIEM,AE.SUMMONLOG,AE.ABILITY,AE.ARMCHAIRTHROW,AE.NOTHING));
         mabel.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.GRENDAARMCHAIR,BE.DAM,BE.TIMEDAM,BE.LOG,BE.RED,BE.DISARM));
         habList.add(mabel);
 
@@ -107,18 +107,18 @@ public class HeroAbilityBulletMapper {
          habList.add(dipper);
 
          HeroAB soos= new HeroAB("Soos Ramirez");
-         soos.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         soos.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.MULTIBEAVERSATTACK));
          soos.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.RED,BE.DAM));
          habList.add(soos);
 
          HeroAB stanek= new HeroAB("Stan Pines");
-         stanek.setAvaillableAbilitiesenums( Arrays.asList(AE.FIRSTSUMMON,AE.FULLCOUNTER));
+         stanek.setAvaillableAbilitiesenums( Arrays.asList(AE.FIRSTSUMMON,AE.FULLCOUNTER,AE.NOTHING,AE.INCREASESHOOTING,AE.PSTEST,AE.PROGRESS));
          stanek.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(stanek);
 
          HeroAB wendy= new HeroAB("Wendy Corduroy");
          wendy.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.TIMEMACHINE));
-         wendy.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         wendy.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.WENDYAXE));
          habList.add(wendy);
 
          HeroAB waddles= new HeroAB("Waddles");
@@ -127,7 +127,7 @@ public class HeroAbilityBulletMapper {
          habList.add(waddles);
 
          HeroAB grenda= new HeroAB("Grenda");
-         grenda.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING));
+         grenda.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.PSTEST));
          grenda.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.GRENDAARMCHAIR));
          habList.add(grenda);
 

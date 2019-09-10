@@ -1,6 +1,8 @@
 package com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage;
 
 
+import android.widget.LinearLayout;
+
 import com.example.user.bulletfalls.Objects.Character;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -30,4 +32,6 @@ public interface BulletDoToCharacterStrategy {
     public void doToCharacter(Character character);
 
     public BulletDoToCharacterStrategy clone();
+
+    public void showOwnDescription(LinearLayout linearLayout);
 }

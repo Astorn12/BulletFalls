@@ -52,11 +52,13 @@ public class GroupsContainer {
     }
     private Group MysteryHackGroup()
     {
-        return new Group(GroupName.MysteryShack,new GroupBoostTable(Arrays.asList(10,20,30,40,50,80)),new GroupIncreaseLifeAbility(),0,R.drawable.mysteryshackminiature);
+        return new Group(GroupName.MysteryShack,new GroupBoostTable(Arrays.asList(10,20,30,40,50,80)),new GroupIncreaseLifeAbility(),0,R.drawable.mysteryshackminiature,
+                "Mystery Hack");
     }
     private Group LumberJack()
     {
-        return new Group(GroupName.Lumberjack,new GroupBoostTable(Arrays.asList(10,20,30,40,50,80)),new GroupIncreaseLifeAbility(),R.drawable.couldrons ,R.drawable.couldrongroupminiature);
+        return new Group(GroupName.Lumberjack,new GroupBoostTable(Arrays.asList(10,20,30,40,50,80)),new GroupIncreaseLifeAbility(),R.drawable.couldrons ,R.drawable.couldrongroupminiature,
+                "Lumber Jack");
     }
     private Group TentOfThelepathy()
     {

@@ -1,6 +1,7 @@
 package com.example.user.bulletfalls.Strategies.Abilities.TimeCounting;
 
 import android.os.AsyncTask;
+import android.widget.LinearLayout;
 
 import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.Objects.Character;
@@ -43,6 +44,16 @@ public class TimeJump implements DoToCharacterStrategy {
             int dress=sup.getDrawableNumber(drawableName, character.getContext());
             growYounger(dress, character);
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public void setAdditionalDescription(LinearLayout linearLayout) {
+
     }
 
     public long getDressUpTime() {

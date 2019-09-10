@@ -290,6 +290,11 @@ public class AbilitySpecyfication extends DisplayedSpecyfication implements Obse
     public void setUnique(boolean unique) {
         this.unique = unique;
     }
+
+    public void decreaseRenewalTime(double d)
+    {
+        this.renewalTime*=(1.0-d);
+    }
 }
 
 

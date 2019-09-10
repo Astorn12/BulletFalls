@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.GameManagement.EyeOnGame;
@@ -11,6 +12,7 @@ import com.example.user.bulletfalls.GameManagement.Game;
 import com.example.user.bulletfalls.GameManagement.GameController;
 import com.example.user.bulletfalls.Supporters.Dimension;
 import com.example.user.bulletfalls.Specyfications.Dynamic.DynamicSpecyfication;
+import com.example.user.bulletfalls.Supporters.ImageScaler;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Timer;
@@ -47,7 +49,7 @@ public abstract class Dynamic extends android.support.v7.widget.AppCompatImageVi
         this.imageResources=jsonViewElement.getImageResources();
         this.setImageResource(imageResources);
         this.height=jsonViewElement.getHeight();
-        this.width=jsonViewElement.getWidth();
+        this.width=(int)((float)height*((float)getDrawable().getIntrinsicWidth()/(float)getDrawable().getIntrinsicHeight()));
         this.power=jsonViewElement.getPower();
         this.speed=jsonViewElement.getSpeed();
         this.name=jsonViewElement.getName();
@@ -97,6 +99,8 @@ public abstract class Dynamic extends android.support.v7.widget.AppCompatImageVi
 
     public void setFrame(FrameLayout frame) {
         this.frame = frame;
+        ImageView imageView = new ImageView(frame.getContext());
+
     }
 
 
@@ -171,6 +175,8 @@ public abstract class Dynamic extends android.support.v7.widget.AppCompatImageVi
     public void born()
     {
         appear();
+
+
         // startMoving();
     }
     public void setController(GameController controller)

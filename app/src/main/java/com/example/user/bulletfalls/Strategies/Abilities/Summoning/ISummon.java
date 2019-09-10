@@ -1,5 +1,8 @@
 package com.example.user.bulletfalls.Strategies.Abilities.Summoning;
 
+import android.widget.ProgressBar;
+
+import com.example.user.bulletfalls.Objects.Description;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.BeastSpecyfication;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -12,9 +15,11 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
         @JsonSubTypes.Type(value=Summon.class, name = "summon"),
         @JsonSubTypes.Type(value=SummonFromList.class, name = "summonfromlist"),
 
+
 })
 public interface ISummon {
 
-     BeastSpecyfication getBeast();
+     BeastSpecyfication choseBeast();
+     Description description();
 
 }

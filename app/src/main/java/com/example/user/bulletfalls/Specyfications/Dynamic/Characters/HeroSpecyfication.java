@@ -1,5 +1,6 @@
 package com.example.user.bulletfalls.Specyfications.Dynamic.Characters;
 
+import com.example.user.bulletfalls.GameBiznesFunctions.Classes.IClass;
 import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
 import com.example.user.bulletfalls.Objects.BarAbilities;
 import com.example.user.bulletfalls.Enums.Permission;
@@ -15,6 +16,7 @@ public class HeroSpecyfication extends CharacterSpecyfication {
     int numberOfAbilities;
     PossesStrategy possesStrategy;
     int tier;
+    IClass icalss;
     public HeroSpecyfication(Hero hero)
     {
 
@@ -24,6 +26,7 @@ public class HeroSpecyfication extends CharacterSpecyfication {
         this.numberOfAbilities= hero.getNumberOfAbilities();
         this.possesStrategy= hero.getPossesStrategy();
         this.tier= hero.getTier();
+        this.icalss=hero.getiClass();
     }
 
     public BarAbilities getAbilities() {
@@ -88,4 +91,15 @@ public class HeroSpecyfication extends CharacterSpecyfication {
             return  true;
         }
         return false;
-    }}
+    }
+
+    public IClass getIcalss() {
+        return icalss;
+    }
+
+    public void setIcalss(IClass icalss) {
+        this.icalss = icalss;
+    }
+}
+
+

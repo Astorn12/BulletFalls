@@ -23,6 +23,7 @@ import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStr
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.AppearActionStrategy.GnomeAppearAction;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.AppearActionStrategy.NothingAppearAction;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.CharacterMoveStrategiesPackage.NoneDoToBulletStrategy;
+import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.DropStrategy.Drop;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.MoveStrategyPackage.UpDownMove;
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPossesStrategy;
 
@@ -47,15 +48,16 @@ public class EnemySet{
     {
         //FrameLayout game=(FrameLayout) context.findViewById(R.id.frame);
         AppearAction aa= new NothingAppearAction();
-        EnemySpecyfication Gideon= new EnemySpecyfication("Gideon",R.drawable.gideon,10,20,200,100,20,1,new Resistance(0,0),null,Kind.HUMAN,Arrays.asList(GroupName.TentOfThelepathy),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,aa,10,new UpDownMove());
+        Drop sDrop= new Drop(this.context,1,0.8);
+        EnemySpecyfication Gideon= new EnemySpecyfication("Gideon",R.drawable.gideon,10,20,200,100,20,1,new Resistance(0,0),null,Kind.HUMAN,Arrays.asList(GroupName.TentOfThelepathy),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,aa,10,new UpDownMove(),sDrop);
 
         AppearAction gnomePowerAction= new GnomeAppearAction();
 
 
-        EnemySpecyfication gnome2= new EnemySpecyfication("RandomGnome",R.drawable.gnome2,10,20,200,100,20,1,new Resistance(0,0),null,Kind.MONSTER,Arrays.asList(GroupName.TentOfThelepathy),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,gnomePowerAction,10,new UpDownMove());
-        EnemySpecyfication jeff= new EnemySpecyfication("Jeff",R.drawable.jeff,10,20,200,100,20,1,new Resistance(0,0),null,Kind.MONSTER,Arrays.asList(GroupName.Gnomes),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,gnomePowerAction,10,new UpDownMove());
-        EnemySpecyfication shmebulock= new EnemySpecyfication("Shmebulock",R.drawable.shmebulock,10,20,200,100,20,1,new Resistance(0,0),null,Kind.MONSTER,Arrays.asList(GroupName.Gnomes),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,gnomePowerAction,10,new UpDownMove());
-        EnemySpecyfication gnomesMonster= new EnemySpecyfication("Gnome Monster",R.drawable.gnomemonster,10,20,200,100,20,1,new Resistance(0,0),null,Kind.MONSTER,Arrays.asList(GroupName.Null),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,aa,10,new UpDownMove());
+        EnemySpecyfication gnome2= new EnemySpecyfication("RandomGnome",R.drawable.gnome2,10,20,200,100,20,1,new Resistance(0,0),null,Kind.MONSTER,Arrays.asList(GroupName.TentOfThelepathy),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,gnomePowerAction,10,new UpDownMove(),sDrop);
+        EnemySpecyfication jeff= new EnemySpecyfication("Jeff",R.drawable.jeff,10,20,200,100,20,1,new Resistance(0,0),null,Kind.MONSTER,Arrays.asList(GroupName.Gnomes),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,gnomePowerAction,10,new UpDownMove(),sDrop);
+        EnemySpecyfication shmebulock= new EnemySpecyfication("Shmebulock",R.drawable.shmebulock,10,20,200,100,20,1,new Resistance(0,0),null,Kind.MONSTER,Arrays.asList(GroupName.Gnomes),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,gnomePowerAction,10,new UpDownMove(),sDrop);
+        EnemySpecyfication gnomesMonster= new EnemySpecyfication("Gnome Monster",R.drawable.gnomemonster,10,20,200,100,20,1,new Resistance(0,0),null,Kind.MONSTER,Arrays.asList(GroupName.Null),CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"gideon",new Description(),R.drawable.gideonminiature,aa,10,new UpDownMove(),sDrop);
 
         // EnemySpecyfication enemy1 = new EnemySpecyfication("enemy",R.drawable.enemy,10,20,200,100,20,1,0,null,null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),R.drawable.miniature,aa,10,new UpDownMove());
       //  Enemy enemy2 = new Enemy(context,10,30,new Point(0,0),200,200,20,R.drawable.rinor,null,200,20,1,0,10,null,"Rinor",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new UpDownMove(),aa);

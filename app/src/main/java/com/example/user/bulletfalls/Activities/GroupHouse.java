@@ -18,11 +18,14 @@ import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.Group;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupsContainer;
+import com.example.user.bulletfalls.Strategies.Abilities.SummonerPackage.BeastRaisers.Linear;
 import com.example.user.bulletfalls.Supporters.GuiSupporters.BorderSetter;
 import com.example.user.bulletfalls.Sets.HeroesSet;
 import com.example.user.bulletfalls.Supporters.RomeLettersConverter;
 import com.example.user.bulletfalls.Objects.Hero;
 import com.example.user.bulletfalls.R;
+import com.example.user.bulletfalls.Supporters.TextViewSupporters.SupporterTextView;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -33,7 +36,7 @@ public class GroupHouse extends AppCompatActivity {
     Group group;
 
     TextView groupsName;
-    TextView groupsDescription;
+    LinearLayout groupsDescription;
 
     ImageView groupsMiniature;
     LinearLayout levelTable;
@@ -46,7 +49,7 @@ public class GroupHouse extends AppCompatActivity {
         setContentView(R.layout.activity_group_house);
         Intent intent=getIntent();
          groupName=(GroupName)intent.getSerializableExtra("groupName");
-        ConstraintLayout house=(ConstraintLayout) findViewById(R.id.house);
+        LinearLayout house=(LinearLayout) findViewById(R.id.house);
         GroupsContainer groupsContainer= new GroupsContainer();
         group=groupsContainer.getGroup(groupName);
         house.setBackgroundColor(group.getBackground());
@@ -54,12 +57,19 @@ public class GroupHouse extends AppCompatActivity {
 
         pullContainers();
         fillLayout();
+        this.group.getGroupAbility().describe(groupsDescription,this.getBoost());
+        SupporterTextView supporterTextView= new SupporterTextView();
+        supporterTextView.setTextViewsTextSize(groupsDescription,20);
+
+
+
+
     }
 
     private void pullContainers()
     {
         this.groupsName=(TextView) findViewById(R.id.groupsname);
-        this.groupsDescription=(TextView)findViewById(R.id.groupdescription);
+        this.groupsDescription=(LinearLayout)findViewById(R.id.groupdescription);
         this.groupsMiniature=(ImageView) findViewById(R.id.groupsminiature);
         this.levelTable=(LinearLayout) findViewById(R.id.leveltable);
         this.miniaturesTable=(TableLayout)findViewById(R.id.miniaturestable);
@@ -68,11 +78,10 @@ public class GroupHouse extends AppCompatActivity {
     private void fillLayout()
     {
         this.groupsName.setText(group.getName());
-        this.groupsDescription.setText(group.getDescription());
+        //this.groupsDescription.setText(group.getDescription());
         Glide.with(this).load(group.getMiniature()).into(groupsMiniature);
         fillLevelsTable();
         fillFamilyMembersTable();
-
     }
 
     private void fillLevelsTable()
@@ -80,14 +89,16 @@ public class GroupHouse extends AppCompatActivity {
 
         int level=this.group.getActualLevel();
 
+        levelTable.setBackgroundColor(Color.parseColor("#A9A9A9"));
         for(MutablePair<Float,Integer> p:this.group.getLevelTable())
         {
-            LinearLayout ll= new LinearLayout(this);
+            LinearLayout  ll= new LinearLayout(this);
+
             ll.setOrientation(LinearLayout.HORIZONTAL);
             TextView v= new TextView(this);
-            v.setText(((int)(p.getLeft()*100))+"%");
+            v.setText(((int)(p.getLeft()*100))+"%   "+this.group.getGroupAbility().getPrefix());
             TextView t=new TextView(this);
-            t.setText(p.getRight()+" ");
+            t.setText(p.getRight()+this.group.getGroupAbility().getFootnote());
 
             ll.addView(v);
             ll.addView(t);
@@ -95,7 +106,16 @@ public class GroupHouse extends AppCompatActivity {
             this.levelTable.addView(ll);
             if(level==0) ll.setBackgroundColor(Color.YELLOW);
             level--;
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            layoutParams.setMargins(0, 20, 0, 0);
+            ll.setLayoutParams(layoutParams);
+
         }
+        SupporterTextView supporterTextView= new SupporterTextView();
+        supporterTextView.setTextViewsTextSize(levelTable,18);
     }
     private void fillFamilyMembersTable()
     {
@@ -148,6 +168,12 @@ public class GroupHouse extends AppCompatActivity {
 
             counter++;
         }
+    }
+    @JsonIgnore
+    private int getBoost()
+    {
+        return this.group.getLevelTable().get(this.group.getActualLevel()).getRight();
+
     }
 
 

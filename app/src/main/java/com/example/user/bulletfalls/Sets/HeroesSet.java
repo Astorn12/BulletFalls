@@ -4,6 +4,10 @@ import android.content.Context;
 
 import com.example.user.bulletfalls.Enums.AE;
 import com.example.user.bulletfalls.Enums.BE;
+import com.example.user.bulletfalls.GameBiznesFunctions.Classes.AngelProtector;
+import com.example.user.bulletfalls.GameBiznesFunctions.Classes.Breeder;
+import com.example.user.bulletfalls.GameBiznesFunctions.Classes.HealerC;
+import com.example.user.bulletfalls.GameBiznesFunctions.Classes.MassDestructor;
 import com.example.user.bulletfalls.GameBiznesFunctions.Classes.Mugol;
 import com.example.user.bulletfalls.GameBiznesFunctions.Resistance.Resistance;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.Group;
@@ -148,7 +152,7 @@ public class HeroesSet  {
         Hero hero3 = new Hero(context,10,20,null,p,p,R.drawable.pansyk,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,new Resistance(0,0),null,"Pansyk",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"żaden",Permission.YES,new Description(),ps,1,aa,mugol);
 
         Hero mabel= new Hero(context,10,30,null,p,p,R.drawable.mabel,null/*(FrameLayout) this.findViewById(R.id.frame)*/,0,20,1,new Resistance(0,0),
-                null,"Mabel Pines",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"żaden",Permission.YES,
+                null,"Mabel Pines",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"mabel",Permission.YES,
                 new Description(),ps,1,aa,mugol);
         BarAbilities bar= new BarAbilities(AbilitySet.getInstance().getAbility(AE.CARPEDIEM),AbilitySet.getInstance().getAbility(AE.ABILITY),AbilitySet.getInstance().getAbility(AE.SUMMONLOG));
         mabel.setAbilities(bar);
@@ -160,14 +164,14 @@ public class HeroesSet  {
 
         Hero soos= new Hero(context,10,20,null,p,p,R.drawable.soos,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,50,1,new Resistance(0,0),null,"Soos Ramirez",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"soos",Permission.NOT,new Description(),new TimePossesStrategy(new DayOfWeekPossesStrategy(3)),2,aa,mugol);
         Hero stanek= new Hero(context,5,20,null,p,p,R.drawable.stanek,null/*(FrameLayout) this.findViewById(R.id.frame)*/,1000,300,1,new Resistance(0,0),null,"Stan Pines",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"stanek",Permission.YES,new Description(),ps,3,aa,mugol);
-        Hero wendy= new Hero(context,10,20,null,p,p,R.drawable.wendy,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,new Resistance(0,0),null,"Wendy Corduroy",null,Arrays.asList(GroupName.MysteryShack,GroupName.Lumberjack),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"wendy",Permission.NOT,new Description(),extendedPossesStrategy,2,aa,mugol);
-        Hero waddles= new Hero(context,4,10,null,p,p,R.drawable.waddles,null/*(FrameLayout) this.findViewById(R.id.frame)*/,500,400,1,new Resistance(20,1),null,"Waddles",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new Stot(10),abilitirs,"waddle",Permission.YES,new Description(),ps,1,aa,mugol);
+        Hero wendy= new Hero(context,10,20,null,p,p,R.drawable.wendy,null/*(FrameLayout) this.findViewById(R.id.frame)*/,100,20,1,new Resistance(0,0),null,"Wendy Corduroy",null,Arrays.asList(GroupName.MysteryShack,GroupName.Lumberjack),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"wendy",Permission.YES,new Description(),extendedPossesStrategy,2,aa,mugol);
+        Hero waddles= new Hero(context,4,10,null,p,p,R.drawable.waddles,null/*(FrameLayout) this.findViewById(R.id.frame)*/,500,400,1,new Resistance(20,1),null,"Waddles",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new Stot(10),abilitirs,"waddle",Permission.YES,new Description(),ps,1,aa,new MassDestructor());
         Hero grenda= new Hero(context,4,10,null,p,p,R.drawable.grenda,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,new Resistance(0,0),null,"Grenda",null,Arrays.asList(GroupName.MabelTeam),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"grenda",Permission.YES,new Description(),ps,1,aa,mugol);
-        Hero loglandgirl= new Hero(context,4,10,null,p,p,R.drawable.loglandgirl,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,new Resistance(0,0),null,"Log Land Girl",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"loglandgirl",Permission.YES,new Description(),ps,1,aa,mugol);
-        Hero tremblin= new Hero(context,4,10,null,40,p,R.drawable.tremblin,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,new Resistance(0,0),null,"Quentin Trembley",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"quentintrembley",Permission.YES,new Description(),extendedPossesStrategy,1,aa,mugol);
+        Hero loglandgirl= new Hero(context,4,10,null,p,p,R.drawable.loglandgirl,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,new Resistance(0,0),null,"Log Land Girl",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"loglandgirl",Permission.YES,new Description(),ps,1,aa,new HealerC());
+        Hero tremblin= new Hero(context,4,10,null,40,p,R.drawable.tremblin,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,new Resistance(0,0),null,"Quentin Trembley",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"quentintrembley",Permission.YES,new Description(),extendedPossesStrategy,1,aa,new Breeder());
         Hero candy= new Hero(context,4,10,null,40,p,R.drawable.candy,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,new Resistance(0,0),null,"Candy Chiu",null,Arrays.asList(GroupName.MabelTeam),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"candy",Permission.YES,new Description(),ps,1,aa,mugol);
         Hero mcgucket= new Hero(context,4,10,null,40,p,R.drawable.mcgucket,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,new Resistance(0,0),null,"Old Man McGucket",null,Arrays.asList(GroupName.Null),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"mcgucket",Permission.NOT,new Description(),new TimePossesStrategy(new TimeInDayPossesStrategy(9,0,10,30)),1,aa,mugol);
-        Hero shootingMabel= new Hero(context,4,10,null,40,p,R.drawable.shootingmabel,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,new Resistance(0,0),null,"Mabel With Grappling Hook",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"mabel",Permission.YES,new Description(),ps,1,aa,mugol);
+        Hero shootingMabel= new Hero(context,4,10,null,40,p,R.drawable.shootingmabel,null/*(FrameLayout) this.findViewById(R.id.frame)*/,200,50,1,new Resistance(0,0),null,"Mabel With Grappling Hook",null,Arrays.asList(GroupName.MysteryShack),CharacterPositioning.LEFTCENTER,new NoneDoToBulletStrategy(),abilitirs,"mabel",Permission.YES,new Description(),ps,1,aa,new AngelProtector());
         List<Hero> heroes = heroesList;
         heroes.add(hero1);
         heroes.add(hero2);
@@ -197,7 +201,7 @@ public class HeroesSet  {
         candy.setAbilities(standardCandy);
 
         tremblin.setAbilities(new BarAbilities(abilitySpecyfication, abilitySpecyfication,nothing));
-        RotateBullet wendyAxe= new RotateBullet(BE.WENDYAXE,context, 10, 20, null, 50, 50,  R.drawable.wendyaxe, null, false,1,new Horizontal(),Shape.RECTANGLE,Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));
+        RotateBullet wendyAxe= new RotateBullet(BE.WENDYAXE,context, 10, 20, null, 100, 100,  R.drawable.wendyaxe, null, false,1,new Horizontal(),Shape.RECTANGLE,Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));
         wendy.setBullet(wendyAxe);
         //BulletSpecyfication armchair=new BulletSpecyfication("armchair",context,100,20,null,110,110,20,R.drawable.grendaamchair,null,false,new Throw(45),Shape.RECTANGLE,new NoneDoToBulletStrategy(),Permission.YES);  //tutaj trzeba będzie zamienić na kod który tworzy kulki określonego rodzaju wykorzystująć klasę BulletKind
         //grenda.setBulletSpecyfication(armchair);
@@ -322,5 +326,17 @@ public class HeroesSet  {
         }
 
         return heroList;
+    }
+
+    public static List<Hero> getMarkedList(Context context,String mark)
+    {
+        List<Hero> markedList =new LinkedList<>();
+        for(Hero h: heroesList)
+        {
+            if(h.getIndyvidualHeroMarker().equals(mark))
+                markedList.add(h.changeContext(context));
+        }
+
+        return markedList;
     }
 }

@@ -4,19 +4,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import com.example.user.bulletfalls.GameBiznesFunctions.Classes.Mugol;
 import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Objects.ChosenHero;
 import com.example.user.bulletfalls.Sets.HeroesSet;
@@ -52,6 +59,9 @@ public class Heroes extends AppCompatActivity {
     List<Hero> list;
 
 
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +70,10 @@ public class Heroes extends AppCompatActivity {
         table=(TableLayout)this.findViewById(R.id.table);
         heroes = new LinkedList<>();
         loadHeroes();
+
+
+
+
     }
     private void writeToFile(String data, Context context, Hero hero) {
       ObjectMapper mapper= new ObjectMapper();
@@ -88,6 +102,7 @@ public class Heroes extends AppCompatActivity {
             ex.getStackTrace();
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void loadHeroes()
     {
         TableRow tableRow = null;
@@ -121,9 +136,43 @@ public class Heroes extends AppCompatActivity {
            if(!hero.getPermission().equals(Permission.YES)|| hero.getPermission().equals(Permission.FORALL)) {
                hero.setColorFilter(Color.BLACK);
            }
+
+
+                //LinearLayout ll= new LinearLayout(this);
+
+           //ll.setGravity(LinearLayout.VERTICAL);
+          // ll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+          // showClasses(hero,ll);
+
+           //hero.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+           //frameLayout.addView(hero);
+           ImageView imageView=new ImageView(this);
+           imageView.setImageResource(hero.getiClass().getImage());
+
+
+
+           //ll.addView(hero);
+
+
+
+           frameLayout.addView(imageView);
+           //imageView.getLayoutParams().height=50;
+           FrameLayout.LayoutParams layoutParams=new FrameLayout.LayoutParams(50, 50);
+           layoutParams.gravity=Gravity.RIGHT;
+           layoutParams.setMargins(0,23,23,0);
+           imageView.setLayoutParams(layoutParams);
+
            frameLayout.addView(hero);
+
+
+
+
+           //imageView.getLayoutParams().height=30;
+
            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                hero.setZ(1);
+               imageView.setZ(1);
+               //ll.setZ(1);
            }
            int pad=10;
            int padLeft=pad,padTop=pad,padRight=pad,padBottom=pad;
@@ -182,6 +231,9 @@ public class Heroes extends AppCompatActivity {
            i++;
        }
     }
+
+
+
     @Override
     public void onPause() {
         super.onPause();

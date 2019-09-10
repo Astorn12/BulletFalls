@@ -15,6 +15,16 @@ import com.example.user.bulletfalls.Enums.Permission;
 import com.example.user.bulletfalls.Enums.Rarity;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.BeastSpecyfication;
+import com.example.user.bulletfalls.Strategies.Abilities.ShootBooster;
+import com.example.user.bulletfalls.Strategies.Abilities.SummonerPackage.BeastChosers.AllOfTheme;
+import com.example.user.bulletfalls.Strategies.Abilities.SummonerPackage.BeastChosers.Progress;
+import com.example.user.bulletfalls.Strategies.Abilities.SummonerPackage.BeastChosers.RoundRobin;
+import com.example.user.bulletfalls.Strategies.Abilities.SummonerPackage.BeastRaisers.AlwaysOne;
+import com.example.user.bulletfalls.Strategies.Abilities.SummonerPackage.BeastStoragers.AsList;
+import com.example.user.bulletfalls.Strategies.Abilities.SummonerPackage.BeastStoragers.Single;
+import com.example.user.bulletfalls.Strategies.Abilities.SummonerPackage.SummonStrategy;
+import com.example.user.bulletfalls.Strategies.Abilities.Summoning.ProgressAmountMassSummoner;
+import com.example.user.bulletfalls.Strategies.Abilities.Summoning.ProgressSummoner;
 import com.example.user.bulletfalls.Strategies.Abilities.Summoning.RandomSummon;
 import com.example.user.bulletfalls.Strategies.Abilities.TimeCounting.FullCounter;
 import com.example.user.bulletfalls.Strategies.Character.Character.DoToBulletStrategy.AppearActionStrategy.AppearAction;
@@ -27,7 +37,6 @@ import com.example.user.bulletfalls.Strategies.Abilities.CarpetDiem;
 import com.example.user.bulletfalls.Strategies.Abilities.ChangeBullet;
 import com.example.user.bulletfalls.Strategies.Abilities.Empty;
 import com.example.user.bulletfalls.Strategies.Abilities.Heal;
-import com.example.user.bulletfalls.Strategies.Abilities.Summoning.Summon;
 import com.example.user.bulletfalls.Strategies.Abilities.SuperShoot;
 import com.example.user.bulletfalls.Strategies.Abilities.TimeChangeBullet;
 import com.example.user.bulletfalls.Strategies.Abilities.TimeCounting.TimeJump;
@@ -170,15 +179,19 @@ public class AbilitySet {
                 null,40,120,2,new Resistance(5,10),BulletSet.getBullet(BE.RED),"Gomper",Kind.MONSTER,Arrays.asList(GroupName.Animal),
                 CharacterPositioning.HEROSUMMONEDBEAST,new NoneDoToBulletStrategy(),"",new Description(),EBeastType.HERO,aa);
         Beast dino4= new Beast(context,10,10,null,200,200,R.drawable.stegozaur,
-                null,40,120,2,new Resistance(5,10),BulletSet.getBullet(BE.RED),"Gomper",Kind.MONSTER,Arrays.asList(GroupName.Animal),
+                null,40,120,2,new Resistance(5,10),BulletSet.getBullet(BE.RED),"Gompers",Kind.MONSTER,Arrays.asList(GroupName.Animal),
                 CharacterPositioning.HEROSUMMONEDBEAST,new NoneDoToBulletStrategy(),"",new Description(),EBeastType.HERO,aa);
-        List<BeastSpecyfication> dinos= Arrays.asList(new BeastSpecyfication(dino1),new BeastSpecyfication(dino2),new BeastSpecyfication(dino3),new BeastSpecyfication(dino4));
+       // List<BeastSpecyfication> dinos= Arrays.asList(new BeastSpecyfication(dino1),new BeastSpecyfication(dino2),new BeastSpecyfication(dino3),new BeastSpecyfication(dino4));
 
+        List<BeastSpecyfication> dinos= BeastsSet.getInstance().getChosen("dino1","dino2","dino3","dino4");
         AbilitySpecyfication dinoSummon= new AbilitySpecyfication(AE.DINOSUMMON,R.drawable.dinosinresin,10000,new RandomSummon(dinos),Permission.YES,Rarity.STARTING,false,
                 new MoneyPossesStrategy("Mystery Coin",10));
 
-        AbilitySpecyfication firstsummoning= new AbilitySpecyfication(AE.FIRSTSUMMON,R.drawable.goat,10000,new Summon((BeastSpecyfication)gompers.getSpecyfication()),Permission.YES,Rarity.STARTING,false,
+        AbilitySpecyfication firstsummoning= new AbilitySpecyfication(AE.FIRSTSUMMON,R.drawable.goat,10000,new SummonStrategy(new Single("Gompers"),new AlwaysOne(),new AllOfTheme()),Permission.YES,Rarity.STARTING,false,
                 new MoneyPossesStrategy("Mystery Coin",10));
+
+       // AbilitySpecyfication progresssummontest= new AbilitySpecyfication(AE.PSTEST,R.drawable.multisummoning,2500,new ProgressSummoner(BeastsSet.getInstance().getChosen("Beaver","Unicorn","Waddles Beast")),Permission.YES,Rarity.STARTING,false,
+               // new MoneyPossesStrategy("Mystery Coin",10));
 
 
         AbilitySpecyfication timemachine= new AbilitySpecyfication(AE.TIMEMACHINE,R.drawable.timemachine,1000,new TimeJump(2000), Permission.YES,Rarity.RARE,true,
@@ -186,21 +199,35 @@ public class AbilitySet {
 
         AbilitySpecyfication counterAttack= new AbilitySpecyfication(AE.FULLCOUNTER,R.drawable.fullcounterbiscuits,1000,new FullCounter(30,3000), Permission.YES,Rarity.RARE,true,
                 new MoneyPossesStrategy("Mystery Coin",10));
-
+        AbilitySpecyfication shootingBooster= new AbilitySpecyfication(AE.INCREASESHOOTING,R.drawable.increaseshooting,1000,new ShootBooster(BulletSet.getBullet(BE.RED).getSpecyfication()), Permission.YES,Rarity.RARE,true,
+                new MoneyPossesStrategy("Mystery Coin",10));
         // RandomSummon threeDinozours= new AbilitySpecyfication(AE.THREEDINOSAURS,10,10,null,200,200,20,R.drawable.);
+        AbilitySpecyfication beaverProgressAttack= new AbilitySpecyfication(AE.MULTIBEAVERSATTACK,R.drawable.beavers,1000,new ProgressAmountMassSummoner(BeastsSet.getInstance().getByName("Beaver"),2), Permission.YES,Rarity.RARE,true,
+                new MoneyPossesStrategy("Mystery Coin",10));
+
+        AbilitySpecyfication rrsummoning= new AbilitySpecyfication(AE.PSTEST,R.drawable.multisummoning,1000,new SummonStrategy(new AsList("Beaver","Unicorn","Waddles Beast"),new AlwaysOne(),new RoundRobin()),Permission.YES,Rarity.STARTING,false,
+                new MoneyPossesStrategy("Mystery Coin",10));
+        AbilitySpecyfication progress= new AbilitySpecyfication(AE.PROGRESS,R.drawable.beavers,1000,new SummonStrategy(new AsList("Beaver","Unicorn","Waddles Beast"),new AlwaysOne(),new Progress(2)),Permission.YES,Rarity.STARTING,false,
+                new MoneyPossesStrategy("Mystery Coin",10));
 
         abilitySpecyficationList.add(carpetdiem);
-          abilitySpecyficationList.add(abilitySpecyfication);
+        abilitySpecyficationList.add(abilitySpecyfication);
         abilitySpecyficationList.add(nothing);
         abilitySpecyficationList.add(summonLog);
         abilitySpecyficationList.add(armchairthrow);
         abilitySpecyficationList.add(firstJurnal);
-        abilitySpecyficationList.add(secondJurnal);
+        abilitySpecyficationList.add(secondJurnal);   
         abilitySpecyficationList.add(thirdJurnal);
         abilitySpecyficationList.add(firstsummoning);
-       abilitySpecyficationList.add(timemachine);
+        abilitySpecyficationList.add(timemachine);
         abilitySpecyficationList.add(dinoSummon);
         abilitySpecyficationList.add(counterAttack);
+        abilitySpecyficationList.add(shootingBooster);
+        //abilitySpecyficationList.add(progresssummontest);
+        abilitySpecyficationList.add(beaverProgressAttack);
+        abilitySpecyficationList.add(rrsummoning);
+        abilitySpecyficationList.add(progress);
+
     }
     public  List<AbilitySpecyfication> getAbilityListForHero(String heroName)
     {

@@ -49,6 +49,12 @@ public class Dam implements BulletMoveStrategy{
     public BulletMoveStrategy clone() {
         return new Dam(this.position);
     }
+
+    @Override
+    public String describe() {
+        return "Dam";
+    }
+
     public int getPosition() {
         return position;
     }

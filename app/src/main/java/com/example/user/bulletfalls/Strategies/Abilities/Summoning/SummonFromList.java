@@ -1,6 +1,8 @@
 package com.example.user.bulletfalls.Strategies.Abilities.Summoning;
 
+import com.example.user.bulletfalls.Objects.Beast;
 import com.example.user.bulletfalls.Objects.Character;
+import com.example.user.bulletfalls.Objects.Hero;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.BeastSpecyfication;
 import com.example.user.bulletfalls.Strategies.Abilities.DoToCharacterStrategy;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -16,6 +18,9 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 @JsonSubTypes({
         @JsonSubTypes.Type(value=Summon.class, name = "summon"),
         @JsonSubTypes.Type(value=RandomSummon.class, name = "randomsummon"),
+        @JsonSubTypes.Type(value=RoundRobinSummon.class, name = "roundrobinsummon"),
+        @JsonSubTypes.Type(value=RandomSummon.class, name = "randomsummon"),
+        @JsonSubTypes.Type(value=ProgressSummoner.class, name = "progresssummon"),
 
 })
 @JsonTypeName("summonfromlist")
@@ -39,8 +44,9 @@ public  abstract class SummonFromList implements ISummon,DoToCharacterStrategy {
     }
 
     @Override
-    public abstract void doToCharacter(Character character);
+    public  void doToCharacter(Character character){
+        ((Hero) character).summon(new Beast(character.getContext(), choseBeast())); }
 
     @Override
-    public abstract BeastSpecyfication getBeast( );
+    public abstract BeastSpecyfication choseBeast( );
 }

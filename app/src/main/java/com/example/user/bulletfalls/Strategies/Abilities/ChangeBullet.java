@@ -1,5 +1,7 @@
 package com.example.user.bulletfalls.Strategies.Abilities;
 
+import android.widget.LinearLayout;
+
 import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Objects.Character;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
@@ -31,6 +33,16 @@ public class ChangeBullet implements DoToCharacterStrategy{
     @Override
     public void doToCharacter(Character character) {
         character.setBullet(bulletSpecyfication);
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public void setAdditionalDescription(LinearLayout linearLayout) {
+
     }
 
     public BulletSpecyfication getBulletSpecyfication() {

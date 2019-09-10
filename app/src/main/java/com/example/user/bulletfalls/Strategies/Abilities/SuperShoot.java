@@ -2,6 +2,7 @@ package com.example.user.bulletfalls.Strategies.Abilities;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
+import android.widget.LinearLayout;
 
 import com.example.user.bulletfalls.Objects.Bullet;
 import com.example.user.bulletfalls.Objects.Character;
@@ -27,6 +28,16 @@ public class SuperShoot implements DoToCharacterStrategy{
      checkIfAnimationDoner(character.superShootAnimation(), character);
         else superShoot(character);
 
+
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public void setAdditionalDescription(LinearLayout linearLayout) {
 
     }
 

@@ -41,8 +41,12 @@ public class CollisionTester {
                 medium.takedDamage(new MutablePair<Integer, BulletSpecyfication>(d,new BulletSpecyfication(bullet)));
                 hero.doToBullet(bullet);
             }
-            for(Enemy enemy : enemies)
+
+
+           // for(Enemy enemy : enemies)
+            for(int i=0;i<enemies.size();i++)
             {
+                Enemy enemy= enemies.get(i);
                 if(bullet.getSpeed()>0&&damageToCharacterChecking(enemy, bullet)) {
 
                     int d= bullet.collisionWithCharacterEfect(enemy);

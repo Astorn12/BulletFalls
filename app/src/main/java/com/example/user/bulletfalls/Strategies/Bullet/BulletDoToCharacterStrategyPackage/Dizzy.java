@@ -2,8 +2,11 @@ package com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrate
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.user.bulletfalls.Objects.Character;
+import com.example.user.bulletfalls.Supporters.GuiSupporters.SupporterBackground;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import static java.lang.Thread.sleep;
@@ -46,5 +49,14 @@ public Dizzy(){}
     @Override
     public BulletDoToCharacterStrategy clone() {
         return new Dizzy(this.stuneTime);
+    }
+
+    @Override
+    public void showOwnDescription(LinearLayout linearLayout) {
+        TextView description= new TextView(linearLayout.getContext());
+        description.setText("Kulka zatrzymuje przeciwnika i blokuje mu strzelanie na "+this.stuneTime/1000+"s");
+        linearLayout.addView(description);
+        SupporterBackground supporterBackground= new SupporterBackground();
+        supporterBackground.setTextViewBackground(description);
     }
 }

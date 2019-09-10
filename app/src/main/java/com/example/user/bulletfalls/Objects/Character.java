@@ -18,6 +18,7 @@ import com.example.user.bulletfalls.Enums.Kind;
 import com.example.user.bulletfalls.GameBiznesFunctions.Resistance.IResistance;
 import com.example.user.bulletfalls.GameManagement.EyeOnGame;
 import com.example.user.bulletfalls.GameManagement.Game;
+import com.example.user.bulletfalls.GameManagement.GameController;
 import com.example.user.bulletfalls.Interfaces.Observed;
 import com.example.user.bulletfalls.Interfaces.Observer;
 import com.example.user.bulletfalls.Specyfications.Dynamic.Bullets.BulletSpecyfication;
@@ -161,10 +162,7 @@ public abstract class Character extends Dynamic implements Observed {
             if(isMoveAble())
             move(eyeOnGame);
         }
-    @Override
-    protected void move(EyeOnGame eyeOnGame) {
 
-    }
     public Bullet startShooting() {
         if(this.shootAble) {
             return shoot();
@@ -676,5 +674,16 @@ public abstract class Character extends Dynamic implements Observed {
     public void changeAppearAction(AppearAction appearAction)
     {
         setAppearAction(appearAction);
+    }
+
+    public void launchMultiBullets(List<Bullet> bullets)
+    {
+        EyeOnGame eye=((Game) this.getContext()).getEyeOnGame();
+
+        for(Bullet b: bullets)
+        {
+            b.born();
+            eye.addBullet(b);
+        }
     }
 }

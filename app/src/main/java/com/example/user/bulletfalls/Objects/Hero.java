@@ -30,6 +30,7 @@ import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyPosses
 import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.PossesStrategy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.skyline.widget.layout.RoundCornerLayout;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -99,6 +100,7 @@ public class Hero extends Character implements PossesAble,Summoner {
     this.possesStrategy= jsHeroSpecyfication.getPossesStrategy();
     this.tier= jsHeroSpecyfication.getTier();
     this.beastsWaitingToSummon= new LinkedList<>();
+    this.iClass=jsHeroSpecyfication.getIcalss();
     }
     public BarAbilities getAbilities() {
         return abilities;
@@ -151,12 +153,7 @@ public class Hero extends Character implements PossesAble,Summoner {
                     return bullet1;
                 } else return null;
             }
-        @Override
-        public void born()
-        {
-             appear();
 
-        }
     @Override
     public Dynamic clone() {
         return null;
@@ -320,7 +317,17 @@ public class Hero extends Character implements PossesAble,Summoner {
 
     public void Summon(FrameLayout frame,List<Beast> beasts)
     {
-        for(Beast beast: this.beastsWaitingToSummon) {
+
+        /*for(Beast beast: this.beastsWaitingToSummon) {
+            beast.setFrame(frame);
+            beast.born();
+            beasts.add(beast);
+
+        }*/
+
+        for(int i=0;i<this.beastsWaitingToSummon.size();i++)
+        {
+            Beast beast= this.beastsWaitingToSummon.get(i);
             beast.setFrame(frame);
             beast.born();
             beasts.add(beast);
@@ -343,4 +350,5 @@ public class Hero extends Character implements PossesAble,Summoner {
     public void setiClass(IClass iClass) {
         this.iClass = iClass;
     }
+
 }

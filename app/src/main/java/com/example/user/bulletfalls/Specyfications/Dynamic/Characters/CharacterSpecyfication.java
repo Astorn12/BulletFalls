@@ -91,7 +91,6 @@ public class CharacterSpecyfication extends DynamicSpecyfication {
         this.irrealWidth = irrealWidth;
         this.irrealHeight = irrealHeight;
         this.indyvidualHeroMarker = indyvidualHeroMarker;
-
         this.description = description;
         this.miniature = miniature;
         this.appearAction = appearAction;

@@ -3,6 +3,7 @@ package com.example.user.bulletfalls.GameSupporters.GroupPackage;
 import com.example.user.bulletfalls.Enums.GroupName;
 import com.example.user.bulletfalls.GameSupporters.GroupPackage.GroupAbilityPackage.GroupAbility;
 import com.example.user.bulletfalls.Objects.Hero;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -15,27 +16,21 @@ public class Group {
     int background;
     int miniature;
     String description;
-
-
-    String abilityDescription;
     int abilitiMiniature;
-    public Group(GroupName gm,GroupBoostTable gt,GroupAbility ga,int background,int miniature)
+    public Group(GroupName gm,GroupBoostTable gt,GroupAbility ga,int background,int miniature,String description)
     {
         this.name=gm;
         this.boostTable=gt;
         this.groupAbility=ga;
         this.background=background;
         this.miniature=miniature;
+        this.description=description;
+
     }
 
     public Group(GroupName gm,GroupBoostTable gt,GroupAbility ga)
     {
-        this.name=gm;
-        this.boostTable=gt;
-        this.groupAbility=ga;
-        this.background=0;
-        this.miniature=0;
-        description="";
+        this(gm,gt,ga,0,0,"");
 
     }
 
@@ -76,19 +71,15 @@ public class Group {
         return this.boostTable.getLevel(this.name);
     }
 
-    public String getAbilityDescription() {
-        return abilityDescription;
-    }
-
-    public void setAbilityDescription(String abilityDescription) {
-        this.abilityDescription = abilityDescription;
-    }
-
     public int getAbilitiMiniature() {
         return abilitiMiniature;
     }
 
     public void setAbilitiMiniature(int abilitiMiniature) {
         this.abilitiMiniature = abilitiMiniature;
+    }
+
+    public GroupAbility getGroupAbility() {
+        return groupAbility;
     }
 }

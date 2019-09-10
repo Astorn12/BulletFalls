@@ -1,8 +1,11 @@
 package com.example.user.bulletfalls.Strategies.Bullet.BulletDoToCharacterStrategyPackage;
 
 import android.os.AsyncTask;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.user.bulletfalls.Objects.Character;
+import com.example.user.bulletfalls.Supporters.GuiSupporters.SupporterBackground;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import static java.lang.Thread.sleep;
@@ -47,6 +50,15 @@ public class Disarm implements BulletDoToCharacterStrategy {
         return new Disarm(this.disarmedTime);
     }
 
+    @Override
+    public void showOwnDescription(LinearLayout linearLayout) {
+        TextView description= new TextView(linearLayout.getContext());
+        description.setText("Kulka rozbraja przeciwnika na "+ disarmedTime/1000+"s");
+        linearLayout.addView(description);
+        SupporterBackground supporterBackground= new SupporterBackground();
+        supporterBackground.setTextViewBackground(description);
+    }
+
     public int getDisarmedTime() {
         return disarmedTime;
     }
@@ -55,3 +67,7 @@ public class Disarm implements BulletDoToCharacterStrategy {
         this.disarmedTime = disarmedTime;
     }
 }
+
+
+
+

@@ -15,7 +15,7 @@ public class Throw implements BulletMoveStrategy {
         this.angle=angle;
         this.timer=0;
     }
-    public Throw()
+    private Throw()
     {
     timer=0;
     }
@@ -35,6 +35,11 @@ public class Throw implements BulletMoveStrategy {
     @Override
     public BulletMoveStrategy clone() {
         return new Throw(this.angle);
+    }
+
+    @Override
+    public String describe() {
+        return "Throw";
     }
 
     public int getAngle() {

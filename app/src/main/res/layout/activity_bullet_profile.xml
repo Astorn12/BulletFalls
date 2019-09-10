@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Objects.AbilityProfile"
     android:orientation="vertical"
-    android:id="@+id/bulletScreen">
+    android:id="@+id/bulletScreen"
+    android:background="@drawable/background3">
 
 
     <ImageView
@@ -21,18 +22,45 @@
 
     <TextView
         android:id="@+id/bulletname"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:text="TextView"
-        android:layout_gravity="center"
-
-        />
-
-    <TextView
-        android:id="@+id/bulletdescription"
         android:layout_width="match_parent"
-        android:layout_height="117dp"
-        android:text="TextView" />
+        android:layout_height="47dp"
+        android:layout_gravity="center"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/specyfication"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dotocharacterstrategy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ability"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+        </LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

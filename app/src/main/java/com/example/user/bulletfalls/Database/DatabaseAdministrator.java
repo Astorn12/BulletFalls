@@ -55,6 +55,7 @@ public class DatabaseAdministrator extends SQLiteOpenHelper {
                 "exp integer," +
                 "levelId integer," +
                 "foreign key (levelId) references Levels(id));");
+
     }
 
     @Override
