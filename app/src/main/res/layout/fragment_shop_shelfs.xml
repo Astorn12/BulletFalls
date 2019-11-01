@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ShopPackage.ShopShelfsFragment"
+    tools:context=".Shop.ShopShelfsFragment"
     android:id="@+id/main"
     android:background="@drawable/woodenboards"
     >
@@ -19,7 +19,7 @@
         <!--android:background="@drawable/norefund"-->
 
 
-    <com.example.user.bulletfalls.FragmentsSlider.SlidingTabLayout
+    <com.example.user.bulletfalls.Shop.FragmentsSlider.SlidingTabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="49dp"

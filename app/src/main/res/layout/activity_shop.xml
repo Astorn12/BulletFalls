@@ -8,7 +8,7 @@
 
     android:fillViewport="true"
     android:orientation="vertical"
-    tools:context=".ShopPackage.Shop"
+    tools:context=".Shop.Shop"
     android:background="#909090"
     tools:layout_editor_absoluteY="81dp">
 

@@ -12,35 +12,30 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.example.user.bulletfalls.Enums.GroupName;
-import com.example.user.bulletfalls.Database.DatabaseAdministrator;
-import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemyReleaseStrategyPackage.RandomEnemyReleaseStrategy;
-import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.EnemysChooser;
-import com.example.user.bulletfalls.GameSupporters.EnemyChooseWayStatergy.TimeReleaseStrategyPackage.LinearTimeReleaseStrategy;
-import com.example.user.bulletfalls.GameSupporters.GameStrategy;
-import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.BountyAssigner;
-import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.ConcreteBountyAssigner;
-import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.HunterDecorator;
-import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.TimeBountyDecorator;
-import com.example.user.bulletfalls.GameSupporters.MediumTasks.ArchivCurrencyContainer;
-import com.example.user.bulletfalls.Sets.AbilitySet;
-import com.example.user.bulletfalls.Sets.BeastsSet;
-import com.example.user.bulletfalls.Sets.BulletSet;
-import com.example.user.bulletfalls.Sets.EnemySet;
-import com.example.user.bulletfalls.Sets.HeroAbilityBulletMapper;
-import com.example.user.bulletfalls.Sets.HeroesSet;
-import com.example.user.bulletfalls.Objects.Enemy;
-import com.example.user.bulletfalls.GameManagement.Game;
-import com.example.user.bulletfalls.GameManagement.GameController;
-import com.example.user.bulletfalls.Objects.Hero;
-import com.example.user.bulletfalls.P2PPackage.P2PConnection;
-import com.example.user.bulletfalls.P2PPackage.P2PGame;
-import com.example.user.bulletfalls.ProfileActivity.Currency;
-import com.example.user.bulletfalls.ProfileActivity.ProfileScreen;
+import com.example.user.bulletfalls.Activities.GameListActivity.GamesList;
+import com.example.user.bulletfalls.Game.Elements.Enemy.EnemySpecyfication;
+import com.example.user.bulletfalls.Game.Elements.Hero.Heroes;
+import com.example.user.bulletfalls.Profile.Collection.UserCollection;
+import com.example.user.bulletfalls.Profile.UserProfile;
+import com.example.user.bulletfalls.Storage.DatabaseAdministrator;
+import com.example.user.bulletfalls.Game.Management.ArchivCurrencyContainer;
+import com.example.user.bulletfalls.Storage.Sets.AbilitySet;
+import com.example.user.bulletfalls.Storage.Sets.BeastsSet;
+import com.example.user.bulletfalls.Storage.Sets.BulletSet;
+import com.example.user.bulletfalls.Storage.Sets.EnemySet;
+import com.example.user.bulletfalls.Storage.Sets.HeroAbilityBulletMapper;
+import com.example.user.bulletfalls.Storage.Sets.HeroesSet;
+import com.example.user.bulletfalls.Game.Elements.Enemy.Enemy;
+import com.example.user.bulletfalls.Game.Activities.Game;
+import com.example.user.bulletfalls.Game.Management.GameController;
+import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
+import com.example.user.bulletfalls.P2P.P2PConnection;
+import com.example.user.bulletfalls.P2P.P2PGame;
+import com.example.user.bulletfalls.Profile.Currency;
+import com.example.user.bulletfalls.Profile.ProfileScreen;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.ShopPackage.Shop;
-import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.Enemy.EnemySpecyfication;
-import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.MoneyNeed;
+import com.example.user.bulletfalls.Shop.Shop;
+import com.example.user.bulletfalls.Shop.PossesStrategyPackage.MoneyNeed;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -62,12 +57,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ArchivCurrencyContainer archivCurrencyContainer= new ArchivCurrencyContainer();
         archivCurrencyContainer.add(new Currency("Mystery Coins"),5);
         MoneyNeed moneyNeed= new MoneyNeed(archivCurrencyContainer);
         ObjectMapper objectMapper= new ObjectMapper();
         Currency currency= new Currency("Mystery Coin");
         String s;
+        DatabaseAdministrator da=new DatabaseAdministrator(this);
+
+        da.actualization(this);
         MutablePair<Currency,Integer> mutablePair= new MutablePair<>(currency,8);
         try {
              s= objectMapper.writeValueAsString(mutablePair);
@@ -75,16 +74,17 @@ public class MainActivity extends AppCompatActivity {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+        UserCollection.getInstance().loadCollection();
         if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)){}
         else {
-                HeroesSet.clear();
-                BulletSet.clear();
+                HeroesSet.getInstance().clear();
+                BulletSet.getInstance().clear();
                 AbilitySet.getInstance().clear();
-            if (BulletSet.isEmpty()) {
-                BulletSet.AddToDatabaseTest(this);
-                BulletSet.save(this);
-                BulletSet.clear();
-                BulletSet.load(this);//to powinno się znaleźć później tutaj normalnie
+            if (BulletSet.getInstance().isEmpty()) {
+                BulletSet.getInstance().AddToDatabaseTest(this);
+                BulletSet.getInstance().save(this);
+                BulletSet.getInstance().clear();
+                BulletSet.getInstance().load(this);//to powinno się znaleźć później tutaj normalnie
             }
             if (BeastsSet.getInstance().isEmpty()) {
                 BeastsSet.getInstance().AddToDatabaseTest(this);
@@ -93,16 +93,16 @@ public class MainActivity extends AppCompatActivity {
                 BeastsSet.getInstance().load(this);
             }
            if (AbilitySet.getInstance().isEmpty()) {
-                AbilitySet.getInstance().AddToDatabaseTest(this);
+                AbilitySet.getInstance().AddToDatabaseTest();
                 AbilitySet.getInstance().save(this);
                 AbilitySet.getInstance().clear();
                 AbilitySet.getInstance().load(this);
             }
-            if (HeroesSet.isEmpty()) {
-                HeroesSet.AddToDatabaseTest(this);
-                HeroesSet.Save(this);
-                HeroesSet.clear();
-                HeroesSet.Load(this);
+            if (HeroesSet.getInstance().isEmpty()) {
+                HeroesSet.getInstance().AddToDatabaseTest(this);
+                HeroesSet.getInstance().save(this);
+                HeroesSet.getInstance().clear();
+                HeroesSet.getInstance().load(this);
             }
             if (HeroAbilityBulletMapper.isEmpty()) {
                 HeroAbilityBulletMapper.AddToDatabaseTest(this);
@@ -113,16 +113,11 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-        EnemySet enemySet= new EnemySet(this);
-
-
-        enemySet.load();
+        EnemySet.getInstance().load(this);
         //ładowanie bazy danych SQLite
 
         //this.deleteDatabase("profileDB.db");
-        DatabaseAdministrator da=new DatabaseAdministrator(this);
 
-        da.actualization(this);
         //ProfileRepository profileDao= new ProfileRepository(this);
 
     }
@@ -144,13 +139,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void startGame(View view)
     {
-        BountyAssigner bountyAssigner=
-                new TimeBountyDecorator(
-                new HunterDecorator(
-                new ConcreteBountyAssigner())
-        );
-        GameStrategy.getInstance().setStrategies(new EnemysChooser(new RandomEnemyReleaseStrategy(convertToSpecyfication(getDefalultEnemyList())),new LinearTimeReleaseStrategy(200)),R.drawable.fightbackground,"Walka",bountyAssigner);
+
+        //GameSketch.getInstance().setStrategies(new EnemysChooser(new RandomIEnemyReleaseStrategy(convertToSpecyfication(getDefalultEnemyList())),new LinearTimeReleaseStrategy(200)),R.drawable.fightbackground,"Walka", bountyAssignerDecorator);
         Intent intent = new Intent(this, Game.class);
+        intent.putExtra("gameSketchName","Zombie atak?");
         this.startActivity(intent);
     }
 
@@ -159,39 +151,11 @@ public class MainActivity extends AppCompatActivity {
         List<EnemySpecyfication> enemySpecyficationSpecyfications = new LinkedList<>();
         for(Enemy enemy : enemies)
         {
-            enemySpecyficationSpecyfications.add(new EnemySpecyfication(enemy));
+            enemySpecyficationSpecyfications.add(enemy.getSpecyfication());
         }
         return enemySpecyficationSpecyfications;
     }
-    private List<Enemy> getDefalultEnemyList()
-    {
-        /*FrameLayout game=(FrameLayout) this.findViewById(R.id.frame);
-        EnemySpecyfication enemy1= new EnemySpecyfication(this,10,20,new Point(0,0),200,200,20,R.drawable.enemy,game,100,20,1,0,10,null,"enemy",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
-        EnemySpecyfication enemy2= new EnemySpecyfication(this,10,30,new Point(0,0),200,200,20,R.drawable.rinor,game,200,20,1,0,10,null,"Rinor",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
-        EnemySpecyfication enemy3= new EnemySpecyfication(this,10,20,new Point(0,0),200,200,20,R.drawable.creature,game,30,20,1,0,10,null,"Creature",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
-        EnemySpecyfication gideon= new EnemySpecyfication(this,10,30,new Point(0,0),200,200,20,R.drawable.gideon,game,45,20,1,0,10,null,"Gideon",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
-        EnemySpecyfication gnome2= new EnemySpecyfication(this,30,10,new Point(0,0),200,200,20,R.drawable.gnome2,game,40,20,1,0,10,null,"Gnome2",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
-        EnemySpecyfication goblin= new EnemySpecyfication(this,10,10,new Point(0,0),200,200,20,R.drawable.goblin,game,100,20,1,0,10,null,"Goblin",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
-        EnemySpecyfication pacific= new EnemySpecyfication(this,10,100,new Point(0,0),200,200,20,R.drawable.pacific,game,100,20,1,0,10,null,"Pacific",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
-        EnemySpecyfication police1= new EnemySpecyfication(this,20,2,new Point(0,0),200,200,20,R.drawable.police1,game,500,20,1,0,10,null,"Police1",null,null,CharacterPositioning.RIGHTRANDOM,new NoneDoToBulletStrategy(),"żaden",new Description(),new Follower());
-        List<EnemySpecyfication> enemysCollection= new LinkedList<>();
-        enemysCollection.add(enemy1);
-        enemysCollection.add(enemy2);
-        enemysCollection.add(enemy3);
-        enemysCollection.add(gideon);
-        enemysCollection.add(gnome2);
-        enemysCollection.add(goblin);
-        enemysCollection.add(pacific);
-        enemysCollection.add(police1);
-        for(EnemySpecyfication enemy:enemysCollection)
-        {
-            enemy.setBulletSpecyfication(new BulletSpecyfication("defaultenemybullet",this,10,20,null,50,50,20,R.drawable.blue,null,false,new Horizontal(),Shape.CIRCLE,new NoneBulletDoToCharacterStrategy(),Permission.YES,Rarity.COMMON,new MoneyPossesStrategy("Mystery Coin",10)).clone());
-            enemy.getBulletSpecyfication().setFrame(game);
-        }
-        return  enemysCollection;*/
-        EnemySet set= new EnemySet(this);
-        return set.getAll();
-    }
+
     public void chooseHero(View view) {
         Intent intent = new Intent(this, Heroes.class);
         this.startActivity(intent);
@@ -215,6 +179,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void shoppingtime(View view) {
         Intent intent= new Intent(this,Shop.class);
+        this.startActivity(intent);
+    }
+    public void chooseGame(View view)
+    {
+        Intent intent= new Intent(this,GamesList.class);
         this.startActivity(intent);
     }
 }

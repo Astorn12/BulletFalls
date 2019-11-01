@@ -28,21 +28,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GameManagement.Game"
+            android:name=".Game.Activities.Game"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.Heroes"
+            android:name=".Game.Elements.Hero.Heroes"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".P2PPackage.P2PConnection"
+            android:name=".P2P.P2PConnection"
             android:label="@string/title_activity_p2pconnection"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".P2PPackage.P2PGame"
+            android:name=".P2P.P2PGame"
             android:label="@string/title_activity_p2pgame"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Objects.HeroProfile"
+            android:name=".Game.Elements.Hero.HeroProfile"
             android:label="@string/title_activity_hero_profile"
             android:screenOrientation="portrait" />
         <activity
@@ -52,25 +52,29 @@
             android:name=".Activities.NotReadyYet"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Objects.ChosenHero"
+            android:name=".Game.Elements.Hero.ChosenHero"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Objects.BulletProfile"
+            android:name=".Game.Elements.Bullet.BulletProfile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Objects.AbilityProfile"
+            android:name=".Game.Elements.Ability.AbilityProfile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ProfileActivity.ProfileScreen"
+            android:name=".Profile.ProfileScreen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ShopPackage.Shop"
+            android:name=".Shop.Shop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.GameListActivity.GamesList"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.GameResult"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.GroupHouse"></activity>
+        <activity android:name=".Activities.FamilyHouse" />
+
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/woodenboards"
-    tools:context=".Objects.ChosenHero"
+    tools:context=".Game.Elements.Hero.ChosenHero"
     android:layout_weight="1"
     >
 

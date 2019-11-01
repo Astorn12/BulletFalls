@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@drawable/tlo"
 
-    tools:context=".GameManagement.Game">
+    tools:context=".Game.Activities.Game">
 
 
     <TextView
@@ -23,18 +23,8 @@
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1">
-
-        <LinearLayout
-            android:id="@+id/startLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="130dp"
-            android:text="Tap to Start"
-            android:textSize="30sp"
-            android:orientation="horizontal" />
 
 
     </FrameLayout>
@@ -48,9 +38,8 @@
         <LinearLayout
             android:id="@+id/abilities"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
             android:orientation="horizontal">
-
 
 
         </LinearLayout>

@@ -11,25 +11,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.user.bulletfalls.ProfileActivity.Currency;
-import com.example.user.bulletfalls.Specyfications.AbilitySpecyfication;
-import com.example.user.bulletfalls.Objects.Ability;
-import com.example.user.bulletfalls.GameSupporters.GiveBountyPackage.Bounty;
-import com.example.user.bulletfalls.GameSupporters.MediumTasks.GameSummary;
-import com.example.user.bulletfalls.GameSupporters.MediumTasks.Medium;
-import com.example.user.bulletfalls.ProfileActivity.LevelBar;
-import com.example.user.bulletfalls.ProfileActivity.UserProfile;
+import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
+import com.example.user.bulletfalls.Game.Elements.Ability.Ability;
+import com.example.user.bulletfalls.Game.Strategies.Bounty.Bounty;
+import com.example.user.bulletfalls.Game.Management.GameSummary;
+import com.example.user.bulletfalls.Game.Management.Medium;
+import com.example.user.bulletfalls.Profile.LevelBar;
+import com.example.user.bulletfalls.Profile.UserProfile;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Specyfications.Dynamic.Characters.HeroSpecyfication;
-import com.example.user.bulletfalls.Supporters.ImageScaler;
-
-import org.apache.commons.lang3.tuple.MutablePair;
+import com.example.user.bulletfalls.Game.Elements.Hero.HeroSpecyfication;
+import com.example.user.bulletfalls.GlobalUsage.Supporters.ScalerSupporter;
 
 public class GameResult extends AppCompatActivity {
     HeroSpecyfication heroSpecyfication;
     Medium medium;
     String gameName;
     Bounty bounty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +57,7 @@ public class GameResult extends AppCompatActivity {
         paramsForLevelBar.setMargins(10,10,10,10);
         frameLayout.setLayoutParams(paramsForLevelBar);
         userStatsBar.addView(frameLayout);/**adding level bar*/
-        Glide.with(this).load(heroSpecyfication.getImageResources()).into(fightingHero);
+        Glide.with(this).load(heroSpecyfication.getImage()).into(fightingHero);
 
         moneyNumber.setText(bounty.getMoney()+"");
         expText.setText(bounty.getExp()+"pkt");
@@ -112,7 +110,7 @@ public class GameResult extends AppCompatActivity {
             @Override
             public void run() {
 
-                new ImageScaler().scaleByHeight(fightingdipper,iconsSize);
+                new ScalerSupporter().scaleByHeight(fightingdipper,iconsSize);
             }
         });
 
@@ -139,7 +137,7 @@ public class GameResult extends AppCompatActivity {
             @Override
             public void run() {
 
-                new ImageScaler().scaleByHeight(dipandmebshootinggnome,iconsSize);
+                new ScalerSupporter().scaleByHeight(dipandmebshootinggnome,iconsSize);
             }
         });
         TextView shotedBullets=new TextView(this);
@@ -162,7 +160,7 @@ public class GameResult extends AppCompatActivity {
         demagedDipper.post(new Runnable() {
             @Override
             public void run() {
-                new ImageScaler().scaleByHeight(demagedDipper,iconsSize);
+                new ScalerSupporter().scaleByHeight(demagedDipper,iconsSize);
             }
         });
         TextView takenDamage=new TextView(this);

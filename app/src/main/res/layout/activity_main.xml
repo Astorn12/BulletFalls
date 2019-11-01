@@ -15,7 +15,8 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_marginTop="30dp">
 
         <Button
             android:id="@+id/button"
@@ -59,17 +60,26 @@
             android:id="@+id/button6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.9"
             android:layout_margin="8dp"
-            android:text="MysteryMap"
-            android:onClick="mysteryMap"/>
+            android:alpha="0.9"
+            android:onClick="mysteryMap"
+            android:text="MysteryMap" />
+
         <Button
             android:id="@+id/shop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.9"
             android:layout_margin="8dp"
-            android:text="Shop"
-            android:onClick="shoppingtime"/>
+            android:alpha="0.9"
+            android:onClick="shoppingtime"
+            android:text="Shop" />
+
+        <Button
+            android:id="@+id/games"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Games"
+            android:onClick="chooseGame"
+            />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

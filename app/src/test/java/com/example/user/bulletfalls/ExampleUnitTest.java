@@ -1,7 +1,6 @@
 package com.example.user.bulletfalls;
 
-import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.TimePossesStrategy;
-import com.example.user.bulletfalls.Strategies.PossesStrategyPackage.TimeStrategiesPackage.DayOfWeekPossesStrategy;
+import com.example.user.bulletfalls.Shop.PossesStrategyPackage.TimeStrategiesPackage.DayOfWeekPossesStrategy;
 
 import org.junit.Test;
 
