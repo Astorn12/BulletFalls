@@ -1,26 +1,41 @@
-package com.example.user.bulletfalls.Game.Elements.Hero;
+package com.example.user.bulletfalls.Activities;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuBuilder;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import com.example.user.bulletfalls.Game.Elements.Helper.ToViewConverter;
+import com.example.user.bulletfalls.Game.Elements.Hero.ChosenHero;
+import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamiliesContainer;
+import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.Family;
+import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
+import com.example.user.bulletfalls.Game.Elements.Hero.HeroProfile;
+import com.example.user.bulletfalls.Game.Elements.Hero.HeroSpecyfication;
+import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
 import com.example.user.bulletfalls.Storage.Sets.HeroesSet;
 import com.example.user.bulletfalls.GlobalUsage.Enums.Permission;
@@ -33,7 +48,10 @@ import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Heroes extends AppCompatActivity {
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class HeroCollection extends AppCompatActivity {
 
 //  LinearLayout linear;
     ScrollView screen;
@@ -41,6 +59,12 @@ public class Heroes extends AppCompatActivity {
     TableLayout table;
     List<Hero> list;
 
+
+    ImageButton familyFilter;
+    ImageButton obligatoryFilter;
+    ImageButton sort;
+    ImageButton extraFilter;
+    PopupMenu menu;
 
 
 
@@ -52,12 +76,37 @@ public class Heroes extends AppCompatActivity {
         screen=(ScrollView)this.findViewById(R.id.screen);
         table=(TableLayout)this.findViewById(R.id.table);
         heroes = new LinkedList<>();
+
+        familyFilter=(ImageButton)this.findViewById(R.id.familyfilter);
+        obligatoryFilter=(ImageButton)this.findViewById(R.id.obligatoryFilter);
+        sort=(ImageButton)this.findViewById(R.id.sort);
+        extraFilter=(ImageButton)this.findViewById(R.id.extrafilter);
+
+        bindMenu();
+
+
         loadHeroes();
 
 
 
 
     }
+
+    private void bindMenu() {
+        Context context=this;
+
+
+        this.familyFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+    }
+
+
+
     private void writeToFile(String data, Context context, Hero hero) {
       ObjectMapper mapper= new ObjectMapper();
 

@@ -45,6 +45,9 @@ public class FamiliesContainer {
         }
         return null;
     }
+    public List<Family> getAll(){
+        return this.familyList;
+    }
 
     private void initial()
     {

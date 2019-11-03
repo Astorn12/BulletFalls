@@ -46,5 +46,6 @@ dependencies {
     implementation group: 'net.sf.flexjson', name: 'flexjson', version: '2.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
+    implementation "com.github.skydoves:powermenu:2.1.2"
 
 }

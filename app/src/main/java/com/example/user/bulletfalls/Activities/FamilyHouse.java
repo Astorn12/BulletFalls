@@ -19,6 +19,7 @@ import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
 import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.Family;
 import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamiliesContainer;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.GuiSupporters.BorderSetter;
+import com.example.user.bulletfalls.Profile.Collection.UserCollection;
 import com.example.user.bulletfalls.Storage.Sets.HeroesSet;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.RomeLettersConverter;
 import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
@@ -149,7 +150,7 @@ public class FamilyHouse extends AppCompatActivity {
 
 
 
-            if(!heroSet.ifHasThisHero(h))
+            if(!UserCollection.getInstance().doYouOwnIt(h.getSpecyfication()))
             {
                 miniature.setColorFilter(Color.WHITE);
                 TextView tier= new TextView(this);
@@ -160,6 +161,7 @@ public class FamilyHouse extends AppCompatActivity {
                 tier.setTextSize(25);
                 tier.setTextColor(Color.BLACK);
                 tier.setGravity(Gravity.CENTER);
+                System.out.println("TIER"+ h.getTier());
                 //tier.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
                 fm.addView(tier);
             }
@@ -174,7 +176,6 @@ public class FamilyHouse extends AppCompatActivity {
     private int getBoost()
     {
         return this.family.getLevelTable().get(this.family.getActualLevel()).getRight();
-
     }
 
 

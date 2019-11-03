@@ -14,9 +14,7 @@ import android.widget.TextView;
 
 import com.example.user.bulletfalls.Activities.GameListActivity.GamesList;
 import com.example.user.bulletfalls.Game.Elements.Enemy.EnemySpecyfication;
-import com.example.user.bulletfalls.Game.Elements.Hero.Heroes;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
-import com.example.user.bulletfalls.Profile.UserProfile;
 import com.example.user.bulletfalls.Storage.DatabaseAdministrator;
 import com.example.user.bulletfalls.Game.Management.ArchivCurrencyContainer;
 import com.example.user.bulletfalls.Storage.Sets.AbilitySet;
@@ -157,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void chooseHero(View view) {
-        Intent intent = new Intent(this, Heroes.class);
+        Intent intent = new Intent(this, HeroCollection.class);
         this.startActivity(intent);
     }
     public void P2PGame(View view) {

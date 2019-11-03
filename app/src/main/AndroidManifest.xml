@@ -31,7 +31,7 @@
             android:name=".Game.Activities.Game"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Game.Elements.Hero.Heroes"
+            android:name=".Activities.HeroCollection"
             android:screenOrientation="portrait" />
         <activity
             android:name=".P2P.P2PConnection"

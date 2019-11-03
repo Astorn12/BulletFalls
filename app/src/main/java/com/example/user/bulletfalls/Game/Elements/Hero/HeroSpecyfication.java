@@ -45,6 +45,7 @@ public class HeroSpecyfication extends CharacterSpecyfication implements PossesA
         this.abilities=getBeginAbilitySet();
         this.iClass =heroAS.getIcalss();
         this.possesStrategy=heroCS.getPossesStrategy();
+        this.tier=heroCS.getTier();
     }
 
     private AbilitiesBar getBeginAbilitySet() {
