@@ -1,4 +1,4 @@
-package com.example.user.bulletfalls.Activities;
+package com.example.user.bulletfalls.Profile.Collection.HeroCollection;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.ColorLong;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -19,29 +21,46 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
-import com.example.user.bulletfalls.Game.Elements.Helper.ToViewConverter;
 import com.example.user.bulletfalls.Game.Elements.Hero.ChosenHero;
 import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamiliesContainer;
 import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.Family;
 import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
 import com.example.user.bulletfalls.Game.Elements.Hero.HeroProfile;
 import com.example.user.bulletfalls.Game.Elements.Hero.HeroSpecyfication;
-import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.AngelProtector;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.Breeder;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MassDestructor;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.SuperShooter;
+import com.example.user.bulletfalls.GlobalUsage.Supporters.RomeLettersConverter;
+import com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters.CollectionFilterComposite;
+import com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters.FamilyFilter;
+import com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters.FeatureMenuItem;
+import com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters.HeroCollectionSorter;
+import com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters.MasterAbilityFilter;
+import com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters.SelectorMenuAdapter;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
 import com.example.user.bulletfalls.Storage.Sets.HeroesSet;
 import com.example.user.bulletfalls.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skydoves.powermenu.CircularEffect;
+import com.skydoves.powermenu.CustomPowerMenu;
+import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenu;
 import com.skydoves.powermenu.PowerMenuItem;
 import com.skyline.widget.layout.RoundCornerLayout;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,13 +69,19 @@ public class HeroCollection extends AppCompatActivity {
 //  LinearLayout linear;
     ScrollView screen;
     TableLayout table;
-    List<HeroSpecyfication> list;
-
 
     ImageButton familyFilter;
-    ImageButton obligatoryFilter;
-    ImageButton sort;
+    ImageButton featuresFilterButton;
+    ImageButton sorter;
     ImageButton extraFilter;
+
+    CollectionFilterComposite<HeroSpecyfication> filterComposite;
+
+    PowerMenu familiesMenu;
+    CustomPowerMenu featureFilter;
+    PowerMenu sorterMenu;
+
+    String displayMode;
 
 
 
@@ -65,62 +90,202 @@ public class HeroCollection extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heroes);
+        displayMode=null;
         screen=(ScrollView)this.findViewById(R.id.screen);
         table=(TableLayout)this.findViewById(R.id.table);
 
         familyFilter=(ImageButton)this.findViewById(R.id.familyfilter);
-        obligatoryFilter=(ImageButton)this.findViewById(R.id.obligatoryFilter);
-        sort=(ImageButton)this.findViewById(R.id.sort);
+        featuresFilterButton=(ImageButton)this.findViewById(R.id.obligatoryFilter);
+        sorter=(ImageButton)this.findViewById(R.id.sort);
         extraFilter=(ImageButton)this.findViewById(R.id.extrafilter);
 
-        bindMenu();
+        this.filterComposite= new CollectionFilterComposite<>();
+        createMenus();
+        bindMenus();
+
+        repaintHeroesCollection(HeroesSet.getInstance().getAll());
+    }
+
+    private void createMenus(){
+        createFamilyFilter();
+        createFeatureFilter();
+        createSorterFilter();
+    }
+
+    private void createSorterFilter(){
+        OnMenuItemClickListener<PowerMenuItem> onSortMenuItemClickListener = new OnMenuItemClickListener<PowerMenuItem>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onItemClick(int position, PowerMenuItem item) {
+                filterComposite.remove(new HeroCollectionSorter(null));
+
+                displayMode=sorterMenu.getItemList().get(position).getTitle();
+                switch(displayMode){
+                    case "Default":
+                        break;
+                    case "Speed":
+                        filterComposite.add(new HeroCollectionSorter( new Comparator<HeroSpecyfication>() {
+                            @Override
+                            public int compare(HeroSpecyfication o1, HeroSpecyfication o2) {
+
+                                if(o1.getSpeed()==o2.getSpeed()) return 0;
+                                else return o1.getSpeed()<o2.getSpeed() ?1 :-1;
+                            }
+                        }));
+                        break;
+                    case "Life":
+                        filterComposite.add(new HeroCollectionSorter( new Comparator<HeroSpecyfication>() {
+                            @Override
+                            public int compare(HeroSpecyfication o1, HeroSpecyfication o2) {
+                                if(o1.getLife()==o2.getLife())return 0;
+                                else return o1.getLife()<o2.getLife() ?1 :-1;
+                            }
+                        }));
+                        break;
+                    case "Shooting speed":
+                        filterComposite.add(new HeroCollectionSorter( new Comparator<HeroSpecyfication>() {
+                            @Override
+                            public int compare(HeroSpecyfication o1, HeroSpecyfication o2) {
+                                if(o1.getShootingSpeed()==o2.getShootingSpeed()) return 0;
+                                else return o1.getShootingSpeed()<o2.getShootingSpeed() ?1 :-1;
+                            }
+                        }));
+                        break;
+                    case "Tier":
+                        filterComposite.add(new HeroCollectionSorter( new Comparator<HeroSpecyfication>() {
+                            @Override
+                            public int compare(HeroSpecyfication o1, HeroSpecyfication o2) {
+                                if(o1.getTier()==o2.getTier()) return 0;
+                                else return o1.getTier()<o2.getTier() ?1 :-1;
+                            }
+                        }));
+                        break;
+                }
+                sorterMenu.dismiss();
+                filter();
+            }
+        };
 
 
-        showHeroesCollection(HeroesSet.getInstance().getAll());
-
-
-
+        this.sorterMenu= new PowerMenu.Builder(this)
+                .addItem(new PowerMenuItem("Default"))
+                .addItem(new PowerMenuItem("Speed"))
+                .addItem(new PowerMenuItem("Life"))
+                .addItem(new PowerMenuItem("Shooting speed"))
+                .addItem(new PowerMenuItem("Tier"))
+                .setTextGravity(Gravity.CENTER)
+                .setMenuRadius(10f)
+                .setMenuShadow(10f)
+                .setCircularEffect(CircularEffect.BODY)
+                .setSelectedMenuColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setAnimation(MenuAnimation.SHOWUP_TOP_LEFT)
+                .setOnMenuItemClickListener(onSortMenuItemClickListener)
+                .build();
 
     }
 
-    private void bindMenu() {
+    private void createFeatureFilter(){
+         OnMenuItemClickListener<FeatureMenuItem> onFeatureMenuItemClickListener = new OnMenuItemClickListener<FeatureMenuItem>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onItemClick(int position, FeatureMenuItem item) {
+                item.changeState();
+                featureFilter.getAdapter().notifyDataSetInvalidated();
+                if(item.isSelected()){
+                    filterComposite.add(new MasterAbilityFilter(item.getMasterAbility()));
+                }
+                else filterComposite.remove(new MasterAbilityFilter(item.getMasterAbility()));
+            }
+        };
 
+        View.OnClickListener onBackgroundClickListener= new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                featureFilter.dismiss();
+                filter();
+            }
+        };
 
+        this.featureFilter= new CustomPowerMenu.Builder(this,new SelectorMenuAdapter())
+                .addItem(new FeatureMenuItem(new AngelProtector()))
+                .addItem(new FeatureMenuItem(new MassDestructor()))
+                .addItem(new FeatureMenuItem(new SuperShooter()))
+                .addItem(new FeatureMenuItem(new Breeder()))
+                .setMenuRadius(30f)
+                .setMenuShadow(30f)
+                .setOnMenuItemClickListener(onFeatureMenuItemClickListener)
+                .setAnimation(MenuAnimation.SHOWUP_TOP_LEFT)
+                .setWidth(300)
+                .setOnBackgroundClickListener(onBackgroundClickListener)
+                .build();
+        featureFilter.getAdapter().notifyDataSetInvalidated();
+    }
 
-         final Context context=this;
+    private void createFamilyFilter(){
+        FamiliesContainer familiesContainer= new FamiliesContainer();
+        List<PowerMenuItem> items= new LinkedList<>();
+        for(Family family: familiesContainer.getAll()){
+            int miniature= family.getMiniature();
+            items.add(new PowerMenuItem("", miniature));
+        }
+
+        OnMenuItemClickListener<PowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<PowerMenuItem>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onItemClick(int position, PowerMenuItem item) {
+                filterComposite.clear();
+                if(familiesMenu.getSelectedPosition()==position){
+                    familiesMenu.setSelectedPosition(-1);
+                }else {
+                    filterComposite.add(new FamilyFilter(familiesContainer.getAll().get(position).getGroupName()));
+                    familiesMenu.setSelectedPosition(position);
+                }
+                filter();
+                familiesMenu.dismiss();
+            }
+        };
+
+        this.familiesMenu= new PowerMenu.Builder(this)
+                .addItemList(items)
+                .setTextGravity(Gravity.CENTER)
+                .setMenuRadius(10f)
+                .setMenuShadow(10f)
+                .setCircularEffect(CircularEffect.BODY)
+                .setSelectedTextColor(Color.WHITE)
+                .setSelectedMenuColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setOnMenuItemClickListener(onMenuItemClickListener)
+                .setAnimation(MenuAnimation.SHOWUP_TOP_LEFT)
+                .build();
+    }
+
+    private void bindMenus() {
 
         this.familyFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FamiliesContainer familiesContainer= new FamiliesContainer();
-                List<PowerMenuItem> items= new LinkedList<>();
-                for(Family family: familiesContainer.getAll()){
-                    int miniature= family.getMiniature();
-                    items.add(new PowerMenuItem("", miniature));
-                }
+                familiesMenu.showAsDropDown(familyFilter);
+            }
+        });
 
 
-                OnMenuItemClickListener<PowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<PowerMenuItem>() {
-                    @Override
-                    public void onItemClick(int position, PowerMenuItem item) {
-                       filter(familiesContainer.getAll().get(position).getGroupName());
-                    }
-                };
-
-                PowerMenu powerMenu= new PowerMenu.Builder(context)
-                        .addItemList(items)
-                        .setTextGravity(Gravity.CENTER)
-                        .setSelectedMenuColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                        .setMenuRadius(10f)
-                        .setMenuShadow(10f)
-                        .build();
-                powerMenu.showAsDropDown(familyFilter);
+        this.featuresFilterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                featureFilter.showAsDropDown(featuresFilterButton);
+            }
+        });
+        this.sorter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sorterMenu.showAsDropDown(sorter);
             }
         });
     }
 
-    private void filter(FamilyName familyName){
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void filter(){
+        repaintHeroesCollection(this.filterComposite.filter(HeroesSet.getInstance().getAll()));
     }
 
     private void writeToFile(String data, Context context, Hero hero) {
@@ -147,23 +312,18 @@ public class HeroCollection extends AppCompatActivity {
     }
 
 
-    private void changeShowedCollection(){
-
-    }
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void showHeroesCollection(List<HeroSpecyfication> filteredHeroes)
+    private void repaintHeroesCollection(List<HeroSpecyfication> filteredHeroes)
     {
         TableRow tableRow = null;
-        TableLayout tableLayout=(TableLayout)findViewById(R.id.table);
+
+        table.removeAllViews();
 
         List<Hero> currentlyShowedHeroList = new LinkedList<>();
 
         int padding=30;
         int n=3;//ilosc kolumn
-        int w= tableLayout.getWidth();
+        int w= table.getWidth();
         int p=(w-(n+1)*padding)/n;
 
        int i=0;
@@ -171,7 +331,7 @@ public class HeroCollection extends AppCompatActivity {
        {
            if(i%3==0) {
               tableRow = new TableRow(this);
-              tableLayout.addView(tableRow);
+              table.addView(tableRow);
            }
            final RoundCornerLayout frameLayout= new RoundCornerLayout(this);
            frameLayout.setRadius(100);
@@ -192,7 +352,7 @@ public class HeroCollection extends AppCompatActivity {
            }
 
            ImageView imageView=new ImageView(this);
-           imageView.setImageResource(hero.getiClass().getImage());
+           imageView.setImageResource(hero.getMasterAbility().getImage());
 
 
            frameLayout.addView(imageView);
@@ -205,11 +365,42 @@ public class HeroCollection extends AppCompatActivity {
            frameLayout.addView(hero);
            currentlyShowedHeroList.add(hero);
 
+           if(displayMode!=null){
+               TextView textView= new TextView(this);
+               String sTmp="";
+              switch(displayMode){
+                  case "Speed":
+                      sTmp=hero.getSpeed()+"";
+                      break;
+                  case "Life":
+                     sTmp=hero.getLife()+"";
+                     break;
+                  case "Shooting speed":
+                      sTmp=hero.getShootingSpeed()+"";
+                      break;
+                  case "Tier":
+                      RomeLettersConverter rome= new RomeLettersConverter();
+                      sTmp=rome.convert(hero.getTier())+"";
+                      break;
+              }
+              textView.setText(sTmp);
+              textView.setGravity(Gravity.BOTTOM);
+              textView.setGravity(Gravity.CENTER_VERTICAL);
+              textView.setTextSize(20);
+              textView.setBackgroundColor(Color.WHITE);
+              textView.getBackground().setAlpha(125);
+              FrameLayout.LayoutParams layoutParams1=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,1);
+              layoutParams1.gravity=Gravity.BOTTOM|Gravity.CENTER;
+               textView.setLayoutParams(layoutParams1);
+              frameLayout.addView(textView);
+              textView.setZ(1);
 
+           }
 
            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                hero.setZ(1);
                imageView.setZ(1);
+
                //ll.setZ(1);
            }
            int pad=10;
@@ -218,8 +409,8 @@ public class HeroCollection extends AppCompatActivity {
 
            if(i%3==0) padLeft+=pad; // ramka z lewej strony
            if(i%3==2) padRight+=pad; //ramka z prawej strony
-           if(tableLayout.getChildCount()==1) padTop+=2*pad; //ramka z góry
-           if(list.size()/3==tableLayout.getChildCount()) padBottom+=2*pad;
+           if(table.getChildCount()==1) padTop+=2*pad; //ramka z góry
+           if(filteredHeroes.size()/3==table.getChildCount()) padBottom+=2*pad;
 
            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) frameLayout.getLayoutParams();
            params.setMargins(padLeft, padTop, padRight, padBottom);

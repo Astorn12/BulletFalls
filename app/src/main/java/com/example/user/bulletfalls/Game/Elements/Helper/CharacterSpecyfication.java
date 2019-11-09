@@ -85,7 +85,7 @@ public class CharacterSpecyfication extends DynamicSpecyfication {
 
     /**BIZNES METHODS*/
     @JsonIgnore
-    public boolean isFromGroup(FamilyName familyName)
+    public boolean isFromFamiy(FamilyName familyName)
     {
         if(this.familyNames !=null) {
             for (FamilyName g : this.familyNames) {

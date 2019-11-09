@@ -15,8 +15,6 @@ import com.example.user.bulletfalls.Game.Elements.Enemy.EnemySpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Helper.Description;
 import com.example.user.bulletfalls.Game.Elements.Enemy.Enemy;
 import com.example.user.bulletfalls.R;
-import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
-import com.example.user.bulletfalls.Game.Elements.Bullet.Specyfication.BulletSpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Overal.AppearActionStrategy.AppearAction;
 import com.example.user.bulletfalls.Game.Elements.Overal.AppearActionStrategy.GnomeAppearAction;
 import com.example.user.bulletfalls.Game.Elements.Overal.AppearActionStrategy.NothingAppearAction;
@@ -128,7 +126,7 @@ public class EnemySet implements ISet<EnemySpecyfication>{
         return enemys;
     }
 
-    public List<EnemySpecyfication> getAll(Context context)
+    public List<EnemySpecyfication> getAll()
     {
         return this.enemys;
     }
@@ -143,7 +141,7 @@ public class EnemySet implements ISet<EnemySpecyfication>{
         List<EnemySpecyfication> group= new LinkedList<>();
         for(EnemySpecyfication es: enemys)
         {
-            if(es.isFromGroup(familyName))
+            if(es.isFromFamiy(familyName))
             group.add(es);
         }
         return group;

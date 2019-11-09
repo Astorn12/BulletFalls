@@ -21,7 +21,7 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
         @JsonSubTypes.Type(value=   SuperShooter.class, name = "supershooter"),
         @JsonSubTypes.Type(value=   Breeder.class, name = "breeder")
 })
-public interface IClass {
+public interface MasterAbility {
     @JsonIgnore
     int getImage();
     @JsonIgnore

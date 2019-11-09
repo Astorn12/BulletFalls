@@ -2,7 +2,7 @@ package com.example.user.bulletfalls.Game.Elements.Ability.Strategy;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.example.user.bulletfalls.Game.ActionService.Action;
 import com.example.user.bulletfalls.Game.ActionService.ActionType.ActionType;
 import com.example.user.bulletfalls.Game.ActionService.Actions.CarpediemAction;
-import com.example.user.bulletfalls.Game.Activities.Game;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.ScalerSupporter;

@@ -36,11 +36,11 @@ public class Family {
 
     }
 
-    public Family(FamilyName gm, FamilyBoostTable gt, FamilyAbility ga)
+   /* public Family(FamilyName gm, FamilyBoostTable gt, FamilyAbility ga)
     {
         this(gm,gt,ga,0,0,"");
 
-    }
+    }*/
 
     public Action boost()
     {

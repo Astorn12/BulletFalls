@@ -10,8 +10,6 @@ import android.widget.FrameLayout;
 import com.example.user.bulletfalls.Game.ActionService.Action;
 import com.example.user.bulletfalls.Game.ActionService.ActionMedium;
 import com.example.user.bulletfalls.GlobalUsage.Enums.BE;
-import com.example.user.bulletfalls.GlobalUsage.Enums.Permission;
-import com.example.user.bulletfalls.GlobalUsage.Enums.Rarity;
 import com.example.user.bulletfalls.Game.Activities.Game;
 import com.example.user.bulletfalls.Game.Elements.Enemy.EnemySpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Items.ItemsController;
@@ -26,15 +24,11 @@ import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamiliesCon
 import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
 import com.example.user.bulletfalls.Game.Elements.Beast.Beast;
 import com.example.user.bulletfalls.Game.Elements.Items.Item;
-import com.example.user.bulletfalls.Game.Elements.Bullet.RotateBullet;
 import com.example.user.bulletfalls.Profile.UserProfile;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Storage.Sets.GameSet;
-import com.example.user.bulletfalls.Game.Elements.Bullet.Specyfication.BulletSpecyfication;
 
 import com.example.user.bulletfalls.Game.Elements.Hero.HeroSpecyfication;
-import com.example.user.bulletfalls.Game.Elements.Bullet.Strategy.BulletMoveStrategyPackage.Horizontal;
-import com.example.user.bulletfalls.Shop.PossesStrategyPackage.MoneyPossesStrategy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
@@ -520,7 +514,7 @@ public class GameController {
     private static class IgnoreInheritedIntrospector extends JacksonAnnotationIntrospector {
         @Override
         public boolean hasIgnoreMarker(final AnnotatedMember m) {
-            return m.getDeclaringClass() == android.support.v7.widget.AppCompatImageView.class || m.getDeclaringClass().isAssignableFrom(android.support.v7.widget.AppCompatImageView.class) || m.getDeclaringClass() == Drawable.class || super.hasIgnoreMarker(m);
+            return m.getDeclaringClass() == androidx.appcompat.widget.AppCompatImageView.class || m.getDeclaringClass().isAssignableFrom(androidx.appcompat.widget.AppCompatImageView.class) || m.getDeclaringClass() == Drawable.class || super.hasIgnoreMarker(m);
         }
     }
 

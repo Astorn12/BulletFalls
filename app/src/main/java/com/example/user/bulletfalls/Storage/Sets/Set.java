@@ -16,7 +16,7 @@ public class Set implements ISet {
     }
 
     @Override
-    public List getAll(Context context) {
+    public List getAll() {
         return null;
     }
 

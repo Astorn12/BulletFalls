@@ -13,10 +13,9 @@ import android.os.Build;
 
 import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
-import com.example.user.bulletfalls.GlobalUsage.Interfaces.PossesAble;
-import com.example.user.bulletfalls.Shop.PossesStrategyPackage.PossesStrategy;
+
 /**Klasa podstawowa dla wszystkich kulek herosów, przeciwników i besti   Bullets and Characters*/
-public class Ability extends android.support.v7.widget.AppCompatImageView {
+public class Ability extends androidx.appcompat.widget.AppCompatImageView {
 
     AbilitySpecyfication abilitySpecyfication;
     public Ability(Context context, AbilitySpecyfication abilitySpecyfication) {

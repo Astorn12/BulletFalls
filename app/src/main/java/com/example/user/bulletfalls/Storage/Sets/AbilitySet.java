@@ -95,10 +95,7 @@ public class AbilitySet implements ISet<AbilitySpecyfication> {
 
     }
 
-    @Override
-    public List<AbilitySpecyfication> getAll(Context context) {
-        return this.abilities;
-    }
+
 
 
 
@@ -114,6 +111,7 @@ public class AbilitySet implements ISet<AbilitySpecyfication> {
         return abilities;
     }
 
+    @Override
     public List<AbilitySpecyfication> getAll() {
         return abilities;
     }

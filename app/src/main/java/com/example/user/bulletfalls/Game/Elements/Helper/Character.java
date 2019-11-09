@@ -6,7 +6,7 @@ import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.widget.ImageView;
 import android.widget.TextView;
 

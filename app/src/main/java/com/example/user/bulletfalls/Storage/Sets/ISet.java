@@ -10,7 +10,7 @@ public interface ISet<T> {
 
     void save(Context context);
 
-    List<T> getAll(Context context);
+    List<T> getAll();
 
     void clear();
 }

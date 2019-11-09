@@ -1,13 +1,11 @@
 package com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes;
 
-import com.example.user.bulletfalls.Game.ActionService.Action;
 import com.example.user.bulletfalls.Game.ActionService.Actions.ClassActions.ClassAction;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
-import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("mugol")
-public class Mugol implements IClass {
+public class Mugol implements MasterAbility {
     @Override
     public int getImage() {
         return 0;

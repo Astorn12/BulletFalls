@@ -1,16 +1,8 @@
 package com.example.user.bulletfalls.GlobalUsage.Supporters.GuiSupporters;
 
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.support.v4.view.ViewPager;
-import android.text.Layout;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.apache.commons.lang3.NotImplementedException;
-import org.w3c.dom.Text;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,9 @@
-package com.example.user.bulletfalls.Profile.Collection.HeroCollection;
+package com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters;
 
-public class CollectionFilter {
+import java.util.List;
+
+public interface CollectionFilter<T>  {
+
+    List<T> filter(List<T> inputList);
+
 }

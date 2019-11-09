@@ -1,5 +1,6 @@
 package com.example.user.bulletfalls.Game.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -11,9 +12,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Dimension;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
 import com.example.user.bulletfalls.Game.Management.GameController;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
@@ -179,12 +181,14 @@ public class Game extends AppCompatActivity {
     /**Methods which are connected with fact that imageViews could be modified only by acticity where they have been puted*/
     public void addView(final Dynamic dynamic) {
 
+        Context context=this;
         runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
 
                 // Stuff that updates the UI
+
                 frame.addView(dynamic);
                 com.example.user.bulletfalls.GlobalUsage.Supporters.Dimension d= dynamic.getDimension();
                 dynamic.getLayoutParams().height= d.getHeight();

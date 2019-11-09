@@ -2,7 +2,7 @@ package com.example.user.bulletfalls.Game.Strategies.Requirements;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 

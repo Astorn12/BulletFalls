@@ -77,7 +77,7 @@ public class BeastsSet implements ISet<BeastSpecyfication> {
     }
 
     @Override
-    public List<BeastSpecyfication> getAll(Context context) {
+    public List<BeastSpecyfication> getAll() {
 
         List<BeastSpecyfication> clone= new LinkedList<>();
 

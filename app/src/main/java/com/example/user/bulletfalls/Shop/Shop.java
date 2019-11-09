@@ -1,13 +1,11 @@
 package com.example.user.bulletfalls.Shop;
 
 import android.graphics.Color;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,7 +15,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.user.bulletfalls.Game.Elements.Helper.ToViewConverter;
-import com.example.user.bulletfalls.GlobalUsage.Enums.Permission;
 import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
 import com.example.user.bulletfalls.Storage.Sets.HeroesSet;
 import com.example.user.bulletfalls.Profile.Currency;

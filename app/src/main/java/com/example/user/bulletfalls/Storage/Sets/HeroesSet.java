@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.user.bulletfalls.Game.Elements.Bullet.Specyfication.BulletSpecyfication;
 import com.example.user.bulletfalls.Game.Elements.BulletManiputatorsPackage.AttackDefenceFilter;
+import com.example.user.bulletfalls.Game.Elements.Helper.Sizers.CharacterSizer;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Active.HeroAS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Collection.HeroCS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Passive.HeroPS;
@@ -96,9 +97,16 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
     }
 
     @Override
-    public List<HeroSpecyfication> getAll(Context context) {
-        return this.heroes;
+    public List<HeroSpecyfication> getAll() {
+
+        List<HeroSpecyfication> list= new LinkedList<>();
+        for(HeroSpecyfication hs:this.heroes){
+            list.add((HeroSpecyfication)hs.clone());
+        }
+
+        return list;
     }
+
 
     public  void setBulletForHero(String name, BulletSpecyfication bullet)
     {
@@ -133,43 +141,43 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
 
         HeroSpecyfication mabel= new HeroSpecyfication("Mabel Pines",
                 new CharacterVS(R.drawable.mabel,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(30,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("mabel",Arrays.asList(FamilyName.MysteryShack),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.CHILD),standardPrice,1));
 
         HeroSpecyfication dipper= new HeroSpecyfication("Dipper Pines",
                 new CharacterVS(R.drawable.dipper,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.FIRSTJURNAL)),
+                new HeroPS(30,150,20,BulletSet.getInstance().getBullet(BE.FIRSTJURNAL)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("dipper",Arrays.asList(FamilyName.MysteryShack),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.CHILD),standardPrice,1));
 
             HeroSpecyfication soos= new HeroSpecyfication("Soos Ramirez",
                 new CharacterVS(R.drawable.soos,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(20,300,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("soos",Arrays.asList(FamilyName.MysteryShack,FamilyName.Ramirez),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.ADULT),standardPrice,1));
 
         HeroSpecyfication stanek= new HeroSpecyfication("Stanford Pines",
                 new CharacterVS(R.drawable.stanek,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(20,250,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("stanek",Arrays.asList(FamilyName.MysteryShack),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.ADULT),standardPrice,1));
 
         HeroSpecyfication wendy= new HeroSpecyfication("Wendy Corduroy",
                 new CharacterVS(R.drawable.wendy,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(20,150,10,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("mabel",Arrays.asList(FamilyName.MysteryShack,FamilyName.Lumberjack),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.TEENEAGER),standardPrice,1));
 
         HeroSpecyfication waddles= new HeroSpecyfication("Waddles",
                 new CharacterVS(R.drawable.waddles,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(20,400,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new MassDestructor()),
                 new HeroCS("waddles",Arrays.asList(FamilyName.MysteryShack),Arrays.asList(Kind.ANIMAL),standardPrice,1));
 
         HeroSpecyfication grenda= new HeroSpecyfication("Grenda",
                 new CharacterVS(R.drawable.grenda,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(15,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("grenda",Arrays.asList(FamilyName.MabelTeam),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.CHILD),standardPrice,1));
 
@@ -187,25 +195,25 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
 
         HeroSpecyfication candy= new HeroSpecyfication("Candy Chiu",
                 new CharacterVS(R.drawable.candy,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(20,100,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("candy",Arrays.asList(FamilyName.MabelTeam),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.CHILD),standardPrice,1));
 
         HeroSpecyfication mcgucket= new HeroSpecyfication("Old Man McGucket",
                 new CharacterVS(R.drawable.mcgucket,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(20,200,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("mcgucket",Arrays.asList(FamilyName.Scientists),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.ADULT),standardPrice,1));
 
         HeroSpecyfication shootingmabel= new HeroSpecyfication("Mabel With Grappling Hook",
                 new CharacterVS(R.drawable.shootingmabel,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(20,150,10,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("mabel",Arrays.asList(FamilyName.MysteryShack),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.CHILD),standardPrice,1));
 
         HeroSpecyfication robie= new HeroSpecyfication("Robie",
                 new CharacterVS(R.drawable.robie,1,new Description()),
-                new HeroPS(20,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(20,160,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("robie",Arrays.asList(FamilyName.WendyTeam),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.TEENEAGER),standardPrice,1));
 
@@ -278,7 +286,7 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
         int counter=0;
         for(HeroSpecyfication hero :heroes)
         {
-            if(hero.isFromGroup(familyName))
+            if(hero.isFromFamiy(familyName))
             {
                 counter+=familiesCandyManager.countHeroCandy(hero,familyName);
 
@@ -292,7 +300,7 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
         int counter=0;
         for(HeroSpecyfication hero :heroes)
         {
-            if(hero.isFromGroup(familyName)&& UserCollection.getInstance().doYouOwnIt(hero))
+            if(hero.isFromFamiy(familyName)&& UserCollection.getInstance().doYouOwnIt(hero))
             {
 
                 counter+=familiesCandyManager.countHeroCandy(hero,familyName);
@@ -324,4 +332,5 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
 
         return markedList;
     }
+
 }

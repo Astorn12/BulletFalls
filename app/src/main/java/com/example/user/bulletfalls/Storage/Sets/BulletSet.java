@@ -79,7 +79,7 @@ public class BulletSet implements ISet<BulletSpecyfication>{
     }
 
     @Override
-    public List<BulletSpecyfication> getAll(Context context) {
+    public List<BulletSpecyfication> getAll() {
         return this.bullets;
     }
 

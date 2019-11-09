@@ -2,20 +2,14 @@ package com.example.user.bulletfalls.Game.Elements.Helper;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.example.user.bulletfalls.Game.Activities.Game;
-import com.example.user.bulletfalls.Game.Management.GameController;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.Dimension;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.Timer;
-
-public abstract class Dynamic extends android.support.v7.widget.AppCompatImageView implements Named {
+public abstract class Dynamic extends androidx.appcompat.widget.AppCompatImageView implements Named {
 
     protected String name;
     protected int image;

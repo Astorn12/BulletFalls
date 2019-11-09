@@ -32,7 +32,7 @@ public class GnomeAppearAction implements AppearAction {
         for(EnemySpecyfication e:eog.getReadOnlyCurrentlyEnemyList())
         {
 
-            if(e.isFromGroup(FamilyName.Gnomes))
+            if(e.isFromFamiy(FamilyName.Gnomes))
             {
                 counter++;
             }
@@ -80,7 +80,7 @@ public class GnomeAppearAction implements AppearAction {
         List<EnemySpecyfication> gnomes= new LinkedList<>();
         for(EnemySpecyfication es: eog.getReadOnlyCurrentlyEnemyList())
         {
-            if(es.isFromGroup(FamilyName.Gnomes))
+            if(es.isFromFamiy(FamilyName.Gnomes))
             {
                 gnomes.add(es);
             }

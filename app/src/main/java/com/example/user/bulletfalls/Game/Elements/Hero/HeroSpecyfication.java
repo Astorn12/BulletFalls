@@ -8,11 +8,12 @@ import android.widget.TextView;
 
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Helper.CharacterSpecyfication;
+import com.example.user.bulletfalls.Game.Elements.Helper.Sizers.CharacterSizer;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Active.HeroAS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Collection.HeroCS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Passive.HeroPS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.View.CharacterVS;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.IClass;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MasterAbility;
 import com.example.user.bulletfalls.Game.Elements.Ability.AbilitiesBar;
 import com.example.user.bulletfalls.GlobalUsage.Enums.AE;
 import com.example.user.bulletfalls.GlobalUsage.Interfaces.PossesAble;
@@ -31,7 +32,7 @@ public class HeroSpecyfication extends CharacterSpecyfication implements PossesA
     AbilitiesBar abilities;
 
     /**ACTIVE STATISTICS*/
-    IClass iClass;
+    MasterAbility masterAbility;
 
     /**COLLECTION STATISTICS*/
     PossesStrategy possesStrategy;
@@ -43,7 +44,7 @@ public class HeroSpecyfication extends CharacterSpecyfication implements PossesA
 
 
         this.abilities=getBeginAbilitySet();
-        this.iClass =heroAS.getIcalss();
+        this.masterAbility =heroAS.getIcalss();
         this.possesStrategy=heroCS.getPossesStrategy();
         this.tier=heroCS.getTier();
     }
@@ -142,12 +143,12 @@ public class HeroSpecyfication extends CharacterSpecyfication implements PossesA
         this.abilities = abilities;
     }
 
-    public IClass getiClass() {
-        return iClass;
+    public MasterAbility getMasterAbility() {
+        return masterAbility;
     }
 
-    public void setiClass(IClass iClass) {
-        this.iClass = iClass;
+    public void setMasterAbility(MasterAbility masterAbility) {
+        this.masterAbility = masterAbility;
     }
 
     public PossesStrategy getPossesStrategy() {
@@ -166,6 +167,14 @@ public class HeroSpecyfication extends CharacterSpecyfication implements PossesA
         this.tier = tier;
     }
 
+    @Override
+    public Object clone(){
+        return  new HeroSpecyfication(this.name,
+                new CharacterVS(this.imageResource,CharacterSizer.getDipperCounter(this.height),this.getDescription()),
+                new HeroPS(this.speed,this.getLife(),this.getShootingSpeed(),this.getBulletSpecyfication()),
+                new HeroAS(this.getCharacterPositioning(),this.getAttackDefenceFilter(),this.getAppearAction(),this.masterAbility),
+                new HeroCS(this.getIndyvidualHeroMarker(),this.getFamilyNames(),this.getKinds(),this.possesStrategy,this.tier));
+    }
 
 }
 

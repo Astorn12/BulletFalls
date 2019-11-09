@@ -13,10 +13,9 @@ import com.example.user.bulletfalls.Game.Elements.Ability.AbilitiesBar;
 import com.example.user.bulletfalls.Game.Elements.Beast.Beast;
 import com.example.user.bulletfalls.Game.Elements.Helper.Character;
 import com.example.user.bulletfalls.Game.Elements.Helper.Summoner;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.IClass;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MasterAbility;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.example.user.bulletfalls.Game.Activities.Game;
-import com.example.user.bulletfalls.GlobalUsage.Interfaces.PossesAble;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
 import com.example.user.bulletfalls.Shop.PossesStrategyPackage.PossesStrategy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,7 +35,7 @@ public class Hero extends Character implements Summoner {
     AbilitiesBar abilities;
 
     /**ACTIVE STATISTICS*/
-    IClass iClass;
+    MasterAbility masterAbility;
 
     /**COLLECTION STATISTICS*/
     PossesStrategy possesStrategy;
@@ -54,7 +53,7 @@ public class Hero extends Character implements Summoner {
 
         this.abilities=specyfication.abilities;
 
-        this.iClass=specyfication.iClass;
+        this.masterAbility =specyfication.masterAbility;
 
         this.possesStrategy=specyfication.possesStrategy;
         this.tier=specyfication.tier;
@@ -169,7 +168,7 @@ public class Hero extends Character implements Summoner {
         HeroSpecyfication heroSpecyfication= new HeroSpecyfication(this.name,
                 new CharacterVS(this.image,CharacterSizer.getDipperCounter(this.height),this.description),
                 new HeroPS(this.speed,this.life,this.shootingSpeed,this.bulletSpecyfication),
-                new HeroAS(this.characterPositioning,this.attackDefenceFilter,this.appearAction,this.iClass),
+                new HeroAS(this.characterPositioning,this.attackDefenceFilter,this.appearAction,this.masterAbility),
                 new HeroCS(this.indyvidualHeroMarker,this.familyNames,this.kind,this.possesStrategy,this.tier));
         heroSpecyfication.setAbilities(this.abilities);
         return heroSpecyfication;
@@ -233,12 +232,12 @@ public class Hero extends Character implements Summoner {
 
 
     /***GETTERS &SETTERS/*/
-    public IClass getiClass() {
-        return iClass;
+    public MasterAbility getMasterAbility() {
+        return masterAbility;
     }
 
-    public void setiClass(IClass iClass) {
-        this.iClass = iClass;
+    public void setMasterAbility(MasterAbility masterAbility) {
+        this.masterAbility = masterAbility;
     }
 
     public int getNumberOfAbilities(){

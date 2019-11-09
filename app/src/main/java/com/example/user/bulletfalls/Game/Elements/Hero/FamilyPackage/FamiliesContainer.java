@@ -63,42 +63,55 @@ public class FamiliesContainer {
     }
     private Family MysteryHackGroup()
     {
-        return new Family(FamilyName.MysteryShack,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),new FamilyIncreaseLifeAbility(),0,R.drawable.mysteryshackminiature,
+        return new Family(FamilyName.MysteryShack,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),
+                new FamilyIncreaseLifeAbility(),0,R.drawable.mysteryshackminiature,
                 "Mystery Hack");
     }
     private Family LumberJack()
     {
-        return new Family(FamilyName.Lumberjack,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),new FamilyIncreaseLifeAbility(),R.drawable.couldrons ,R.drawable.couldrongroupminiature,
+        return new Family(FamilyName.Lumberjack,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),
+                new FamilyIncreaseLifeAbility(),R.drawable.couldrons ,R.drawable.couldrongroupminiature,
                 "Lumber Jack");
     }
     private Family TentOfThelepathy()
     {
-        return new Family(FamilyName.TentOfThelepathy,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),new FamilyPowerUpBulletAbility());
+        return new Family(FamilyName.TentOfThelepathy,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),
+                new FamilyPowerUpBulletAbility(),R.drawable.tentofthelepathy,R.drawable.tentofthelepathy,
+                "Tent of thelepathy");
 
     }
 
     private Family WendyTeam()
     {
-        return new Family(FamilyName.WendyTeam,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),new FamilyIncreaseResistanceAbility());
+        return new Family(FamilyName.WendyTeam,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),
+                new FamilyIncreaseResistanceAbility(),R.drawable.robie,R.drawable.robie,
+                "Wendy Team");
 
     }
     private Family MabelTeam()
     {
-        return new Family(FamilyName.MabelTeam,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),new FamilyHealAbility());
+        return new Family(FamilyName.MabelTeam,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),
+                new FamilyHealAbility(),R.drawable.mabel,R.drawable.mabel,
+                "Mabel Team");
 
     }
     private Family Null()
     {
-        return new Family(FamilyName.Null,new FamilyBoostTable(Arrays.asList(0,0,0,0,0,0)),new NoFamilyAbility());
+        return new Family(FamilyName.Null,new FamilyBoostTable(Arrays.asList(0,0,0,0,0,0)),
+                new NoFamilyAbility(),R.drawable.arrow,R.drawable.arrow,
+                "Nothing");
     }
 
     private Family Ramirez()
     {/*może być kopią umiejętności drugiej rodziny z lepszą/gorszą tabelką*/
-        return new Family(FamilyName.Ramirez,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,120)),new FamilyHealAbility());
+        return new Family(FamilyName.Ramirez,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,120)),
+                new FamilyHealAbility(),R.drawable.soos,R.drawable.soos,
+                "Ramirez");
     }
 
     private Family Scientist(){
-        return new Family(FamilyName.Scientists,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,120)),new FamilyHealAbility());
-
+        return new Family(FamilyName.Scientists,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,120)),
+                new FamilyHealAbility(),R.drawable.mcgucket,R.drawable.mcgucket,
+                "Scientists");
     }
 }
