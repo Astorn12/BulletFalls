@@ -5,25 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuBuilder;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -38,9 +33,11 @@ import com.example.user.bulletfalls.Game.Elements.Hero.HeroSpecyfication;
 import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
 import com.example.user.bulletfalls.Storage.Sets.HeroesSet;
-import com.example.user.bulletfalls.GlobalUsage.Enums.Permission;
 import com.example.user.bulletfalls.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skydoves.powermenu.OnMenuItemClickListener;
+import com.skydoves.powermenu.PowerMenu;
+import com.skydoves.powermenu.PowerMenuItem;
 import com.skyline.widget.layout.RoundCornerLayout;
 
 import java.io.IOException;
@@ -48,23 +45,18 @@ import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 import java.util.List;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 public class HeroCollection extends AppCompatActivity {
 
 //  LinearLayout linear;
     ScrollView screen;
-    LinkedList<Hero> heroes;
     TableLayout table;
-    List<Hero> list;
+    List<HeroSpecyfication> list;
 
 
     ImageButton familyFilter;
     ImageButton obligatoryFilter;
     ImageButton sort;
     ImageButton extraFilter;
-    PopupMenu menu;
 
 
 
@@ -75,7 +67,6 @@ public class HeroCollection extends AppCompatActivity {
         setContentView(R.layout.activity_heroes);
         screen=(ScrollView)this.findViewById(R.id.screen);
         table=(TableLayout)this.findViewById(R.id.table);
-        heroes = new LinkedList<>();
 
         familyFilter=(ImageButton)this.findViewById(R.id.familyfilter);
         obligatoryFilter=(ImageButton)this.findViewById(R.id.obligatoryFilter);
@@ -85,7 +76,7 @@ public class HeroCollection extends AppCompatActivity {
         bindMenu();
 
 
-        loadHeroes();
+        showHeroesCollection(HeroesSet.getInstance().getAll());
 
 
 
@@ -93,19 +84,44 @@ public class HeroCollection extends AppCompatActivity {
     }
 
     private void bindMenu() {
-        Context context=this;
 
+
+
+         final Context context=this;
 
         this.familyFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FamiliesContainer familiesContainer= new FamiliesContainer();
+                List<PowerMenuItem> items= new LinkedList<>();
+                for(Family family: familiesContainer.getAll()){
+                    int miniature= family.getMiniature();
+                    items.add(new PowerMenuItem("", miniature));
+                }
 
 
+                OnMenuItemClickListener<PowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<PowerMenuItem>() {
+                    @Override
+                    public void onItemClick(int position, PowerMenuItem item) {
+                       filter(familiesContainer.getAll().get(position).getGroupName());
+                    }
+                };
+
+                PowerMenu powerMenu= new PowerMenu.Builder(context)
+                        .addItemList(items)
+                        .setTextGravity(Gravity.CENTER)
+                        .setSelectedMenuColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                        .setMenuRadius(10f)
+                        .setMenuShadow(10f)
+                        .build();
+                powerMenu.showAsDropDown(familyFilter);
             }
         });
     }
 
+    private void filter(FamilyName familyName){
 
+    }
 
     private void writeToFile(String data, Context context, Hero hero) {
       ObjectMapper mapper= new ObjectMapper();
@@ -129,19 +145,29 @@ public class HeroCollection extends AppCompatActivity {
             ex.getStackTrace();
         }
     }
+
+
+    private void changeShowedCollection(){
+
+    }
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void loadHeroes()
+    private void showHeroesCollection(List<HeroSpecyfication> filteredHeroes)
     {
         TableRow tableRow = null;
         TableLayout tableLayout=(TableLayout)findViewById(R.id.table);
-       int padding=30;
+
+        List<Hero> currentlyShowedHeroList = new LinkedList<>();
+
+        int padding=30;
         int n=3;//ilosc kolumn
         int w= tableLayout.getWidth();
         int p=(w-(n+1)*padding)/n;
 
-        list=ToViewConverter.convertHeroes(this,HeroesSet.getInstance().getHeroesList());
        int i=0;
-       for( final Hero hero :list)
+       for( final HeroSpecyfication heroSpecyfication :filteredHeroes)
        {
            if(i%3==0) {
               tableRow = new TableRow(this);
@@ -150,13 +176,12 @@ public class HeroCollection extends AppCompatActivity {
            final RoundCornerLayout frameLayout= new RoundCornerLayout(this);
            frameLayout.setRadius(100);
            tableRow.addView(frameLayout);
+           Hero hero = new Hero(this,heroSpecyfication);
            frameLayout.post(new Runnable() {
            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
            @Override
            public void run() {
-
                hero.colorBackgroundByGroup(frameLayout);
-
            }
        });
 
@@ -178,6 +203,7 @@ public class HeroCollection extends AppCompatActivity {
            imageView.setLayoutParams(layoutParams);
 
            frameLayout.addView(hero);
+           currentlyShowedHeroList.add(hero);
 
 
 
@@ -208,7 +234,7 @@ public class HeroCollection extends AppCompatActivity {
            frameLayout.getLayoutParams().width=p;
 
            final Context context= this;
-           final int  m= heroes.indexOf(hero);
+           final int  m= 0;
            final Hero wsk= hero;
            final Activity ac=this;
            if(UserCollection.getInstance().doYouOwnIt(hero.getSpecyfication())) {
@@ -217,7 +243,7 @@ public class HeroCollection extends AppCompatActivity {
                    public void onClick(View v) {
                        writeToFile(m + "", context, wsk);
                        if (wsk.getAlpha() > 0.99f) {
-                           for (Hero hero : list) {
+                           for (Hero hero : currentlyShowedHeroList) {
                                hero.setAlpha(1f);
                            }
                            wsk.setAlpha((float) 0.8);
