@@ -45,7 +45,6 @@ public class Currency {
         this(name);
         CurrencyRepository currencyDao= new CurrencyRepository(context);
         this.resource=currencyDao.getCurrency(this.name).getResource();
-
     }
 
     public void loadImageRessource(Context context)

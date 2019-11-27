@@ -28,7 +28,8 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
         @JsonSubTypes.Type(value=   FullCounter.class, name = "fullcounter"),
         @JsonSubTypes.Type(value=   SummonFromList.class, name = "summonfromlist"),
         @JsonSubTypes.Type(value=   ShootBooster.class, name = "shootbooster"),
-        @JsonSubTypes.Type(value=   SummonStrategy.class, name = "summonstrategy")
+        @JsonSubTypes.Type(value=   SummonStrategy.class, name = "summonstrategy"),
+        @JsonSubTypes.Type(value=   ProtectedBall.class, name = "protectedball")
 
 })
 public interface StartAction {

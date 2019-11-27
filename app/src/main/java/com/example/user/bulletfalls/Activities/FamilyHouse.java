@@ -62,8 +62,6 @@ public class FamilyHouse extends AppCompatActivity {
         supporterTextView.setTextViewsTextSize(groupsDescription,20);
 
 
-
-
     }
 
     private void pullContainers()
@@ -140,9 +138,6 @@ public class FamilyHouse extends AppCompatActivity {
             ImageView miniature= new ImageView(this);
             Glide.with(this).load(h.getMiniature()).into(miniature);
 
-            HeroesSet heroSet= HeroesSet.getInstance();
-
-
             miniature.setBackgroundColor(Color.BLACK);
             BorderSetter borderSetter= new BorderSetter(3,this.familyName.getValue());
             FrameLayout fm=borderSetter.setBorderWB(miniature);
@@ -162,7 +157,7 @@ public class FamilyHouse extends AppCompatActivity {
                 tier.setTextColor(Color.BLACK);
                 tier.setGravity(Gravity.CENTER);
                 System.out.println("TIER"+ h.getTier());
-                //tier.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+
                 fm.addView(tier);
             }
 

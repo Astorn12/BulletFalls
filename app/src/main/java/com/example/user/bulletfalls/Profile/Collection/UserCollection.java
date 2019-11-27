@@ -76,7 +76,7 @@ public class UserCollection {
                 new CollectionItem(HE.DIPPERPINES.getValue(),true),
                 new CollectionItem(HE.GRENDA.getValue(),true),
                 new CollectionItem(HE.LOGLANDGIRL.getValue(),true),
-                new CollectionItem(HE.MABELPINES.getValue(),false),
+                new CollectionItem(HE.MABELPINES.getValue(),true),
                 new CollectionItem(HE.MABLEWITHGRAPPLINGHOOK.getValue(),true),
                 new CollectionItem(HE.OLDMANMCGUCKET.getValue(),true),
                 new CollectionItem(HE.QUENTINTREBLEY.getValue(),true),

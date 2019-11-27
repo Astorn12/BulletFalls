@@ -1,11 +1,16 @@
 package com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes;
 
 import com.example.user.bulletfalls.Game.ActionService.Actions.ClassActions.ClassAction;
+import com.example.user.bulletfalls.Game.ActionService.Actions.ClassActions.MugolClassAction;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("mugol")
-public class Mugol implements MasterAbility {
+public class Mugol extends MasterAbility {
+    public Mugol() {
+
+    }
+
     @Override
     public int getImage() {
         return 0;
@@ -18,8 +23,7 @@ public class Mugol implements MasterAbility {
 
     @Override
     public ClassAction action(EyeOnGame eog) {
-        return null;
+        return new MugolClassAction();
     }
-
 
 }

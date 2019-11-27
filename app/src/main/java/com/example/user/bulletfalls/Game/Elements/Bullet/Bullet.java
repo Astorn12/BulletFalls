@@ -239,4 +239,5 @@ public class Bullet extends Dynamic implements Comparable {
     public void setStartingCoordinates(Point startingCoordinates) {
         this.startingCoordinates = startingCoordinates;
     }
+
 }

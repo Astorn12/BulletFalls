@@ -4,63 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Profile.ProfileScreen">
 
     <LinearLayout
-        android:id="@+id/list"
-        android:layout_width="132dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/list"
+            android:layout_width="132dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="252dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="177dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/photo"
+                    android:layout_width="176dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="34dp"
+                    android:layout_marginRight="34dp"
+                    android:layout_marginBottom="28dp"
+                    app:layout_constraintBottom_toTopOf="@+id/name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside"
+                    tools:srcCompat="@tools:sample/avatars[0]" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="35dp"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/photo"
+                    app:layout_constraintStart_toStartOf="@+id/photo"
+                    app:layout_constraintTop_toBottomOf="@+id/photo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+            </FrameLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="252dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="177dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="265dp">
-
-            <ImageView
-                android:id="@+id/photo"
-                android:layout_width="176dp"
-                android:layout_height="160dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="34dp"
-                android:layout_marginRight="34dp"
-                android:layout_marginBottom="28dp"
-                app:layout_constraintBottom_toTopOf="@+id/name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread_inside"
-                tools:srcCompat="@tools:sample/avatars[0]" />
-
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="35dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/photo"
-                app:layout_constraintStart_toStartOf="@+id/photo"
-                app:layout_constraintTop_toBottomOf="@+id/photo"
-                android:textAlignment="center"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-    </LinearLayout>
+        android:id="@+id/familyStats"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_weight="0"
+        android:orientation="vertical"></LinearLayout>
 
 </LinearLayout>

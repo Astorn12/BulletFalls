@@ -21,13 +21,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Activities.GameListActivity.GamesList;
-import com.example.user.bulletfalls.Game.Elements.Enemy.EnemySpecyfication;
 import com.example.user.bulletfalls.Profile.Collection.HeroCollection.HeroCollection;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
+import com.example.user.bulletfalls.Profile.LevelBar;
+import com.example.user.bulletfalls.Profile.UserProfile;
 import com.example.user.bulletfalls.Storage.DatabaseAdministrator;
 import com.example.user.bulletfalls.Game.Management.ArchivCurrencyContainer;
 import com.example.user.bulletfalls.Storage.Sets.AbilitySet;
@@ -36,10 +37,7 @@ import com.example.user.bulletfalls.Storage.Sets.BulletSet;
 import com.example.user.bulletfalls.Storage.Sets.EnemySet;
 import com.example.user.bulletfalls.Storage.Sets.HeroAbilityBulletMapper;
 import com.example.user.bulletfalls.Storage.Sets.HeroesSet;
-import com.example.user.bulletfalls.Game.Elements.Enemy.Enemy;
 import com.example.user.bulletfalls.Game.Activities.Game;
-import com.example.user.bulletfalls.Game.Management.GameController;
-import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
 import com.example.user.bulletfalls.P2P.P2PConnection;
 import com.example.user.bulletfalls.P2P.P2PGame;
 import com.example.user.bulletfalls.Profile.Currency;
@@ -52,16 +50,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
-
-    public TextView scoreLabel;
-    FrameLayout frame;
-    Hero hero;
-    LinkedList<Enemy> enemies;
-    private GameController controller;
+//wszelkie prawa autorskie złamane w trakcie tworzenia tej wspaniałej aplikacji
+    private LinearLayout headLine;
     private final int MEMORY_ACCESS=5;
 
 
@@ -70,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //this.headLine =(LinearLayout) this.findViewById(R.id.mainwallet);
 
 
 
@@ -135,150 +127,28 @@ public class MainActivity extends AppCompatActivity {
 
         //ProfileRepository profileDao= new ProfileRepository(this);
 
-        mapStarting();
-    }
-    private void mapStarting(){
-        final ImageView transparentMap=new ImageView(this);
-        /*Glide.with(this)
-                .load(R.drawable.coloredmainmap)
-                .into(transparentMap);*/
 
-       // transparentMap.setX(0);
-        //transparentMap.setY(0);
-
-        ImageView map = new ImageView(this);
-
-
-        Glide.with(this)
-                .load(R.drawable.mainmap)
-                .into(map);
-        final Activity activity=this;
-
-        Display display = getWindowManager(). getDefaultDisplay();
-        Point size = new Point();
-        display. getSize(size);
-        FrameLayout l=(FrameLayout) this.findViewById(R.id.mainmapframe);
-        transparentMap.setAlpha(0f);
-        map.setAdjustViewBounds(true);
-        transparentMap.setAdjustViewBounds(true);
-        map.setAlpha(0.5f);
-        transparentMap.setAlpha(0.5f);
-
-        l.addView(map);
-        l.addView(transparentMap);
-        transparentMap.setImageResource(R.drawable.coloredmainmap);
-        transparentMap.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        map.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-        map.post(new Runnable() {
-            @Override
-            public void run() {
-                final Bitmap bitmap= ((BitmapDrawable)transparentMap.getDrawable()).getBitmap();
-
-
-                transparentMap.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                            lastTouchDownXY[0] = event.getX();
-                            lastTouchDownXY[1] = event.getY();
-                        }
-                        return false;
-                    }
-                });
-                transparentMap.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Matrix inverse = new Matrix();
-                        ((ImageView)v).getImageMatrix().invert(inverse);
-
-                        inverse.mapPoints(lastTouchDownXY);
-
-                        int  x = Integer.valueOf((int)lastTouchDownXY[0]);
-                        int  y = Integer.valueOf((int)lastTouchDownXY[1]);
-                        System.out.println(x+" "+y);
-
-
-                        int pixel= bitmap.getPixel(x,y);
-                        int color= Color.rgb(Color.red(pixel),Color.green(pixel),Color.blue(pixel));
-                        int id=0;
-                        String title="";
-                        if(color==Color.rgb(30,26,189)){
-                            Log.i("mYSTERY Atraction"," MysteryShack");
-
-                            id=R.drawable.mysteryshack;
-                            title="Mystery Shack";
-                            startGame();
-
-                        }else if(color==Color.rgb(242,169,29)){
-                            Log.i("mYSTERY Atraction"," YeroyalDiscountPuttHutt");
-                            title="Yeroyal Discount Putt Hutt";
-                            id=R.drawable.yeroyaldiscountputthutt;
-                            chooseHero();
-                        }else if(color==Color.rgb(242,29,169)){
-                            Log.i("mYSTERY Atraction","Tent of Thelepathy ");
-                            title="Tent of Thelepathy";
-                            id=R.drawable.tentofthelepathy;
-                            chooseGame();
-                        }
-                        else if(color==Color.rgb(217,242,10)){
-                            Log.i("mYSTERY Atraction"," Petting Zoo");
-                            title="Petting Zoo";
-                            id=R.drawable.pettingzoofarm;
-                        }
-                        else if(color==Color.rgb(164,97,10)){
-                            Log.i("mYSTERY Atraction","Beaver Museum ");
-                            title="Beaver Museum";
-                        }
-                        else if(color==Color.rgb(182,27,19)){
-                            title="Camp";
-                        }
-                        else if(color==Color.rgb(246,27,27)){
-                            title="Yarn Ball";
-                        }
-                        else if(color==Color.rgb(155,162,74)){
-                            title="The Big Things";
-                        }
-                        else if(color==Color.rgb(162,140,74)){
-                            title="Logland";
-                        }
-                        else if(color==Color.rgb(113,106,105)){
-                            title="The Giant Pan";
-                        }
-                        else if(color==Color.rgb(83,162,74)){
-                            title="Upside Down Town";
-                        }
-                        else if(color==Color.rgb(161,20,182)){
-                            title="House Shoe";
-                        }
-                        else if(color==Color.rgb(20,172,182)){
-                            title="Mystery Mountain";//
-                        }
-                        else if(color==Color.rgb(20,182,31)){
-                            title="Corn Maze";
-                        }
-                        else if(color==Color.rgb(244,37,81)){
-                            title="Neon Ville";
-                        }
-                        else if(color==Color.rgb(244,37,81)){
-                            title="Sceptic Ridge RV Park";
-                        }
-
-                        if(id!=0) {
-                            Intent intent = new Intent(activity, NotReadyYet.class);
-                            intent.putExtra("id", id);
-                            intent.putExtra("title", title);
-                            activity.startActivity(intent);
-                        }
-                    }
-                });
-
-            }
-        });
-        //map.setX(0);
-        //map.setY(150);
+       // fillHeadLine();
 
     }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+
+    }
+
+
+
+
+    private void fillMainWallet() {
+        UserProfile userProfile= new UserProfile(this);
+        userProfile.addWallet(this.headLine,this);
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -305,18 +175,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void chooseHero() {
-        Intent intent = new Intent(this, HeroCollection.class);
-        this.startActivity(intent);
+
     }
     public void P2PGame() {
         Intent intent= new Intent(this,P2PConnection.class);
         this.startActivity(intent);
 
     }
-    public void showProfile() {
-        Intent intent= new Intent(this,ProfileScreen.class);
-        this.startActivity(intent);
-    }
+
     public void ToGame() {
         Intent intent= new Intent(this,P2PGame.class);
         this.startActivity(intent);
@@ -325,13 +191,31 @@ public class MainActivity extends AppCompatActivity {
         Intent intent= new Intent(this,MysterymMap.class);
         this.startActivity(intent);
     }
-    public void shoppingtime() {
+
+
+
+    public void showProfile(View view) {
+        Intent intent= new Intent(this,ProfileScreen.class);
+        this.startActivity(intent);
+    }
+
+    public void choseGame(View view) {
+        Intent intent= new Intent(this,GamesList.class);
+        this.startActivity(intent);
+    }
+
+    public void showCollection(View view) {
+        Intent intent = new Intent(this, HeroCollection.class);
+        this.startActivity(intent);
+    }
+
+    public void showShop(View view) {
         Intent intent= new Intent(this,Shop.class);
         this.startActivity(intent);
     }
-    public void chooseGame()
-    {
-        Intent intent= new Intent(this,GamesList.class);
+
+    public void showFamiliesMap(View view) {
+        Intent intent= new Intent(this,FamiliesMap.class);
         this.startActivity(intent);
     }
 }

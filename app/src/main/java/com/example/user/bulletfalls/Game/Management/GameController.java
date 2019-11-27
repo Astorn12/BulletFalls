@@ -119,7 +119,9 @@ public class GameController {
         for(Action action: gameScenarioActions){
             actionMedium.addAction(action);
         }
-
+        UserProfile userProfile=new UserProfile();
+        userProfile.load(this.gameActivity);
+        actionMedium.addAction(this.hero.getMasterAbility().action(this.eyeOnGame));
     }
 
     public void start() {
@@ -318,12 +320,13 @@ public class GameController {
 
 
     public void enemyCleaning() {
-        for (Enemy enemy : enemyGravedigger) {
+        for (int i = 0; i <enemyGravedigger.size() ; i++) {
+            Enemy enemy = enemyGravedigger.get(i);
             removeEnemyFromGame(enemy);
             medium.deathOfEnemy(enemy.getSpecyfication());
         }
-        for(Enemy enemy: removeAfterMutation)
-        {
+        for (int i = 0; i <removeAfterMutation.size() ; i++) {
+            Enemy enemy= removeAfterMutation.get(i);
             removeEnemyFromGame(enemy);
         }
         enemyGravedigger.removeAll(enemyGravedigger);
@@ -588,8 +591,8 @@ public class GameController {
 
     public List<EnemySpecyfication> getReadOnlyCurrentEnemyList() {
             List<EnemySpecyfication> ret= new LinkedList<>();
-        for(Enemy e: this.enemies)
-            {
+            for(int i=0;i<this.enemies.size();i++){
+                Enemy e=this.enemies.get(i);
                 ret.add(e.getSpecyfication());
             }
             return ret;

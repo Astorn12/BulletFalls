@@ -23,10 +23,13 @@ public class Clip extends AttackFilter {
                 this.setRemovAble(true);
                 break;
             }
-            Bullet bullet=bullets.get(i);
-            if(character.isStandardBullet(bullet)){
-                bullets.set(i,new Bullet(bullet.getContext(),this.bs));
+            Bullet oldBullet=bullets.get(i);
+            if(character.isStandardBullet(oldBullet)){
+                Bullet newBullet=new Bullet(oldBullet.getContext(),this.bs);
+                newBullet.setStartingCoordinates(oldBullet.getStartingCoordinates());
+                bullets.set(i,newBullet);
             }
+            this.bulletAmount--;
         }
     }
 }

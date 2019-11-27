@@ -1,10 +1,13 @@
 package com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes;
 
+import android.content.Context;
+
 import com.example.user.bulletfalls.Game.ActionService.Action;
 import com.example.user.bulletfalls.Game.ActionService.Actions.ClassActions.ClassAction;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
 
+import com.example.user.bulletfalls.Profile.UserProfile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -21,10 +24,20 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
         @JsonSubTypes.Type(value=   SuperShooter.class, name = "supershooter"),
         @JsonSubTypes.Type(value=   Breeder.class, name = "breeder")
 })
-public interface MasterAbility {
+public abstract class MasterAbility {
+    LevelTable levelTable;
+    protected  int timeQuant=200;
+
     @JsonIgnore
-    int getImage();
+    public abstract int getImage();
     @JsonIgnore
-    String getDescription();
-    ClassAction action(EyeOnGame eog);
+    public abstract String getDescription();
+    public abstract ClassAction action(EyeOnGame eog);
+
+    protected int getValueAccordingToLevel(Context context){
+        UserProfile userProfile=new UserProfile(context);
+
+        int currentLevel=userProfile.getLevel().getNumber();
+        return levelTable.getBoostAccordingToLevel(currentLevel);
+    }
 }

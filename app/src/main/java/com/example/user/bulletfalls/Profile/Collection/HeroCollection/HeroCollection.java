@@ -35,6 +35,7 @@ import com.example.user.bulletfalls.Game.Elements.Hero.HeroProfile;
 import com.example.user.bulletfalls.Game.Elements.Hero.HeroSpecyfication;
 import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.AngelProtector;
 import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.Breeder;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.HealerC;
 import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MassDestructor;
 import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.SuperShooter;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.RomeLettersConverter;
@@ -212,6 +213,7 @@ public class HeroCollection extends AppCompatActivity {
                 .addItem(new FeatureMenuItem(new MassDestructor()))
                 .addItem(new FeatureMenuItem(new SuperShooter()))
                 .addItem(new FeatureMenuItem(new Breeder()))
+                .addItem(new FeatureMenuItem(new HealerC()))
                 .setMenuRadius(30f)
                 .setMenuShadow(30f)
                 .setOnMenuItemClickListener(onFeatureMenuItemClickListener)
@@ -234,7 +236,7 @@ public class HeroCollection extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onItemClick(int position, PowerMenuItem item) {
-                filterComposite.clear();
+                filterComposite.clearFamilyFilters();
                 if(familiesMenu.getSelectedPosition()==position){
                     familiesMenu.setSelectedPosition(-1);
                 }else {

@@ -2,6 +2,7 @@ package com.example.user.bulletfalls.Storage.Sets;
 
 import android.content.Context;
 
+import com.example.user.bulletfalls.Game.Elements.Ability.Strategy.ProtectedBall;
 import com.example.user.bulletfalls.Game.Elements.BulletManiputatorsPackage.AttackDefenceFilter;
 import com.example.user.bulletfalls.GlobalUsage.Enums.AE;
 import com.example.user.bulletfalls.GlobalUsage.Enums.BE;
@@ -21,6 +22,7 @@ import com.example.user.bulletfalls.Game.Elements.Ability.Strategy.SummonerPacka
 import com.example.user.bulletfalls.Game.Elements.Ability.Strategy.Summoning.ProgressAmountMassSummoner;
 import com.example.user.bulletfalls.Game.Elements.Ability.Strategy.Summoning.RandomSummon;
 import com.example.user.bulletfalls.Game.Elements.Ability.Strategy.TimeCounting.FullCounter;
+import com.example.user.bulletfalls.GlobalUsage.Exceptions.IncorrectBeastNameException;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.FileSupporter;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
 import com.example.user.bulletfalls.R;
@@ -172,13 +174,22 @@ public class AbilitySet implements ISet<AbilitySpecyfication> {
         AbilitySpecyfication shootingBooster= new AbilitySpecyfication(AE.INCREASESHOOTING,R.drawable.increaseshooting,1000,new ShootBooster(BulletSet.getInstance().getBullet(BE.RED)), Rarity.RARE,true,
                 new MoneyPossesStrategy("Mystery Coin",10));
         // RandomSummon threeDinozours= new AbilitySpecyfication(AE.THREEDINOSAURS,10,10,null,200,200,20,R.drawable.);
-        AbilitySpecyfication beaverProgressAttack= new AbilitySpecyfication(AE.MULTIBEAVERSATTACK,R.drawable.beavers,1000,new ProgressAmountMassSummoner(BeastsSet.getInstance().getByName("Beaver"),2), Rarity.RARE,true,
-                new MoneyPossesStrategy("Mystery Coin",10));
+        AbilitySpecyfication beaverProgressAttack= null;
+        try {
+            beaverProgressAttack = new AbilitySpecyfication(AE.MULTIBEAVERSATTACK,R.drawable.beavers,1000,new ProgressAmountMassSummoner(BeastsSet.getInstance().getByName("Beaver"),2), Rarity.RARE,true,
+                    new MoneyPossesStrategy("Mystery Coin",10));
+        } catch (IncorrectBeastNameException e) {
+            e.printStackTrace();
+        }
 
         AbilitySpecyfication rrsummoning= new AbilitySpecyfication(AE.PSTEST,R.drawable.multisummoning,1000,new SummonStrategy(new AsList("Beaver","Unicorn","Waddles Beast"),new AlwaysOne(),new RoundRobin()),Rarity.STARTING,false,
                 new MoneyPossesStrategy("Mystery Coin",10));
         AbilitySpecyfication progress= new AbilitySpecyfication(AE.PROGRESS,R.drawable.beavers,1000,new SummonStrategy(new AsList("Beaver","Unicorn","Waddles Beast"),new AlwaysOne(),new Progress(2)),Rarity.STARTING,false,
                 new MoneyPossesStrategy("Mystery Coin",10));
+
+        AbilitySpecyfication hamsterBall= new AbilitySpecyfication(AE.HAMSTERBALL.getValue(),R.drawable.hamsterball,3000,new ProtectedBall(R.drawable.hamsterball,6),Rarity.RARE,
+                true,new MoneyPossesStrategy("Mystery Coin",10));
+
 
         abilities.add(carpetdiem);
         abilities.add(abilitySpecyfication);
@@ -196,6 +207,7 @@ public class AbilitySet implements ISet<AbilitySpecyfication> {
         abilities.add(beaverProgressAttack);
         abilities.add(rrsummoning);
         abilities.add(progress);
+        abilities.add(hamsterBall);
 
     }
     public  List<AbilitySpecyfication> getAbilityListForHero(String heroName)

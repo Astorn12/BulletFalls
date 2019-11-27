@@ -8,6 +8,7 @@ import com.example.user.bulletfalls.Game.Elements.Helper.Dynamic;
 import com.example.user.bulletfalls.Game.Elements.Helper.DynamicSpecyfication;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.example.user.bulletfalls.Game.Activities.Game;
+import com.example.user.bulletfalls.GlobalUsage.Enums.Shape;
 import com.example.user.bulletfalls.Profile.Currency;
 import com.example.user.bulletfalls.Storage.Data.CurrencyEnum;
 
@@ -70,8 +71,6 @@ public class Item extends Dynamic {
     }
 
 
-
-
     @Override
     public void setStartingPoint() {
 
@@ -80,5 +79,10 @@ public class Item extends Dynamic {
     @Override
     public Dynamic clone() {
         return null;
+    }
+
+    @Override
+    public Shape getShape() {
+        return Shape.RECTANGLE;
     }
 }

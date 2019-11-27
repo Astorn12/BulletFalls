@@ -39,10 +39,10 @@ public class ItemsController {
 
             }
         }
-        odśmiecanie();
+        garbageCleaning();
     }
 
-    private void odśmiecanie() {
+    private void garbageCleaning() {
         for(Item item: garbage)
         {
             this.items.remove(item);

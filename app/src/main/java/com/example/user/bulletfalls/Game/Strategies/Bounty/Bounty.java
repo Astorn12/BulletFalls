@@ -2,15 +2,16 @@ package com.example.user.bulletfalls.Game.Strategies.Bounty;
 
 import com.example.user.bulletfalls.Game.Management.ArchivContainer;
 import com.example.user.bulletfalls.Profile.Currency;
+import com.example.user.bulletfalls.Storage.Data.CurrencyEnum;
+import com.example.user.bulletfalls.Storage.Data.CurrencyRepository;
 
 public class Bounty {
     int exp;
-    int money;
+
     ArchivContainer<Currency> itemsList;
     public Bounty()
     {
         this.itemsList=new ArchivContainer<>();
-        this.money=0;
         this.exp=0;
     }
 
@@ -20,8 +21,10 @@ public class Bounty {
     }
     public void addMoney(int n)
     {
-        this.money+=n;
+        CurrencyRepository currencyRepository=new CurrencyRepository();
+        itemsList.add(currencyRepository.getCurrency(CurrencyEnum.MysteryCoin.toString()),n);
     }
+
 
     public void addItems(Currency c, int n)
     {
@@ -37,8 +40,15 @@ public class Bounty {
         return exp;
     }
 
-    public int getMoney() {
-        return money;
+
+    public int getMoney(){
+        for (int i=0;i<this.itemsList.size();i++)
+        {
+            if(this.itemsList.getList().get(i).getLeft().getName().equals(CurrencyEnum.MysteryCoin.toString()))
+            {
+                return this.itemsList.getList().get(i).right;
+            }
+        }return 0;
     }
 
     public ArchivContainer<Currency> getItemsList() {

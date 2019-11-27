@@ -1,12 +1,36 @@
 package com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes;
 
+import com.example.user.bulletfalls.Game.ActionService.Actions.ClassActions.BreaderAction;
 import com.example.user.bulletfalls.Game.ActionService.Actions.ClassActions.ClassAction;
+import com.example.user.bulletfalls.Game.Elements.Beast.BeastSpecyfication;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
+import com.example.user.bulletfalls.GlobalUsage.Exceptions.IncorrectBeastNameException;
 import com.example.user.bulletfalls.R;
+import com.example.user.bulletfalls.Storage.Sets.BeastsSet;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import java.util.Arrays;
+
 @JsonTypeName("breeder")
-public class Breeder implements MasterAbility {
+public class Breeder extends MasterAbility {
+    BeastSpecyfication beastSpecyfication;
+    public Breeder() {
+
+        this.levelTable=new LevelTable( Arrays.asList(
+                new LevelBoost(4,10),
+                new LevelBoost(10,20),
+                new LevelBoost(15,30),
+                new LevelBoost(20,40),
+                new LevelBoost(30,50),
+                new LevelBoost(50,120)
+        ));
+        try {
+            this.beastSpecyfication= BeastsSet.getInstance().getBreederPupil();
+        } catch (IncorrectBeastNameException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public int getImage() {
         return R.drawable.summoner;
@@ -21,8 +45,7 @@ public class Breeder implements MasterAbility {
 
     @Override
     public ClassAction action(EyeOnGame eog) {
-        return null;
+        return new BreaderAction(this.timeQuant,this.beastSpecyfication);
     }
-
 
 }

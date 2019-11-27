@@ -60,6 +60,7 @@ public class FullCounter implements StartAction {
         b2.setFrame(eyeOnGame.getHero().getFrame());
 
         int numberOfBullets= damageToCounter/bulletPower;
+        if(numberOfBullets==0)numberOfBullets=1;
         System.out.println("Number of bullets: "+numberOfBullets );
 
         MultiBulletPositioner m= new MultiBulletPositioner();

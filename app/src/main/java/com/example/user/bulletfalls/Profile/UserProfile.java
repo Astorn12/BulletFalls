@@ -81,8 +81,6 @@ public class UserProfile {
     {
 
     }
-
-
     public boolean hasMoney(Currency currency, int amount )//thi method if for checking,it does not participate in buying
     {
         boolean flag=false;
@@ -94,7 +92,7 @@ public class UserProfile {
                     flag = true;
                     break;
                 }
-                }
+            }
         }
         return flag;
     }
@@ -123,10 +121,6 @@ public class UserProfile {
         }
         return true;
     }
-
-
-
-
 
     public boolean pay(MoneyNeed moneyNeed)
     {
@@ -324,7 +318,7 @@ public class UserProfile {
     public void makeOfBounty(Bounty bounty)
     {
         gainExp(bounty.getExp());
-        earn(new Currency(CurrencyEnum.MysteryCoin.toString()),bounty.getMoney());
+      //  earn(new Currency(CurrencyEnum.MysteryCoin.toString()),bounty.getMoney());
         ArchivContainer<Currency> ar=bounty.getItemsList();
 
         for(int i=0;i<ar.size();i++)

@@ -7,9 +7,11 @@ import android.widget.FrameLayout;
 import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.example.user.bulletfalls.Game.Activities.Game;
+import com.example.user.bulletfalls.Game.Management.ICollisionable;
+import com.example.user.bulletfalls.GlobalUsage.Enums.Shape;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.Dimension;
 
-public abstract class Dynamic extends androidx.appcompat.widget.AppCompatImageView implements Named {
+public abstract class Dynamic extends androidx.appcompat.widget.AppCompatImageView implements Named, ICollisionable {
 
     protected String name;
     protected int image;
@@ -111,6 +113,8 @@ public abstract class Dynamic extends androidx.appcompat.widget.AppCompatImageVi
     }
 
 
+    @Override
+    public abstract Shape getShape();
 }
 
 

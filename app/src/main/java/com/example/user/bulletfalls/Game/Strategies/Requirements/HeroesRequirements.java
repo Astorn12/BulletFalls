@@ -1,6 +1,7 @@
 package com.example.user.bulletfalls.Game.Strategies.Requirements;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import com.example.user.bulletfalls.Game.Elements.Helper.ToViewConverter;
 import com.example.user.bulletfalls.GlobalUsage.Enums.HE;
 import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
+import com.example.user.bulletfalls.Profile.Collection.UserCollection;
 import com.example.user.bulletfalls.Storage.Sets.HeroesSet;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.GuiSupporters.LayoutParamsSupporter;
 
@@ -35,17 +37,11 @@ public class HeroesRequirements implements IGameRequirements {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean canPlay(Context context) {
-        List<Hero> checkList=ToViewConverter.convertHeroes(context,HeroesSet.getInstance().getHeroesList());
-
+        UserCollection userCollection= UserCollection.getInstance();
+        HeroesSet heroesSet= HeroesSet.getInstance();
         for(HE h : this.heroes) {
-
-            boolean haveHero=false;
-            for(Hero he:checkList)
-            {
-
-                if(he.getName().equals(h.getValue())) haveHero=true;
-            }
-            if(!haveHero) return false;
+            if(!userCollection.doYouOwnIt(heroesSet.getHero(h.getValue())))
+                return false;
         }
         return true;
     }
@@ -70,6 +66,8 @@ public class HeroesRequirements implements IGameRequirements {
 
 
                     heroesShow.addView(he);
+                    if(UserCollection.getInstance().doYouOwnIt(he.getSpecyfication()))
+                        he.setColorFilter(Color.BLACK);
                     break;
                 }
 

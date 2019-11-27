@@ -5,8 +5,6 @@ import java.util.List;
 
 public class CollectionFilterComposite<T> extends LinkedList<CollectionFilter<T>> implements CollectionFilter<T>  {
 
-
-
     @Override
     public List<T> filter(List<T> inputList) {
         List<T> manageList=inputList;
@@ -27,6 +25,16 @@ public class CollectionFilterComposite<T> extends LinkedList<CollectionFilter<T>
         }
 
         return false;
+    }
+
+    public void clearFamilyFilters(){
+
+        for(int i=0;i<this.size();i++){
+            if(this.get(i).getClass().equals(FamilyFilter.class)){
+                this.remove(i);
+                i--;
+            }
+        }
     }
 
 

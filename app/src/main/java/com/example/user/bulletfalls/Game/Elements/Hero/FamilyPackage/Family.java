@@ -42,6 +42,8 @@ public class Family {
 
     }*/
 
+
+
     public Action boost()
     {
         return  familyAbility.boostGame(boostTable.getBoostCount(name));

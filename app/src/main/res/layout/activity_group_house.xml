@@ -24,14 +24,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="315dp"
+        android:layout_height="385dp"
+        android:layout_weight="0"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/leveltable"
             android:layout_width="132dp"
-            android:layout_height="227dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="126dp"></LinearLayout>
@@ -64,9 +65,10 @@
 
     <TableLayout
         android:id="@+id/miniaturestable"
-        android:layout_width="352dp"
-        android:layout_height="148dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:gravity="center_vertical|center_horizontal"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="390dp">

@@ -68,33 +68,33 @@ public class GameResult extends AppCompatActivity {
     }
 
     private void fillItems(LinearLayout items) {
-        System.out.println("Ilość itemów wypadniętych "+ this.bounty.getItemsList().size());
-        for(int i=0;i< this.bounty.getItemsList().size();i++)
-        {
-            LinearLayout horizontal= new LinearLayout(this);
-            ImageView currencyView= new ImageView(this);
-            currencyView.setImageResource(this.bounty.getItemsList().get(i).left.getResource());
-            TextView amount= new TextView(this);
-            amount.setText(this.bounty.getItemsList().getList().get(i).right+"");
-            horizontal.setOrientation(LinearLayout.HORIZONTAL);
-            horizontal.addView(currencyView);
-            horizontal.addView(amount);
-            items.addView(horizontal);
-            System.out.println("Dodaje item");
-        }
+
         if (this.bounty.getItemsList().size()==0)
         {
             ImageView blindEye= new ImageView(this);
             blindEye.setImageResource(R.drawable.blindeye);
             items.addView(blindEye);
         }
+        else
+            for(int i=0;i< this.bounty.getItemsList().size();i++)
+            {
+                LinearLayout horizontal= new LinearLayout(this);
+                ImageView currencyView= new ImageView(this);
+                currencyView.setImageResource(this.bounty.getItemsList().get(i).left.getResource());
+                TextView amount= new TextView(this);
+                amount.setText(this.bounty.getItemsList().getList().get(i).right+"");
+                horizontal.setOrientation(LinearLayout.HORIZONTAL);
+                horizontal.addView(currencyView);
+                horizontal.addView(amount);
+                items.addView(horizontal);
+            }
     }
 
     private void addWallet(LinearLayout linearLayout)
     {
         UserProfile userProfile= new UserProfile(this);
         userProfile.addWallet(linearLayout,this);
-    }
+}
     private void addStatistics(LinearLayout stats)
     {
         int size= 16;

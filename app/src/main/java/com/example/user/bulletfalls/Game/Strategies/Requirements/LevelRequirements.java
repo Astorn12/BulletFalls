@@ -19,8 +19,8 @@ public class LevelRequirements implements IGameRequirements {
     @Override
     public boolean canPlay(Context context) {
         UserProfile userProfile=new UserProfile(context);
-        if(userProfile.getLevel().getNumber()>this.lvl)
-        return true;
+        if(userProfile.getLevel().getNumber()>=this.lvl)
+            return true;
         else return false;
     }
 

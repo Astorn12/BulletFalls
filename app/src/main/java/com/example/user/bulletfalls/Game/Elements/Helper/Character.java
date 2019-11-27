@@ -25,6 +25,7 @@ import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.example.user.bulletfalls.Game.Activities.Game;
 import com.example.user.bulletfalls.Game.Elements.Bullet.Specyfication.BulletSpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Overal.AppearActionStrategy.AppearAction;
+import com.example.user.bulletfalls.GlobalUsage.Enums.Shape;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.Dimension;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.DrawableConverter;
 import com.example.user.bulletfalls.R;
@@ -112,8 +113,6 @@ public abstract class Character extends Dynamic {
         textLife=new TextView(this.getContext());
         this.dressUps= new LinkedList<>();
 
-
-
       }
 
     /**ABSTRACT*/
@@ -172,11 +171,13 @@ public abstract class Character extends Dynamic {
         }
     }
 
-
     public int getDamage(int damage) {
-        this.life -=damage;
-        lifeChecking();
-        return damage;
+        if(!immune) {
+            this.life -= damage;
+            lifeChecking();
+            return damage;
+        }
+        else return 0;
     }
     @Override
     public void appear() {
@@ -193,7 +194,7 @@ public abstract class Character extends Dynamic {
 
 
 
-    public void uploatLifeView() {
+    public void uploadlifeview() {
         ((Game)this.getContext() ).uploadLifeView(this,textLife);
     }
 
@@ -204,43 +205,40 @@ public abstract class Character extends Dynamic {
     public void heal(int extraLife)
     {
         this.life+=extraLife;
-        healAnimation();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            healAnimation();
+        }
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void healAnimation()
     {
         int oldId=this.getImage();
         int w= this.getLayoutParams().width;
         int h=this.getLayoutParams().height;
-        ((Game) this.getContext()).changeForegroundForAnimation(this,R.drawable.heal_animation);
-
+        ((Game) this.getContext()).startAnimation(this,R.drawable.heal_animation);
+        //this.setForeground(getResources().getDrawable(R.drawable.heal_animation));
         //AnimationDrawable heal=(AnimationDrawable)this.getDrawable();
-        AnimationDrawable heal= null;
+       /* AnimationDrawable heal = (AnimationDrawable)this.getForeground();
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            heal = (AnimationDrawable)this.getForeground();
-        }
 
         this.getLayoutParams().width=w;
         this.getLayoutParams().height=h;
+
         heal.start();
-        //this.setBackgroundResource(oldId);
-        checkIfAnimationDoner(heal,oldId);
+        checkIfAnimationDoner(heal,oldId);*/
     }
 
     public void speedUpShooting(int speedUp){
         if(speedUp>0)
-        this.shootingSpeed+=speedUp;}
+        this.shootingSpeed+=speedUp;
+    }
+
     public void slowDownShooting(int slowDown)
         {
             if(slowDown>0) {
                 this.shootingSpeed -= slowDown;
                 if(shootingSpeed<0)shootingSpeed=0;
-            }
-        }
-
-
-
-
+            }}
 
     public boolean isAlive() {
         if(this.life<=0)return false;
@@ -339,9 +337,7 @@ public abstract class Character extends Dynamic {
         this.getLayoutParams().height = realha;
 
         animation.start();
-        checkIfAnimationDone(animation, sp, oldId, oldDimension);
-            System.out.println(this.getDrawable().getIntrinsicHeight());
-    }
+        checkIfAnimationDone(animation, sp, oldId, oldDimension); }
     }
     protected AnimationDrawable CharacterAnimation(String animationName)
     {
@@ -384,7 +380,7 @@ public abstract class Character extends Dynamic {
         return trembley;
     }
     //zatrzymanie ruchu postaci w momęcie gdy wykonuje swoją super moc
-    private void checkIfAnimationDone(AnimationDrawable anim, final int oldSpeed,final int id,final Dimension dimension){
+    public void checkIfAnimationDone(AnimationDrawable anim, final int oldSpeed,final int id,final Dimension dimension){
         final AnimationDrawable a = anim;
         int timeBetweenChecks = 300;
         Handler h = new Handler();
@@ -403,11 +399,11 @@ public abstract class Character extends Dynamic {
             }
         }, timeBetweenChecks);
     }
-    private void checkIfAnimationDoner(AnimationDrawable anim, final int id){
+    public void checkIfAnimationDoner(AnimationDrawable anim, final int id){
         final AnimationDrawable a = anim;
         int timeBetweenChecks = 300;
         Handler h = new Handler();
-        final Dynamic i=this;
+        final Character i=this;
         h.postDelayed(new Runnable(){
             public void run(){
                 if (a.getCurrent() != a.getFrame(a.getNumberOfFrames() - 1)){
@@ -599,6 +595,7 @@ public abstract class Character extends Dynamic {
         this.attackDefenceFilter.boostDefence(filter);
     }
 
+
     private void setAttackDefenceFilter(AttackDefenceFilter attackDefenceFilter) {
         this.attackDefenceFilter = attackDefenceFilter;
     }
@@ -678,5 +675,10 @@ public abstract class Character extends Dynamic {
 
     public void setImmune(boolean immune) {
         this.immune = immune;
+    }
+
+    @Override
+    public Shape getShape(){
+        return Shape.RECTANGLE;
     }
 }

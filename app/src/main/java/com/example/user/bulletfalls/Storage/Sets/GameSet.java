@@ -24,7 +24,6 @@ public class GameSet {
                     R.drawable.gnomesgame,
                     new GirlPower(),
                     new EnemysChooser(
-
                             new RandomIEnemyReleaseStrategy(EnemySet.getInstance().getEnemys(
                                     EE.JEFF.getValue(),EE.RANDOMGNOME.getValue(),EE.SHMEBULOCK.getValue())),
                             new LinearTimeReleaseStrategy(100)),
@@ -43,7 +42,7 @@ public class GameSet {
                             new LinearTimeReleaseStrategy(2000)),
                     new KillerDecorator(new ConcreteBountyAssigner()),
                     new TimeEnd(30),
-                    new HeroesRequirements(HE.STANFORDPINNES,HE.MABELPINES,HE.GRENDA)
+                    new HeroesRequirements(HE.STANFORDPINNES,HE.MABELPINES,HE.WANDYCOULDRON)
             ));
 
 

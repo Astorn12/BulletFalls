@@ -39,8 +39,6 @@ public class Drop {
             }
         }
     }
-
-
     public Currency drop()
     {
         Random random= new Random();

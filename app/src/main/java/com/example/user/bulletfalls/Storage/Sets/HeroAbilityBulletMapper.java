@@ -96,9 +96,9 @@ public class HeroAbilityBulletMapper {
      public static void AddToDatabaseTest(Context context)
      {
         HeroAB mabel= new HeroAB(HE.MABELPINES);
-        mabel.setAvaillableAbilitiesenums( Arrays.asList(AE.CARPEDIEM,AE.SUMMONLOG,AE.ABILITY,AE.ARMCHAIRTHROW,AE.NOTHING));
-        mabel.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.GRENDAARMCHAIR,BE.DAM,BE.TIMEDAM,BE.LOG,BE.RED,BE.DISARM));
-        habList.add(mabel);
+         mabel.setAvaillableAbilitiesenums( Arrays.asList(AE.CARPEDIEM,AE.SUMMONLOG,AE.ABILITY,AE.ARMCHAIRTHROW,AE.NOTHING,AE.HAMSTERBALL));
+         mabel.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD,BE.GRENDAARMCHAIR,BE.DAM,BE.TIMEDAM,BE.LOG,BE.RED,BE.DISARM));
+         habList.add(mabel);
 
          HeroAB dipper= new HeroAB(HE.DIPPERPINES);
          dipper.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.FIRSTJURNAL,AE.SECONDJURNAL,AE.THIRDJURNAL));

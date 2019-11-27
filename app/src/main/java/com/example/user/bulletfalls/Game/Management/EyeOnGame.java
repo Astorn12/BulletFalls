@@ -1,9 +1,11 @@
 package com.example.user.bulletfalls.Game.Management;
 
+import android.content.Context;
 import android.graphics.Point;
 
 import com.example.user.bulletfalls.Game.ActionService.Action;
 
+import com.example.user.bulletfalls.Game.Activities.Game;
 import com.example.user.bulletfalls.Game.Elements.Bullet.Bullet;
 import com.example.user.bulletfalls.Game.Elements.Enemy.Enemy;
 import com.example.user.bulletfalls.Game.Elements.Enemy.EnemySpecyfication;
@@ -57,7 +59,7 @@ public class EyeOnGame {
 
     public void itemDrop(Currency currency,Point point) {
 
-         Item item= new Item(this.gameController.game.getContext(),new DynamicSpecyfication("",new DynamicVS(currency.getResource(),10),
+         Item item= new Item(this.gameController.game.getContext(),new DynamicSpecyfication("",new DynamicVS(currency.getResource(),40),
                  new DynamicPS(10)),point,currency);
 
          this.gameController.itemsController.registerItem(item);
@@ -73,4 +75,9 @@ public class EyeOnGame {
     public Hero getHero() {
          return this.gameController.getHero();
     }
+
+    public Context getGameContext(){
+         return this.gameController.getGameFrame().getContext();
+    }
+
 }

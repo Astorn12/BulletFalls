@@ -15,6 +15,7 @@ import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
 import com.example.user.bulletfalls.GlobalUsage.Enums.Kind;
 import com.example.user.bulletfalls.Game.Elements.Beast.BeastSpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Helper.Description;
+import com.example.user.bulletfalls.GlobalUsage.Exceptions.IncorrectBeastNameException;
 import com.example.user.bulletfalls.R;
 
 import com.example.user.bulletfalls.Game.Elements.Overal.AppearActionStrategy.AppearAction;
@@ -28,6 +29,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -117,7 +119,7 @@ public class BeastsSet implements ISet<BeastSpecyfication> {
                 new CharacterAS(CharacterPositioning.HEROSUMMONEDBEAST,adf,aa),
                 new CharacterCS("dino",Arrays.asList(),Arrays.asList(Kind.MONSTER)));
 
-        BeastSpecyfication dino3= new BeastSpecyfication("dino2",
+        BeastSpecyfication dino3= new BeastSpecyfication("dino3",
                 new CharacterVS(R.drawable.trex,1,new Description()),
                 new BeastPS(20,40,10,BulletSet.getInstance().getBullet(BE.RED),EBeastType.HERO),
                 new CharacterAS(CharacterPositioning.HEROSUMMONEDBEAST,adf,aa),
@@ -164,13 +166,13 @@ public class BeastsSet implements ISet<BeastSpecyfication> {
         this.beasts.add(unicorn);
        }
 
-    public BeastSpecyfication getByName(String name)
-    {
+    public BeastSpecyfication getByName(String name) throws IncorrectBeastNameException {
         for(BeastSpecyfication b :this.beasts)
         {
-            if(b.getName().equals(name)) return b;
+            if(b.getName().equals(name))
+                return b;
         }
-        return null;
+        throw new IncorrectBeastNameException(name);
     }
 
     public boolean isEmpty()
@@ -187,6 +189,38 @@ public class BeastsSet implements ISet<BeastSpecyfication> {
             }
         }
         return ret;
+    }
+
+    public BeastSpecyfication getBreederPupil() throws IncorrectBeastNameException {
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+        BeastSpecyfication beastToReturn=getByName("Waddles Beast");
+
+        switch (day) {
+            case Calendar.MONDAY:
+                beastToReturn=getByName("Gompers");
+                break;
+            case Calendar.TUESDAY:
+                beastToReturn=getByName("dino1");
+                break;
+            case Calendar.WEDNESDAY:
+                beastToReturn=getByName("dino2");
+                break;
+            case Calendar.THURSDAY:
+                beastToReturn=getByName("dino3");
+                break;
+            case Calendar.FRIDAY:
+                beastToReturn=getByName("dino4");
+                break;
+            case Calendar.SATURDAY:
+                beastToReturn=getByName("Beaver");
+                break;
+            case Calendar.SUNDAY:
+                beastToReturn=getByName("Unicorn");
+                break;
+        }
+        return  beastToReturn;
     }
 
 }

@@ -24,11 +24,11 @@ public abstract class Action {
         this.removAble = removAble;
     }
     public void setPermanentAction(){
-        setRemovAble(true);
+        setRemovAble(false);
     }
 
-    public void endDurationAction(){
-        setRemovAble(false);
+    public void endActionDuration(){
+        setRemovAble(true);
     }
 
 

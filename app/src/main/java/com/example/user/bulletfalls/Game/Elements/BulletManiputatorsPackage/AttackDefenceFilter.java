@@ -23,6 +23,7 @@ public class AttackDefenceFilter {
         this.defence.add(filter);
     }
 
+
     public void filterAttack(List<Bullet> bullets,Character character,boolean isShootingTime){
 
         List<AttackFilter> garbage= new LinkedList<>();

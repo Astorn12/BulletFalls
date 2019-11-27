@@ -28,6 +28,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
+import com.example.user.bulletfalls.Game.Elements.Weapon.Weapon;
 import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
 import com.example.user.bulletfalls.Game.Management.GameController;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
@@ -35,6 +37,7 @@ import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.Family;
 import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamiliesContainer;
 import com.example.user.bulletfalls.Game.Elements.Ability.Ability;
 import com.example.user.bulletfalls.Game.Elements.Helper.Character;
+import com.example.user.bulletfalls.GlobalUsage.Supporters.Dimension;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Game.Elements.Helper.Dynamic;
 import com.example.user.bulletfalls.Game.Elements.Hero.HeroSpecyfication;
@@ -127,11 +130,7 @@ public class Game extends AppCompatActivity {
             boostDescription.addView(family.getGroupField(this));
         }
 
-
     }
-
-
-
 
     public void setX(Dynamic vm, int x)
     {
@@ -181,26 +180,31 @@ public class Game extends AppCompatActivity {
     /**Methods which are connected with fact that imageViews could be modified only by acticity where they have been puted*/
     public void addView(final Dynamic dynamic) {
 
-        Context context=this;
         runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
-
-                // Stuff that updates the UI
-
                 frame.addView(dynamic);
                 com.example.user.bulletfalls.GlobalUsage.Supporters.Dimension d= dynamic.getDimension();
                 dynamic.getLayoutParams().height= d.getHeight();
                 dynamic.getLayoutParams().width= d.getWidth();
             }
         });
-
     }
 
+    public void addWeapon(final Weapon weapon, Dimension d) {
 
+        runOnUiThread(new Runnable() {
 
+            @Override
+            public void run() {
+                frame.addView(weapon);
+                weapon.getLayoutParams().height= d.getHeight();
+                weapon.getLayoutParams().width= d.getWidth();
+            }
+        });
 
+    }
     public void addLifeInformation(final TextView textView)
     {
         runOnUiThread(new Runnable() {
@@ -293,13 +297,10 @@ public class Game extends AppCompatActivity {
 
     public void moveViewElement(final Dynamic dynamic, final int x, final int y)
     {
-
         runOnUiThread(new Runnable() {
-
             @Override
             public void run() {
 
-                // Stuff that updates the UI
                 dynamic.setX(dynamic.getX()+x);
                 dynamic.setY(dynamic.getY()+y);
             }
@@ -307,21 +308,48 @@ public class Game extends AppCompatActivity {
 
     }
 
-    public void setViewElement(final Dynamic dynamic, final int x, final int y)
+    public void setViewElement(final View dynamic, final int x, final int y)
     {
-
         runOnUiThread(new Runnable() {
-
             @Override
             public void run() {
 
-                // Stuff that updates the UI
                 dynamic.setX(x);
                 dynamic.setY(y);
             }
         });
-
     }
+
+    public void moveHero(final Hero hero, final int x, final int y)
+    {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                hero.setX(hero.getX()+x);
+                hero.setY(hero.getY()+y);
+                for (Weapon w:hero.getWeaponList()){
+                    w.setX(w.getX()+x);
+                    w.setY(w.getY()+y);
+                }
+            }
+        });
+    }
+    public void setHero(final Hero hero, final int x, final int y)
+    {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (Weapon w:hero.getWeaponList()){
+                    w.setX(w.getX()+x-hero.getX());
+                    w.setY(w.getY()+y-hero.getY());
+                }
+                hero.setX(x);
+                hero.setY(y);
+            }
+        });
+    }
+
 
     public void uploadLifeView(final Character character, final TextView textLife)
     {
@@ -334,7 +362,6 @@ public class Game extends AppCompatActivity {
                 if (textLife != null) {
                     // Stuff that updates the UI
                     textLife.setText(character.getLife() + "");
-
                     textLife.setTextColor(Color.WHITE);
                     textLife.setTextSize(14);
                     textLife.measure(0, 0);
@@ -459,21 +486,20 @@ public class Game extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                //Glide
+                 //Glide
                         //.with(pointer)
                        // .load(oldResourse)
                        // .transition(GenericTransitionOptions.with(resource))
                       //  .into(viewElement);
                 dynamic.setImageResource(resource);
-
             }
         });
     }
-    public void changeForegroundForAnimation(final Dynamic dynamic, final int resource)
+    public Drawable changeForegroundForAnimation(final Character dynamic, final int resource)
     {
-        final Game pointer=this;
+        final Drawable[] drawable = new Drawable[1];
         runOnUiThread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void run() {
 
@@ -482,12 +508,48 @@ public class Game extends AppCompatActivity {
                 // .load(oldResourse)
                 // .transition(GenericTransitionOptions.with(resource))
                 //  .into(viewElement);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    dynamic.setForeground(getResources().getDrawable(resource));
-                }
+
+                   // dynamic.setForeground(getResources().getDrawable(resource));
+
+                    dynamic.setForeground(getDrawable(resource));
+
+
 
             }
         });
+        return drawable[0];
+    }
+
+    public Drawable startAnimation(final Character dynamic, final int resource)
+    {
+        final Drawable[] drawable = new Drawable[1];
+        runOnUiThread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void run() {
+
+                //Glide
+                //.with(pointer)
+                // .load(oldResourse)
+                // .transition(GenericTransitionOptions.with(resource))
+                //  .into(viewElement);
+
+                // dynamic.setForeground(getResources().getDrawable(resource));
+                int oldId=dynamic.getImage();
+                int w= dynamic.getLayoutParams().width;
+                int h=dynamic.getLayoutParams().height;
+                dynamic.setForeground(getDrawable(resource));
+                drawable[0] =dynamic.getForeground();
+                AnimationDrawable animation = (AnimationDrawable)dynamic.getForeground();
+
+                dynamic.getLayoutParams().width=w;
+                dynamic.getLayoutParams().height=h;
+
+                animation.start();
+                dynamic.checkIfAnimationDoner(animation,oldId);
+            }
+        });
+        return drawable[0];
     }
 
 
@@ -558,7 +620,14 @@ public class Game extends AppCompatActivity {
     }
 
 
-
-
-
+    public void changeForeground(View view, int resource) {
+        runOnUiThread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void run() {
+                if(resource==0)view.setForeground(null);
+                else view.setForeground(getResources().getDrawable(resource));
+            }
+        });
+    }
 }

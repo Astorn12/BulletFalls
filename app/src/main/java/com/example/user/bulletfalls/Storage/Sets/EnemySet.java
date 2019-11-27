@@ -36,11 +36,11 @@ public class EnemySet implements ISet<EnemySpecyfication>{
     {
 
     }
+
     public static EnemySet getInstance()
     {
         return ourInstance;
     }
-
 
 
 
@@ -49,12 +49,9 @@ public class EnemySet implements ISet<EnemySpecyfication>{
         AttackDefenceFilter adf= new AttackDefenceFilter();
         AppearAction aa= new NothingAppearAction();
 
-
         Drop sDrop= new Drop(context,1,0.8);
 
         AppearAction gnomePowerAction= new GnomeAppearAction();
-
-
 
         EnemySpecyfication gideon= new EnemySpecyfication("Gideon",
                 new CharacterVS(R.drawable.gideon,0.9f,new Description()),
@@ -85,11 +82,6 @@ public class EnemySet implements ISet<EnemySpecyfication>{
                 new EnemyPS(20,250,30,BulletSet.getInstance().getBullet(BE.STANDARD),10),
                 new EnemyAS(CharacterPositioning.RIGHTRANDOM,adf,gnomePowerAction,new UpDownMove(),sDrop),
                 new CharacterCS("gnome",Arrays.asList(FamilyName.Gnomes),Arrays.asList(Kind.MONSTER)));
-
-
-
-
-
 
         enemys.add(gideon);
         enemys.add(gnome2);
@@ -146,6 +138,7 @@ public class EnemySet implements ISet<EnemySpecyfication>{
         }
         return group;
     }
+
     public List<EnemySpecyfication> convertToEnemySpecyficationList(List<Enemy> enemies)
     {
         List<EnemySpecyfication> enemySpecyficationSpecyfications = new LinkedList<>();

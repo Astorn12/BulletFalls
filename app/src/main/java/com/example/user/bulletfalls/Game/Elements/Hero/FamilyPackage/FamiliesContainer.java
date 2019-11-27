@@ -84,7 +84,7 @@ public class FamiliesContainer {
     private Family WendyTeam()
     {
         return new Family(FamilyName.WendyTeam,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),
-                new FamilyIncreaseResistanceAbility(),R.drawable.robie,R.drawable.robie,
+                new FamilyIncreaseResistanceAbility(),R.drawable.bigmuffin,R.drawable.bigmuffin,
                 "Wendy Team");
 
     }

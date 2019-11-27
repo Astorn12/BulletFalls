@@ -70,7 +70,7 @@ public class Beast extends Character {
     @Override
     public void move(EyeOnGame eyeOnGame)
     {
-        uploatLifeView();
+        uploadlifeview();
         ((Game)this.getContext()).moveViewElement(this,0,speed);
         if(this.getY()<0-speed)
         {

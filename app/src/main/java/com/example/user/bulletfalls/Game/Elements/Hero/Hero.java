@@ -13,10 +13,12 @@ import com.example.user.bulletfalls.Game.Elements.Ability.AbilitiesBar;
 import com.example.user.bulletfalls.Game.Elements.Beast.Beast;
 import com.example.user.bulletfalls.Game.Elements.Helper.Character;
 import com.example.user.bulletfalls.Game.Elements.Helper.Summoner;
+import com.example.user.bulletfalls.Game.Elements.Weapon.Weapon;
 import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MasterAbility;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.example.user.bulletfalls.Game.Activities.Game;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
+import com.example.user.bulletfalls.GlobalUsage.Supporters.Dimension;
 import com.example.user.bulletfalls.Shop.PossesStrategyPackage.PossesStrategy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -46,6 +48,7 @@ public class Hero extends Character implements Summoner {
     List<Beast> beastsWaitingToSummon;
 
 
+    List<Weapon> weaponList;
 
     public Hero(Context context, HeroSpecyfication specyfication){
         super(context,specyfication);
@@ -62,6 +65,7 @@ public class Hero extends Character implements Summoner {
         this.touchFlag=false;
 
         this.beastsWaitingToSummon= new LinkedList<>();
+        this.weaponList=new LinkedList<>();
     }
 
 
@@ -83,21 +87,22 @@ public class Hero extends Character implements Summoner {
                 if (this.touchFlag) {
                     if (this.getY() - speed > frame.getY()) {
 
-                        // this.setY(getY() - 20);
-                        ((Game) this.getContext()).moveViewElement(this, 0, -speed);
+
+                        ((Game) this.getContext()).moveHero(this, 0, -speed);
                     } else {
-                        ((Game) this.getContext()).setViewElement(this, 0, 0);
+                        ((Game) this.getContext()).setHero(this, 0, 0);
+                        //uploadWeapons();
                     }
                 } else {
                     if (this.getY() + this.getHeight() + speed < frame.getHeight()) {
 
-                        //this.setY(getY() + 20);
-                        ((Game) this.getContext()).moveViewElement(this, 0, speed);
+                        ((Game) this.getContext()).moveHero(this, 0, speed);
                     } else {
-                        ((Game) this.getContext()).setViewElement(this, (int) this.getX(), frame.getHeight() - this.getHeight());
+                        ((Game) this.getContext()).setHero(this, (int) this.getX(), frame.getHeight() - this.getHeight());
+                        //uploadWeapons();
                     }
                 }
-                uploatLifeView();
+                uploadlifeview();
 
         }
 
@@ -242,5 +247,32 @@ public class Hero extends Character implements Summoner {
 
     public int getNumberOfAbilities(){
         return 3;
+    }
+    public void changeForeground(int resource){
+        ((Game)this.getContext()).changeForeground(this,resource);
+    }
+
+    public void addWeapon(Weapon weapon){
+        this.weaponList.add(weapon);
+        int d=Math.max(this.getLayoutParams().height,this.getLayoutParams().width);
+        getGame().addWeapon(weapon,new Dimension(d,d));
+        weapon.setPosition(getGame(), new Dimension(d,d),this.getMiddle());
+    }
+    public void removeWeapon(int resource){
+        for(Weapon w:this.weaponList){
+            if(w.getImage()==resource){
+                this.weaponList.remove(w);
+                getGame().removeObject(w);
+                break;
+            }
+        }
+
+    }
+    private Game getGame(){
+        return (Game)this.getContext();
+    }
+
+    public List<Weapon> getWeaponList(){
+        return this.weaponList;
     }
 }

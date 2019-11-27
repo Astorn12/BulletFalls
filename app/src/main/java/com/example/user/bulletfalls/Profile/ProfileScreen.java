@@ -1,13 +1,20 @@
 package com.example.user.bulletfalls.Profile;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.user.bulletfalls.Game.Elements.Ability.Strategy.SummonerPackage.BeastRaisers.Linear;
+import com.example.user.bulletfalls.Profile.Collection.UserStatistics.FamilyCompletenessList;
 import com.example.user.bulletfalls.R;
 
 import org.apache.commons.lang3.tuple.MutablePair;
@@ -20,6 +27,7 @@ public class ProfileScreen extends AppCompatActivity {
     TextView userName;
     ImageView userPhoto;
     LinearLayout currienciesList;
+    LinearLayout familyStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +36,21 @@ public class ProfileScreen extends AppCompatActivity {
         userName=(TextView) findViewById(R.id.name);
         userPhoto=(ImageView)findViewById(R.id.photo);
         currienciesList=(LinearLayout) findViewById(R.id.list);
-
+        familyStats=(LinearLayout) findViewById(R.id.familyStats);
         UserProfile up=new UserProfile(this);
         userName.setText(up.getName());
         Glide.with(this).load(up.resource).into(userPhoto);
         userPhoto.invalidate();
         currenciesListLoader();
+        addFamiliesStats();
+    }
+
+    private void addFamiliesStats(){
+        FamilyCompletenessList fcl=new FamilyCompletenessList(this);
+        fcl.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        this.familyStats.addView(fcl);
+        fcl.setBackgroundColor(Color.BLUE);
+        fcl.load();
     }
 
     private void currenciesListLoader()

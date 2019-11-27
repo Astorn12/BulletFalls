@@ -19,7 +19,6 @@ import com.example.user.bulletfalls.Game.Elements.Items.DropStrategy.Drop;
 import com.example.user.bulletfalls.Game.Elements.Overal.MoveStrategyPackage.CharacterMoveStrategy;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @JsonTypeName("enemy")
@@ -86,7 +85,7 @@ public class Enemy extends Character {
     @Override
     public void move(EyeOnGame eye)
     {
-        uploatLifeView();
+        uploadlifeview();
 
         int newY =this.moveStrategy.getQuantum(this.speed,eye, new Point((int)this.getX(),(int)this.getY()));
         //((Game)this.getContext()).moveViewElement(this,0,speed);

@@ -16,13 +16,13 @@ public class CurrencyRepository implements Repository<Currency> {
     {
         this.context=context;
     }
+    public CurrencyRepository(){
+
+    }
 
     @Override
     public List<Currency> getAll() {
         List<Currency> currencies= new LinkedList<>();
-
-
-
         return null;
     }
 
@@ -32,7 +32,6 @@ public class CurrencyRepository implements Repository<Currency> {
         Cursor cursor= da.getById(id,"Currencies");
         cursor.moveToFirst();
         return new Currency(cursor.getString(1),cursor.getInt(2));
-
     }
 
     @Override
@@ -40,7 +39,6 @@ public class CurrencyRepository implements Repository<Currency> {
         ContentValues content=new ContentValues();
         content.put("name",currency.getName());
         content.put("resource",currency.getResource());
-
     }
 
     @Override

@@ -17,7 +17,8 @@ public enum AE {
     INCREASESHOOTING("increaseshooting"),
     PSTEST("PSTEST"),
     MULTIBEAVERSATTACK("Multi Beavers Attack"),
-    PROGRESS("Progress");
+    PROGRESS("Progress"),
+    HAMSTERBALL("Hamster Ball");
 
     private final String value;
 

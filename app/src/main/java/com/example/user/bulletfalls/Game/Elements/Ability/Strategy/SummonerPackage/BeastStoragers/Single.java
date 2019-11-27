@@ -1,6 +1,7 @@
 package com.example.user.bulletfalls.Game.Elements.Ability.Strategy.SummonerPackage.BeastStoragers;
 
 import com.example.user.bulletfalls.Game.Elements.Beast.BeastSpecyfication;
+import com.example.user.bulletfalls.GlobalUsage.Exceptions.IncorrectBeastNameException;
 import com.example.user.bulletfalls.Storage.Sets.BeastsSet;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -21,7 +22,11 @@ public class Single implements IBeastStorage{
 
     public Single(String name)
     {
-        this.bs=BeastsSet.getInstance().getByName(name);
+        try {
+            this.bs=BeastsSet.getInstance().getByName(name);
+        } catch (IncorrectBeastNameException e) {
+            e.printStackTrace();
+        }
     }
     public BeastSpecyfication getBs() {
         return bs;
