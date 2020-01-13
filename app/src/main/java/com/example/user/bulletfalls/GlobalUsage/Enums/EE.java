@@ -6,7 +6,8 @@ public enum EE {
     RANDOMGNOME("Random Gnome"),
     JEFF("Jeff"),
     SHMEBULOCK("Shmebulock"),
-    GNOMEMONSTER("Gnome Monster");
+    GNOMEMONSTER("Gnome Monster"),
+    RAINBOWUNICORN("Rainbow unicorn");
 
     private final String value;
 

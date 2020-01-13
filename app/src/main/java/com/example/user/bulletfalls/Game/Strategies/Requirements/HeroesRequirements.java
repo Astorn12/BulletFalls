@@ -66,7 +66,7 @@ public class HeroesRequirements implements IGameRequirements {
 
 
                     heroesShow.addView(he);
-                    if(UserCollection.getInstance().doYouOwnIt(he.getSpecyfication()))
+                    if(!UserCollection.getInstance().doYouOwnIt(he.getSpecyfication()))
                         he.setColorFilter(Color.BLACK);
                     break;
                 }

@@ -7,6 +7,8 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Handler;
 import androidx.annotation.RequiresApi;
+
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 

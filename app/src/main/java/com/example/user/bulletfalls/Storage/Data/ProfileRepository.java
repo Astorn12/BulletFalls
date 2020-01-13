@@ -9,20 +9,17 @@ import com.example.user.bulletfalls.Profile.UserProfile;
 
 import java.util.List;
 
-public class ProfileRepository implements Repository<UserProfile> {
-    Context context;
+public class ProfileRepository extends Repository<UserProfile> {
+
     public ProfileRepository(Context context)
     {
-        this.context=context;
+        super(context);
     }
-    @Override
-    public List<UserProfile> getAll() {
-        return null;
-    }
+
     public boolean hasProfile()
     {
         DatabaseAdministrator da= new DatabaseAdministrator(context);
-        if(da.getCursor("Profile","id","1").getCount()==0)
+        if(da.getCursor(getTableName(),"id","1").getCount()==0)
         {
             return false;
         }
@@ -33,23 +30,10 @@ public class ProfileRepository implements Repository<UserProfile> {
     public UserProfile getById(int  i) {
         DatabaseAdministrator da= new DatabaseAdministrator(context);
 
-        Cursor cursor=da.getAll(null,"Profile");
-
+        Cursor cursor=da.getAll(null,getTableName());
         cursor.moveToFirst();
-        UserProfile userProfile= new UserProfile();
-        userProfile.setName(cursor.getString(1));
-        userProfile.setResource(cursor.getInt(2));
-        userProfile.setExp(cursor.getInt(3));
 
-        LevelRepository ld= new LevelRepository(context);
-
-        userProfile.setLevel(ld.getByLevel(cursor.getInt(4)));
-        StockRepository sd= new StockRepository(context);
-        userProfile.setStock(sd.getAll());
-        userProfile.setContext(context);
-
-        return userProfile;
-
+        return createFromCursor(cursor);
     }
 
     @Override
@@ -61,23 +45,23 @@ public class ProfileRepository implements Repository<UserProfile> {
         LevelRepository ld= new LevelRepository(context);
         content.put("levelId",ld.getId(userProfile.getLevel().getNumber()));
         content.put("exp",userProfile.getExp());
-        da.update("Profile","id",1,content);
+        da.update(getTableName(),"id",1,content);
     }
 
     @Override
     public void remove(UserProfile userProfile) {
         DatabaseAdministrator da= new DatabaseAdministrator(context);
-        da.remove("profile","name",userProfile.getName());
+        da.remove(getTableName(),"name",userProfile.getName());
     }
     public void remove(int id)
     {
         DatabaseAdministrator da= new DatabaseAdministrator(context);
-        da.remove("profile","id",id);
+        da.remove(getTableName(),"id",id);
     }
     public void remove(String name)
     {
         DatabaseAdministrator da= new DatabaseAdministrator(context);
-        da.remove("profile","name",name);
+        da.remove(getTableName(),"name",name);
     }
 
     @Override
@@ -90,6 +74,27 @@ public class ProfileRepository implements Repository<UserProfile> {
 
         content.put("levelId",ld.getId(userProfile.getLevel().getNumber()));
         content.put("exp",userProfile.getExp());
-        da.add(content,"profile");
+        da.add(content,getTableName());
+    }
+
+    @Override
+    public UserProfile createFromCursor(Cursor cursor) {
+        UserProfile userProfile= new UserProfile();
+        userProfile.setName(cursor.getString(1));
+        userProfile.setResource(cursor.getInt(2));
+        userProfile.setExp(cursor.getInt(3));
+
+        LevelRepository ld= new LevelRepository(context);
+
+        userProfile.setLevel(ld.getByLevel(cursor.getInt(4)));
+        StockRepository sd= new StockRepository(context);
+        userProfile.setStock(sd.getAll());
+        userProfile.setContext(context);
+        return userProfile;
+    }
+
+    @Override
+    public String getTableName() {
+        return "Profile";
     }
 }

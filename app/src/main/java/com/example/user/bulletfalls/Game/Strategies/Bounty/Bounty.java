@@ -1,6 +1,9 @@
 package com.example.user.bulletfalls.Game.Strategies.Bounty;
 
+import android.content.Context;
+
 import com.example.user.bulletfalls.Game.Management.ArchivContainer;
+import com.example.user.bulletfalls.MyApplication;
 import com.example.user.bulletfalls.Profile.Currency;
 import com.example.user.bulletfalls.Storage.Data.CurrencyEnum;
 import com.example.user.bulletfalls.Storage.Data.CurrencyRepository;
@@ -21,7 +24,7 @@ public class Bounty {
     }
     public void addMoney(int n)
     {
-        CurrencyRepository currencyRepository=new CurrencyRepository();
+        CurrencyRepository currencyRepository=new CurrencyRepository(MyApplication.getAppContext());
         itemsList.add(currencyRepository.getCurrency(CurrencyEnum.MysteryCoin.toString()),n);
     }
 

@@ -27,7 +27,6 @@ public class DatabaseAdministrator extends SQLiteOpenHelper {
         super(context, "profileDB.db", null, 1);
         this.context=context;
 
-
     }
 
     @Override
@@ -55,6 +54,11 @@ public class DatabaseAdministrator extends SQLiteOpenHelper {
                 "exp integer," +
                 "levelId integer," +
                 "foreign key (levelId) references Levels(id));");
+
+        db.execSQL("create table OverallStatistics(" +
+                "id integer primary key autoincrement,"+
+                "name text," +
+                "amount integer);");
 
     }
 

@@ -1,5 +1,6 @@
 package com.example.user.bulletfalls.Game.Strategies.Bounty;
 
+import android.content.Context;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 

@@ -1,5 +1,6 @@
 package com.example.user.bulletfalls.Storage.Sets;
 
+import com.example.user.bulletfalls.Game.Strategies.Scenario.EmptyGameScenario;
 import com.example.user.bulletfalls.GlobalUsage.Enums.EE;
 import com.example.user.bulletfalls.GlobalUsage.Enums.HE;
 import com.example.user.bulletfalls.Game.Strategies.GameSketch;
@@ -43,6 +44,18 @@ public class GameSet {
                     new KillerDecorator(new ConcreteBountyAssigner()),
                     new TimeEnd(30),
                     new HeroesRequirements(HE.STANFORDPINNES,HE.MABELPINES,HE.WANDYCOULDRON)
+            ),
+
+            new GameSketch("Get unicorn hair",
+                    R.drawable.unicorngame,
+                    new EmptyGameScenario(),
+                     new EnemysChooser(
+                            new RandomIEnemyReleaseStrategy(EnemySet.getInstance().getEnemys(
+                                    EE.JEFF.getValue(),EE.RANDOMGNOME.getValue(),EE.SHMEBULOCK.getValue())),
+                    new LinearTimeReleaseStrategy(200)),
+                    new KillerDecorator(new ConcreteBountyAssigner()),
+                    new TimeEnd(30),
+                    new LevelRequirements(0)
             ));
 
 

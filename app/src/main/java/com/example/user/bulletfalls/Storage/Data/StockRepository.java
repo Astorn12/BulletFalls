@@ -12,31 +12,13 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import java.util.LinkedList;
 import java.util.List;
 
-public class StockRepository implements Repository<MutablePair<Currency,Integer>> {
-    Context context;
+public class StockRepository extends Repository<MutablePair<Currency, Integer>> {
+
     public StockRepository(Context context)
     {
-        this.context=context;
+        super(context);
     }
-    @Override
-    public List<MutablePair<Currency, Integer>> getAll() {
-        List<MutablePair<Currency,Integer>> list= new LinkedList<>();
-        DatabaseAdministrator da= new DatabaseAdministrator(context);
-        Cursor cursor=da.getAll(null,"Stock");
-        cursor.moveToFirst();
 
-        if(cursor.getCount()!=0) {
-            do {
-                CurrencyRepository cd = new CurrencyRepository(context);
-                int x = cursor.getInt(2);
-                Currency currency = cd.getById(cursor.getInt(2));
-
-                MutablePair<Currency, Integer> pair = new MutablePair<>(currency, cursor.getInt(1));
-                list.add(pair);
-            } while (cursor.moveToNext());
-        }
-        return list;
-    }
 
     @Override
     public MutablePair<Currency, Integer> getById(int n) {
@@ -51,8 +33,8 @@ public class StockRepository implements Repository<MutablePair<Currency,Integer>
 
         int currencyId= da.getId("Currencies","name",pair.getLeft().getName());
 
-        int id= da.getId("Stock","currencyId",currencyId+"");
-        da.update("Stock","id",id,content);
+        int id= da.getId(getTableName(),"currencyId",currencyId+"");
+        da.update(getTableName(),"id",id,content);
 
     }
 
@@ -62,8 +44,6 @@ public class StockRepository implements Repository<MutablePair<Currency,Integer>
             update(pair);
         }
     }
-
-
 
     @Override
     public void remove(MutablePair<Currency, Integer> currencyIntegerMutablePair) {
@@ -78,7 +58,19 @@ public class StockRepository implements Repository<MutablePair<Currency,Integer>
         content.put("amount",currencyIntegerMutablePair.right);
         content.put("currencyId",id);
         DatabaseAdministrator ad= new DatabaseAdministrator(context);
-        ad.add(content,"Stock");
+        ad.add(content,getTableName());
 
+    }
+
+    @Override
+    public MutablePair<Currency, Integer> createFromCursor(Cursor cursor) {
+        CurrencyRepository cd = new CurrencyRepository(context);
+        Currency currency = cd.getById(cursor.getInt(2));
+        return new MutablePair<>(currency, cursor.getInt(1));
+    }
+
+    @Override
+    public String getTableName() {
+        return "Stock";
     }
 }

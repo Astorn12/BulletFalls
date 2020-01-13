@@ -17,13 +17,14 @@ import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MasterAbili
 import com.example.user.bulletfalls.Game.Elements.Ability.AbilitiesBar;
 import com.example.user.bulletfalls.GlobalUsage.Enums.AE;
 import com.example.user.bulletfalls.GlobalUsage.Interfaces.PossesAble;
+import com.example.user.bulletfalls.Profile.UserProfile;
 import com.example.user.bulletfalls.Shop.PossesStrategyPackage.PossesStrategy;
 import com.example.user.bulletfalls.Storage.Sets.AbilitySet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("herospecyfication")
-public class HeroSpecyfication extends CharacterSpecyfication implements PossesAble {
+public class HeroSpecyfication extends CharacterSpecyfication implements PossesAble{
 
     /**VIEW STATISTICS*/
 
@@ -175,6 +176,7 @@ public class HeroSpecyfication extends CharacterSpecyfication implements PossesA
                 new HeroAS(this.getCharacterPositioning(),this.getAttackDefenceFilter(),this.getAppearAction(),this.masterAbility),
                 new HeroCS(this.getIndyvidualHeroMarker(),this.getFamilyNames(),this.getKinds(),this.possesStrategy,this.tier));
     }
+
 
 }
 

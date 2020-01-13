@@ -82,12 +82,17 @@ public class EnemySet implements ISet<EnemySpecyfication>{
                 new EnemyPS(20,250,30,BulletSet.getInstance().getBullet(BE.STANDARD),10),
                 new EnemyAS(CharacterPositioning.RIGHTRANDOM,adf,gnomePowerAction,new UpDownMove(),sDrop),
                 new CharacterCS("gnome",Arrays.asList(FamilyName.Gnomes),Arrays.asList(Kind.MONSTER)));
-
+        EnemySpecyfication unicornreinbow= new EnemySpecyfication("Rainbow unicorn",
+                new CharacterVS(R.drawable.unicorn,2,new Description()),
+                new EnemyPS(20,150,20,BulletSet.getInstance().getBullet(BE.DISARM),100),
+                new EnemyAS(CharacterPositioning.RIGHTRANDOM,adf,gnomePowerAction,new UpDownMove(),sDrop),
+                new CharacterCS("unicorn",Arrays.asList(FamilyName.Null),Arrays.asList(Kind.MONSTER)));
         enemys.add(gideon);
         enemys.add(gnome2);
         enemys.add(jeff);
         enemys.add(shmebulock);
         enemys.add(gnomeMonster);
+        enemys.add(unicornreinbow);
     }
 
     @Override

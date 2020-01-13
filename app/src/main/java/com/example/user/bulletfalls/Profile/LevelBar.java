@@ -79,7 +79,7 @@ public class LevelBar {
         this.level.setText(levell.number+"");
         int required=levell.requiredXp;
         int exp=userProfile.getExp();
-        //exp=5; //linia testowa
+
         final int tmp=(int) (w*((float)exp/(float)(exp+required)));
         v1.setLayoutParams(new LinearLayout.LayoutParams(tmp,LinearLayout.LayoutParams.MATCH_PARENT));
         v2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));

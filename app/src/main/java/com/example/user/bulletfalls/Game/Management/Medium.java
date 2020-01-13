@@ -31,6 +31,7 @@ public class Medium  {
     Bounty bounty;
 
     List<HeroHited> hitsFromEnemyToHero;
+    String result;
 
     public Medium()
     {
@@ -44,6 +45,7 @@ public class Medium  {
         hitsFromEnemyToHero=new LinkedList<>();
         this.bounty= new Bounty();
         this.hitsFromEnemyToHero=new LinkedList<>();
+        result="Win";
     }
 
     public void startTimer()
@@ -157,5 +159,9 @@ public class Medium  {
 
     public void registerItem(Currency currency) {
         this.bounty.addItem(currency);
+    }
+
+    public String getResult() {
+        return result;
     }
 }

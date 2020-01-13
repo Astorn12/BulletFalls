@@ -25,6 +25,8 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Activities.GameListActivity.GamesList;
+import com.example.user.bulletfalls.OveralStatisticsAndCollectionsMissions.MissionManager;
+import com.example.user.bulletfalls.OveralStatisticsAndCollectionsMissions.MissionsActivity;
 import com.example.user.bulletfalls.Profile.Collection.HeroCollection.HeroCollection;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
 import com.example.user.bulletfalls.Profile.LevelBar;
@@ -62,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //this.headLine =(LinearLayout) this.findViewById(R.id.mainwallet);
-
-
 
         ArchivCurrencyContainer archivCurrencyContainer= new ArchivCurrencyContainer();
         archivCurrencyContainer.add(new Currency("Mystery Coins"),5);
@@ -121,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         EnemySet.getInstance().load(this);
+
+
+        MissionManager missionManager= new MissionManager();
+        missionManager.updateSavingOfTheOveralStatisctics(this);
         //ładowanie bazy danych SQLite
 
         //this.deleteDatabase("profileDB.db");
@@ -216,6 +220,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void showFamiliesMap(View view) {
         Intent intent= new Intent(this,FamiliesMap.class);
+        this.startActivity(intent);
+    }
+
+    public void showMissionList(View view) {
+        Intent intent= new Intent(this, MissionsActivity.class);
         this.startActivity(intent);
     }
 }
