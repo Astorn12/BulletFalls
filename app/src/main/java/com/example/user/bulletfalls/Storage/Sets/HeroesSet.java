@@ -4,23 +4,23 @@ import android.content.Context;
 
 import com.example.user.bulletfalls.Game.Elements.Bullet.Specyfication.BulletSpecyfication;
 import com.example.user.bulletfalls.Game.Elements.BulletManiputatorsPackage.AttackDefenceFilter;
-import com.example.user.bulletfalls.Game.Elements.Helper.Sizers.CharacterSizer;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Active.HeroAS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Collection.HeroCS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Passive.HeroPS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.View.CharacterVS;
 import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamiliesCandyManager;
 import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.Family;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.AngelProtector;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.Breeder;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.HealerC;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.SuperShooter;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.AngelProtector;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.Breeder;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.HealerC;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.SuperShooter;
 import com.example.user.bulletfalls.GlobalUsage.Enums.BE;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MassDestructor;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.Mugol;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.MassDestructor;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.Mugol;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Ability.AbilitiesBar;
 import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
+import com.example.user.bulletfalls.GlobalUsage.Enums.HE;
 import com.example.user.bulletfalls.GlobalUsage.Enums.Kind;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
 import com.example.user.bulletfalls.Storage.Data.CurrencyEnum;
@@ -136,7 +136,7 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
 
         HeroSpecyfication mabel= new HeroSpecyfication("Mabel Pines",
                 new CharacterVS(R.drawable.mabel,3,new Description()),
-                new HeroPS(10,150,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroPS(10,1500,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("mabel",Arrays.asList(FamilyName.MysteryShack),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.CHILD),standardPrice,1));
 
@@ -212,6 +212,59 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
                 new HeroCS("robie",Arrays.asList(FamilyName.WendyTeam),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.TEENEAGER),standardPrice,1));
 
+        HeroSpecyfication soossGrandma= new HeroSpecyfication(HE.SOOSSGRANDMA,
+                new CharacterVS(R.drawable.soossgrandma,1.3f,new Description()),
+                new HeroPS(12,260,20,BulletSet.getInstance().getBullet(BE.COUNTERBULLET)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
+                new HeroCS("soossgrandma",Arrays.asList(FamilyName.Ramirez),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.SENIOR),standardPrice,3));
+
+        HeroSpecyfication preston= new HeroSpecyfication(HE.PRESTONNORTHWEST,
+                new CharacterVS(R.drawable.prestonnorthwest,1.7f,new Description()),
+                new HeroPS(10,300,10,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
+                new HeroCS("preston",Arrays.asList(FamilyName.Northwest),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.ADULT),standardPrice,1));
+
+        HeroSpecyfication priscilla= new HeroSpecyfication(HE.PRISCILLANORTHWEST,
+                new CharacterVS(R.drawable.priscillanorthwest,1.5f,new Description()),
+                new HeroPS(20,160,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
+                new HeroCS("priscilla",Arrays.asList(FamilyName.Northwest),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.ADULT),standardPrice,1));
+
+        HeroSpecyfication prestonpremium= new HeroSpecyfication(HE.PRESTONPREMIUM,
+                new CharacterVS(R.drawable.prestonnorthwestpremiumdone,1,new Description()),
+                new HeroPS(20,160,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
+                new HeroCS("preston",Arrays.asList(FamilyName.Northwest),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.ADULT),standardPrice,1));
+        HeroSpecyfication priscillapremium= new HeroSpecyfication(HE.PRISCILLAPREMIUM,
+                new CharacterVS(R.drawable.priscillanorthwestpremium,1,new Description()),
+                new HeroPS(20,160,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
+                new HeroCS("priscilla",Arrays.asList(FamilyName.Northwest),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.TEENEAGER),standardPrice,1));
+
+        HeroSpecyfication pacifica= new HeroSpecyfication(HE.PACIFIC,
+                new CharacterVS(R.drawable.pacific,1,new Description()),
+                new HeroPS(20,160,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
+                new HeroCS("pacific",Arrays.asList(FamilyName.Northwest),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.CHILD),standardPrice,1));
+
+        HeroSpecyfication gideon =new HeroSpecyfication(HE.GIDEONGLEEFUL,
+                new CharacterVS(R.drawable.gideon,1,new Description()),
+                new HeroPS(20,160,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
+                new HeroCS("gideon",Arrays.asList(FamilyName.TentOfThelepathy),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.CHILD),standardPrice,1));
+
+        HeroSpecyfication mrsgleeful= new HeroSpecyfication(HE.MRSGLEEFUL,
+                new CharacterVS(R.drawable.mrsgleeful,1,new Description()),
+                new HeroPS(20,160,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
+                new HeroCS("mrsgleeful",Arrays.asList(FamilyName.TentOfThelepathy),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.ADULT),standardPrice,1));
+        HeroSpecyfication budgleeful= new HeroSpecyfication(HE.BUDGLEEFUL,
+                new CharacterVS(R.drawable.buddgleeful,1,new Description()),
+                new HeroPS(20,160,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
+                new HeroCS("bud",Arrays.asList(FamilyName.TentOfThelepathy),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.ADULT),standardPrice,1));
+
+
         heroes.add(mabel);
         heroes.add(dipper);
         heroes.add(soos);
@@ -225,6 +278,15 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
         heroes.add(mcgucket);
         heroes.add(shootingmabel);
         heroes.add(robie);
+        heroes.add(soossGrandma);
+        heroes.add(pacifica);
+        heroes.add(preston);
+        heroes.add(prestonpremium);
+        heroes.add(priscilla);
+        heroes.add(priscillapremium);
+        heroes.add(gideon);
+        heroes.add(budgleeful);
+        heroes.add(mrsgleeful);
         //RotateBullet wendyAxe= new RotateBullet(BE.WENDYAXE,context, 10, 20, null, 100, 100,  R.drawable.wendyaxe, null, false,1,new Horizontal(),Shape.RECTANGLE,Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));
         //wendy.setBullet(wendyAxe);
     }
@@ -291,6 +353,19 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
             {
 
                 counter+=familiesCandyManager.countHeroCandy(hero,familyName);
+            }
+        }
+        return counter;
+    }
+
+    public int getAmountOfOwnedMembers(FamilyName familyName){
+        int counter=0;
+        for(HeroSpecyfication hero :heroes)
+        {
+            if(hero.isFromFamiy(familyName)&& UserCollection.getInstance().doYouOwnIt(hero))
+            {
+
+                counter+=1;
             }
         }
         return counter;

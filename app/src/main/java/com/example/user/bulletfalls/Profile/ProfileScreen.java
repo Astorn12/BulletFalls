@@ -3,11 +3,13 @@ package com.example.user.bulletfalls.Profile;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -27,16 +29,18 @@ public class ProfileScreen extends AppCompatActivity {
     TextView userName;
     ImageView userPhoto;
     LinearLayout currienciesList;
-    LinearLayout familyStats;
+    //LinearLayout familyStats;
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilescreen);
+        scrollView=findViewById(R.id.scrollviewfamilystats);
         userName=(TextView) findViewById(R.id.name);
         userPhoto=(ImageView)findViewById(R.id.photo);
         currienciesList=(LinearLayout) findViewById(R.id.list);
-        familyStats=(LinearLayout) findViewById(R.id.familyStats);
+        //familyStats=(LinearLayout) findViewById(R.id.familyStats);
         UserProfile up=new UserProfile(this);
         userName.setText(up.getName());
         Glide.with(this).load(up.resource).into(userPhoto);
@@ -46,11 +50,18 @@ public class ProfileScreen extends AppCompatActivity {
     }
 
     private void addFamiliesStats(){
+        //ScrollView scrollView= new ScrollView(this);
+
         FamilyCompletenessList fcl=new FamilyCompletenessList(this);
-        fcl.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        this.familyStats.addView(fcl);
+
+        //scrollView.addView(fcl);
+
+
         fcl.setBackgroundColor(Color.BLUE);
-        fcl.load();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            fcl.load();
+        }
+        this.scrollView.addView(fcl);
     }
 
     private void currenciesListLoader()

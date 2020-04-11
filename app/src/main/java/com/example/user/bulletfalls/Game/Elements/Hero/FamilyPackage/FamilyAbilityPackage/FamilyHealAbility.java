@@ -12,6 +12,8 @@ public class FamilyHealAbility implements FamilyAbility {
         return new BoostHeroLife(ActionTypeBI.BEGIN,boost);
     }
 
+
+
     @Override
     public void describe(LinearLayout linearLayout, int boost) {
 
@@ -25,5 +27,10 @@ public class FamilyHealAbility implements FamilyAbility {
     @Override
     public String getPrefix() {
         return "+";
+    }
+
+    @Override
+    public String getDescription(int boost) {
+        return null;
     }
 }

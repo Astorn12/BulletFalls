@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("supershoot")
 public class SuperShoot implements StartAction {
-    BulletSpecyfication bulletSpecyfication;
+    private BulletSpecyfication bulletSpecyfication;
     String name;
     public SuperShoot(BulletSpecyfication bullet)
     {
@@ -32,7 +32,7 @@ public class SuperShoot implements StartAction {
         else superShoot(eyeOnGame);
         */
 
-        return new com.example.user.bulletfalls.Game.ActionService.Actions.AbilitysActions.SuperShoot(ActionType.INNER,this.bulletSpecyfication);
+        return new com.example.user.bulletfalls.Game.ActionService.Actions.AbilitysActions.SuperShoot(ActionType.INNER,this.bulletSpecyfication.clone());
 
     }
 
@@ -47,7 +47,7 @@ public class SuperShoot implements StartAction {
     }
 
     public BulletSpecyfication getBulletSpecyfication() {
-        return bulletSpecyfication;
+        return bulletSpecyfication.clone();
     }
 
     public void setBulletSpecyfication(BulletSpecyfication bulletSpecyfication) {
@@ -72,7 +72,7 @@ public class SuperShoot implements StartAction {
 
     public void superShoot(Character character)
     {
-        Bullet bulletn= new Bullet(character.getContext(),this.bulletSpecyfication);
+        Bullet bulletn= new Bullet(character.getContext(),this.bulletSpecyfication.clone());
         //bulletn.setStartingPoint(character.getStartingPointForBullet());
 
         bulletn.born();

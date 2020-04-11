@@ -2,6 +2,8 @@ package com.example.user.bulletfalls.Game.Management;
 
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.WaitAbilitySpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Enemy.EnemySpecyfication;
+import com.example.user.bulletfalls.Missions.Missionable;
+import com.example.user.bulletfalls.Missions.Requirements.OveralStatisticChecker;
 import com.example.user.bulletfalls.Profile.Currency;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
 import com.example.user.bulletfalls.Game.Strategies.Bounty.Bounty;
@@ -15,7 +17,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Medium  {
+public class Medium implements Missionable {
     HeroSpecyfication heroSpecyfication;
     List<EnemySpecyfication> deathEnemySpecyficationList;
     List<EnemySpecyfication> pushedEnemySpecyfications;
@@ -121,6 +123,14 @@ public class Medium  {
         return sum;
     }
 
+    public int dealedDamage(){
+        int sum=0;
+        for(Hitt h: this.enemyHits){
+            sum+=h.damage;
+        }
+        return sum;
+    }
+
     
     /**Do zaprogramowania*/
     // lista zdobytych obietów i obiekt item
@@ -163,5 +173,18 @@ public class Medium  {
 
     public String getResult() {
         return result;
+    }
+
+    public void addMoney(int gold){
+        this.bounty.addMoney(gold);
+    }
+
+    public HeroSpecyfication getHeroSpecyfication() {
+        return heroSpecyfication;
+    }
+
+    @Override
+    public int acceptChecking(OveralStatisticChecker checker,int i) {
+        return checker.check(this,i);
     }
 }

@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OveralStatisticsAndCollectionsMissions.MissionsActivity"
+        <activity android:name=".Missions.MissionsActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".Activities.FamiliesMap"
             android:screenOrientation="portrait"/>

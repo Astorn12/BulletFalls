@@ -132,10 +132,21 @@ public class Family {
         linearLayout.addView(logo);
         linearLayout.addView(boostText);
 
+
         linearLayout.setBackgroundColor(this.getBackground());
 
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,dpsConverter.getPixels(40)));
 
         return linearLayout;
     }
+    public String getFamilyBonusDescription(){
+        FamilyAbility familyAbility= this.getFamilyAbility();
+        return familyAbility.getDescription(getBoost());
+    }
+
+    private int getBoost(){
+        return this.getLevelTable().get(this.getActualLevel()).getRight();
+    }
+
+
 }

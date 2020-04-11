@@ -1,6 +1,9 @@
 package com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage;
 
 import com.example.user.bulletfalls.Game.ActionService.Action;
+import com.example.user.bulletfalls.Game.ActionService.Actions.MoneyBountyMultiplication;
+import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamilyAbilityPackage.FamilyAbilityTimeDecrease;
+import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamilyAbilityPackage.MoneyCollector;
 import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
 import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamilyAbilityPackage.FamilyHealAbility;
 import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamilyAbilityPackage.FamilyIncreaseLifeAbility;
@@ -60,6 +63,7 @@ public class FamiliesContainer {
         this.familyList.add(Null());
         this.familyList.add(Ramirez());
         this.familyList.add(Scientist());
+        this.familyList.add(Northwerts());
     }
     private Family MysteryHackGroup()
     {
@@ -75,7 +79,7 @@ public class FamiliesContainer {
     }
     private Family TentOfThelepathy()
     {
-        return new Family(FamilyName.TentOfThelepathy,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),
+        return new Family(FamilyName.TentOfThelepathy,new FamilyBoostTable(Arrays.asList(2,3,5,6,10,14)),
                 new FamilyPowerUpBulletAbility(),R.drawable.tentofthelepathy,R.drawable.tentofthelepathy,
                 "Tent of thelepathy");
 
@@ -83,7 +87,7 @@ public class FamiliesContainer {
 
     private Family WendyTeam()
     {
-        return new Family(FamilyName.WendyTeam,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,80)),
+        return new Family(FamilyName.WendyTeam,new FamilyBoostTable(Arrays.asList(2,4,6,8,10,14)),
                 new FamilyIncreaseResistanceAbility(),R.drawable.bigmuffin,R.drawable.bigmuffin,
                 "Wendy Team");
 
@@ -104,14 +108,20 @@ public class FamiliesContainer {
 
     private Family Ramirez()
     {/*może być kopią umiejętności drugiej rodziny z lepszą/gorszą tabelką*/
-        return new Family(FamilyName.Ramirez,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,120)),
+        return new Family(FamilyName.Ramirez,new FamilyBoostTable(Arrays.asList(20,40,60,80,160,320)),
                 new FamilyHealAbility(),R.drawable.soos,R.drawable.soos,
                 "Ramirez");
     }
 
     private Family Scientist(){
-        return new Family(FamilyName.Scientists,new FamilyBoostTable(Arrays.asList(10,20,30,40,50,120)),
-                new FamilyHealAbility(),R.drawable.mcgucket,R.drawable.mcgucket,
+        return new Family(FamilyName.Scientists,new FamilyBoostTable(Arrays.asList(3,6,10,20,25,35)),
+                new FamilyAbilityTimeDecrease(),R.drawable.mcgucket,R.drawable.memorygun,
                 "Scientists");
+    }
+
+    private Family Northwerts(){
+        return new Family(FamilyName.Northwest,new FamilyBoostTable(Arrays.asList(10,30,40,100,150,250)),
+                new MoneyCollector(),R.drawable.northwestfamily,R.drawable.northwestminiature,
+                "NorthwestFamily");
     }
 }

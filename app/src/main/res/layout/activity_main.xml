@@ -64,6 +64,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/gfbutton2"
             android:onClick="showCollection"
+            android:fontFamily="@font/gravitation_falls"
             android:scaleType="fitXY"
             android:text="Collection" />
 
@@ -75,7 +76,9 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/gfbutton2"
             android:onClick="showShop"
+            android:fontFamily="@font/gravitation_falls"
             android:scaleType="fitXY"
+
             android:text="Shop" />
 
         <Button

@@ -76,6 +76,11 @@ public class EyeOnGame {
          return this.gameController.getHero();
     }
 
+    /**Niebezpieczne użycie medium dużo zmienia, użycie takiego trybu oznacza dużą dozę zaufania*/
+    public Medium getMedium(){
+        return  this.getMedium();
+    }
+
     public Context getGameContext(){
          return this.gameController.getGameFrame().getContext();
     }

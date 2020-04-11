@@ -11,7 +11,7 @@ public class Hitt {
     public Hitt(EnemySpecyfication enemySpecyficationSpecyfication, BulletSpecyfication bulletSpecyfication, int damage) {
         this.enemySpecyficationSpecyfication = enemySpecyficationSpecyfication;
         this.bulletSpecyfication = bulletSpecyfication;
-        damage = damage;
+        this.damage = damage;
     }
 
     public EnemySpecyfication getEnemySpecyficationSpecyfication() {

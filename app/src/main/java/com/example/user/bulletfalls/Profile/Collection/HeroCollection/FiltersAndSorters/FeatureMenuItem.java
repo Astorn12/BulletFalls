@@ -1,9 +1,8 @@
 package com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MasterAbility;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.MasterAbility;
 
 public class FeatureMenuItem {
 

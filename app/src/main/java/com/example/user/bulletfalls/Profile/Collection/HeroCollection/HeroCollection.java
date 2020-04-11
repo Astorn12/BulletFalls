@@ -8,7 +8,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.ColorLong;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -21,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -33,11 +31,12 @@ import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.Family;
 import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
 import com.example.user.bulletfalls.Game.Elements.Hero.HeroProfile;
 import com.example.user.bulletfalls.Game.Elements.Hero.HeroSpecyfication;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.AngelProtector;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.Breeder;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.HealerC;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MassDestructor;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.SuperShooter;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.AngelProtector;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.Breeder;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.HealerC;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.MassDestructor;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.SuperShooter;
+import com.example.user.bulletfalls.GlobalUsage.Enums.FamilyName;
 import com.example.user.bulletfalls.GlobalUsage.Supporters.RomeLettersConverter;
 import com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters.CollectionFilterComposite;
 import com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters.FamilyFilter;
@@ -56,8 +55,6 @@ import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenu;
 import com.skydoves.powermenu.PowerMenuItem;
 import com.skyline.widget.layout.RoundCornerLayout;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -85,7 +82,7 @@ public class HeroCollection extends AppCompatActivity {
     String displayMode;
 
 
-
+    TextView title;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +118,7 @@ public class HeroCollection extends AppCompatActivity {
                 filterComposite.remove(new HeroCollectionSorter(null));
 
                 displayMode=sorterMenu.getItemList().get(position).getTitle();
+                title.setText(displayMode);
                 switch(displayMode){
                     case "Default":
                         break;
@@ -192,6 +190,7 @@ public class HeroCollection extends AppCompatActivity {
             public void onItemClick(int position, FeatureMenuItem item) {
                 item.changeState();
                 featureFilter.getAdapter().notifyDataSetInvalidated();
+                title.setText("Collection");
                 if(item.isSelected()){
                     filterComposite.add(new MasterAbilityFilter(item.getMasterAbility()));
                 }
@@ -240,8 +239,10 @@ public class HeroCollection extends AppCompatActivity {
                 if(familiesMenu.getSelectedPosition()==position){
                     familiesMenu.setSelectedPosition(-1);
                 }else {
+                    FamilyName familyName=familiesContainer.getAll().get(position).getGroupName();
                     filterComposite.add(new FamilyFilter(familiesContainer.getAll().get(position).getGroupName()));
                     familiesMenu.setSelectedPosition(position);
+
                 }
                 filter();
                 familiesMenu.dismiss();

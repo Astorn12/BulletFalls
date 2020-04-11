@@ -161,6 +161,53 @@ public class HeroAbilityBulletMapper {
          robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
          habList.add(robie);
 
+         HeroAB soosgrandma= new HeroAB(HE.SOOSSGRANDMA);
+         robie.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.SUMMONLOG));
+         robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         habList.add(soosgrandma);
+
+         HeroAB prestonnorthwest= new HeroAB(HE.PRESTONNORTHWEST);
+         robie.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.SUMMONLOG));
+         robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         habList.add(prestonnorthwest);
+
+         HeroAB prestonPremium= new HeroAB(HE.PRESTONPREMIUM);
+         robie.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.SUMMONLOG));
+         robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         habList.add(prestonPremium);
+
+         HeroAB priscillaNorthwest= new HeroAB(HE.PRISCILLANORTHWEST);
+         robie.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.SUMMONLOG));
+         robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         habList.add(priscillaNorthwest);
+
+         HeroAB priscillaPremium= new HeroAB(HE.PRISCILLAPREMIUM);
+         robie.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.SUMMONLOG));
+         robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         habList.add(priscillaPremium);
+
+         HeroAB pacific= new HeroAB(HE.PACIFIC);
+         robie.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.SUMMONLOG));
+         robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         habList.add(pacific);
+
+         HeroAB gideon= new HeroAB(HE.GIDEONGLEEFUL);
+         robie.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.SUMMONLOG));
+         robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         habList.add(gideon);
+
+         HeroAB mrsgleeful= new HeroAB(HE.MRSGLEEFUL);
+         robie.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.SUMMONLOG));
+         robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         habList.add(mrsgleeful);
+
+         HeroAB budgleeful= new HeroAB(HE.BUDGLEEFUL);
+         robie.setAvaillableAbilitiesenums( Arrays.asList(AE.NOTHING,AE.SUMMONLOG));
+         robie.setAvaillableBulletsenums(Arrays.asList(BE.STANDARD));
+         habList.add(budgleeful);
+
+
+
      }
     public static boolean isEmpty()
     {

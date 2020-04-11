@@ -52,6 +52,28 @@
 
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#bebeb3"
+            android:fontFamily="@font/gravitation_falls"
+            android:gravity="center"
+            android:text="Collection"
+            android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/familylogo"
+            android:layout_width="31dp"
+            android:layout_height="37dp"
+
+            app:srcCompat="@color/black" />
+    </FrameLayout>
+
     <ScrollView
         android:id="@+id/screen"
         android:layout_width="match_parent"

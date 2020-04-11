@@ -14,7 +14,16 @@ public enum HE  {
     CANDYCHIU("Candy Chiu"),
     OLDMANMCGUCKET("Old Man McGucket"),
     MABLEWITHGRAPPLINGHOOK("Mabel with Gramppling Hook"),
-    ROBIE("Robie");
+    ROBIE("Robie"),
+    SOOSSGRANDMA("Soos's Grandma"),
+    PRESTONNORTHWEST("Preston Northwest"),
+    PRESTONPREMIUM("Preston Premium "),
+    PRISCILLANORTHWEST("Priscilla Northwest"),
+    PRISCILLAPREMIUM("Priscilla Premium "),
+    MRSGLEEFUL("Mrs. Gleeful"),
+    BUDGLEEFUL("Bud Gleeful"),
+    GIDEONGLEEFUL("Gideon Gleeful"),
+    PACIFIC("Pacific Northwest");
 
 
 

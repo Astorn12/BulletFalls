@@ -89,9 +89,9 @@ public class BulletSpecyfication extends DynamicSpecyfication implements Named, 
     }
     public BulletSpecyfication clone()
     {
-        return new BulletSpecyfication(BE.valueOf(this.name), new DynamicVS(this.imageResource,this.getHeight()) ,
+        return new BulletSpecyfication(BE.getEnumByString(this.name), new DynamicVS(this.imageResource,this.getHeight()) ,
                 new BulletPS(this.speed,this.shape,this.collisionAble,this.power,this.bulletScale),
-                new BulletAS(this.bulletMoveStrategy,this.bulletDoToCharacterStrategy),
+                new BulletAS(this.bulletMoveStrategy.clone(),this.bulletDoToCharacterStrategy),
                 new BulletCS (this.rarity,this.possesStrategy));
     }
 

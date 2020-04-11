@@ -10,15 +10,18 @@ import java.util.List;
 
 public class BoostResistance extends BoostAction {
 
-
-    public BoostResistance(ActionType type, int boost) {
+    private int boost;
+    private int bottom;
+    public BoostResistance(ActionType type, int boost,int bottom) {
         super(type, boost);
+        this.boost=boost;
+        this.bottom=bottom;
     }
 
     @Override
     public void doMagic(EyeOnGame eyeOnGame) {
 
-        eyeOnGame.getHero().getAttackDefenceFilter().boostDefence(new Resistance(2,2));
+        eyeOnGame.getHero().getAttackDefenceFilter().boostDefence(new Resistance(this.boost,this.bottom));
 
     }
 }

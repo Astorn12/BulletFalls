@@ -1,7 +1,7 @@
 package com.example.user.bulletfalls.Profile.Collection.HeroCollection.FiltersAndSorters;
 
 import com.example.user.bulletfalls.Game.Elements.Hero.HeroSpecyfication;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MasterAbility;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.MasterAbility;
 
 public class MasterAbilityFilter extends SmartFilter<HeroSpecyfication> {
 

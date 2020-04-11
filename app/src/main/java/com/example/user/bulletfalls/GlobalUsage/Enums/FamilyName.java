@@ -11,7 +11,8 @@ public enum FamilyName {
     MabelTeam(Color.rgb(247,185,233)),
     Gnomes(Color.rgb(126,202,155)),
     Ramirez(Color.rgb(125,125,125)),
-    Scientists(Color.rgb(125,125,125));
+    Scientists(Color.rgb(125,125,125)),
+    Northwest(Color.rgb(255,215,0));
 
     private final int value;
     FamilyName(int black) {

@@ -58,7 +58,8 @@ public class DatabaseAdministrator extends SQLiteOpenHelper {
         db.execSQL("create table OverallStatistics(" +
                 "id integer primary key autoincrement,"+
                 "name text," +
-                "amount integer);");
+                "amount integer,"+
+                "token integer);");
 
     }
 
@@ -160,10 +161,12 @@ public class DatabaseAdministrator extends SQLiteOpenHelper {
         db.delete("Currencies",null,null);
         db.delete("Levels",null,null);
         db.delete("Profile",null,null);
+        db.delete("OverallStatistics",null,null);
         db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '" +"Levels" + "'");
         db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '" +"Profile" + "'");
         db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '" +"Currencies" + "'");
         db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '" +"Stock" + "'");
+        db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '" +"OverallStatistics" + "'");
         db.close();
     }
 

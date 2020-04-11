@@ -2,7 +2,7 @@ package com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Active;
 
 import com.example.user.bulletfalls.Game.Elements.BulletManiputatorsPackage.AttackDefenceFilter;
 import com.example.user.bulletfalls.Game.Elements.Overal.AppearActionStrategy.AppearAction;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MasterAbility;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.MasterAbility;
 import com.example.user.bulletfalls.GlobalUsage.Enums.CharacterPositioning;
 
 public class HeroAS extends CharacterAS {

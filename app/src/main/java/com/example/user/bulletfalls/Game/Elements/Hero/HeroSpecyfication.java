@@ -13,11 +13,11 @@ import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Active.HeroA
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Collection.HeroCS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Passive.HeroPS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.View.CharacterVS;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MasterAbility;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.MasterAbility;
 import com.example.user.bulletfalls.Game.Elements.Ability.AbilitiesBar;
 import com.example.user.bulletfalls.GlobalUsage.Enums.AE;
+import com.example.user.bulletfalls.GlobalUsage.Enums.HE;
 import com.example.user.bulletfalls.GlobalUsage.Interfaces.PossesAble;
-import com.example.user.bulletfalls.Profile.UserProfile;
 import com.example.user.bulletfalls.Shop.PossesStrategyPackage.PossesStrategy;
 import com.example.user.bulletfalls.Storage.Sets.AbilitySet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,6 +48,9 @@ public class HeroSpecyfication extends CharacterSpecyfication implements PossesA
         this.masterAbility =heroAS.getIcalss();
         this.possesStrategy=heroCS.getPossesStrategy();
         this.tier=heroCS.getTier();
+    }
+    public HeroSpecyfication(HE name, CharacterVS characterVS, HeroPS heroPS, HeroAS heroAS, HeroCS heroCS){
+        this(name.getValue() ,  characterVS,  heroPS,  heroAS,  heroCS);
     }
 
     private AbilitiesBar getBeginAbilitySet() {

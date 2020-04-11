@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.GlobalUsage.Interfaces.PossesAble;
+import com.example.user.bulletfalls.Missions.Missionable;
+import com.example.user.bulletfalls.Missions.Requirements.OveralStatisticChecker;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
 import com.example.user.bulletfalls.Storage.Data.StockRepository;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
@@ -31,7 +33,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class UserProfile {
+public class UserProfile implements Missionable {
 
     String name;
     int resource;
@@ -325,5 +327,10 @@ public class UserProfile {
         {
             earn(ar.get(i).getLeft(),ar.get(i).getRight());
         }
+    }
+
+    @Override
+    public int acceptChecking(OveralStatisticChecker checker,int i) {
+        return checker.check(this,i);
     }
 }

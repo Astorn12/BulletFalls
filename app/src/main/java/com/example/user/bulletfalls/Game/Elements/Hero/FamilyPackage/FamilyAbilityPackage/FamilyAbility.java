@@ -14,4 +14,6 @@ public interface FamilyAbility {
     String getFootnote();
     @JsonIgnore
     String getPrefix();
+    @JsonIgnore
+    String getDescription(int boost);
 }

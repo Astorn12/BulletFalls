@@ -17,8 +17,7 @@ public class FamilyAbilityTimeDecrease implements FamilyAbility {
     @Override
     public void describe(LinearLayout linearLayout, int boost) {
         TextView textView= new TextView(linearLayout.getContext());
-        int bottom=1;
-        textView.setText("Umiejętność grupy zmniejsza czas odnawiani umiejętności o "+boost+"%");
+        textView.setText("Zmniejsza czas odnawiani umiejętności o "+boost+"%");
         SupporterBackground supporterBackground= new SupporterBackground();
         linearLayout.addView(textView);
         supporterBackground.setChildViewBackground(linearLayout);
@@ -32,5 +31,10 @@ public class FamilyAbilityTimeDecrease implements FamilyAbility {
     @Override
     public String getPrefix() {
         return "-";
+    }
+
+    @Override
+    public String getDescription(int boost) {
+        return "odnowienie umiejętności -"+boost+"%";
     }
 }

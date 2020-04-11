@@ -26,6 +26,7 @@
     </LinearLayout>
     </HorizontalScrollView>
 
+
     <FrameLayout
         android:id="@+id/shopShelf"
         android:layout_width="match_parent"

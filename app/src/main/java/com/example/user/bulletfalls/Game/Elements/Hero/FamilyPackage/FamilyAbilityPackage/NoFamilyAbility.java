@@ -7,11 +7,11 @@ import com.example.user.bulletfalls.Game.ActionService.ActionType.ActionType;
 import com.example.user.bulletfalls.Game.ActionService.Actions.EmptyAction;
 
 public class NoFamilyAbility implements FamilyAbility {
+
     @Override
-    public Action boostGame(int boost) {
+    public Action boostGame(int o) {
         return new EmptyAction();
     }
-
     @Override
     public void describe(LinearLayout linearLayout, int boost) {
 
@@ -19,11 +19,16 @@ public class NoFamilyAbility implements FamilyAbility {
 
     @Override
     public String getFootnote() {
-        return null;
+        return " ";
     }
 
     @Override
     public String getPrefix() {
-        return null;
+        return " ";
+    }
+
+    @Override
+    public String getDescription(int boost) {
+        return "brak akcji";
     }
 }

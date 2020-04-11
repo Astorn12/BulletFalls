@@ -72,7 +72,8 @@ public class GameResult extends AppCompatActivity {
         if (this.bounty.getItemsList().size()==0)
         {
             ImageView blindEye= new ImageView(this);
-            blindEye.setImageResource(R.drawable.blindeye);
+           // blindEye.setImageResource(R.drawable.blindeye);
+            Glide.with(this).load(R.drawable.blindeye);
             items.addView(blindEye);
         }
         else
@@ -80,7 +81,8 @@ public class GameResult extends AppCompatActivity {
             {
                 LinearLayout horizontal= new LinearLayout(this);
                 ImageView currencyView= new ImageView(this);
-                currencyView.setImageResource(this.bounty.getItemsList().get(i).left.getResource());
+               // currencyView.setImageResource(this.bounty.getItemsList().get(i).left.getResource());
+                Glide.with(this).load(this.bounty.getItemsList().get(i).left.getResource()).into(currencyView);
                 TextView amount= new TextView(this);
                 amount.setText(this.bounty.getItemsList().getList().get(i).right+"");
                 horizontal.setOrientation(LinearLayout.HORIZONTAL);
@@ -104,7 +106,8 @@ public class GameResult extends AppCompatActivity {
         l1.setOrientation(LinearLayout.HORIZONTAL);
 
         final ImageView fightingdipper=new ImageView(this);
-        fightingdipper.setImageResource(R.drawable.dipperfighting);
+        //fightingdipper.setImageResource(R.drawable.dipperfighting);
+        Glide.with(this).load(R.drawable.dipperfighting).into(fightingdipper);
         fightingdipper.setLayoutParams(new LinearLayout.LayoutParams(-1,-2,1));
         fightingdipper.post(new Runnable() {
             @Override
@@ -131,7 +134,8 @@ public class GameResult extends AppCompatActivity {
         l2.setGravity(Gravity.CENTER);
 
         final ImageView dipandmebshootinggnome=new ImageView(this);
-        dipandmebshootinggnome.setImageResource(R.drawable.dipandmebshootedgnome);
+        //dipandmebshootinggnome.setImageResource(R.drawable.dipandmebshootedgnome);
+        Glide.with(this).load(R.drawable.dipandmebshootedgnome).into(dipandmebshootinggnome);
         dipandmebshootinggnome.setLayoutParams(new LinearLayout.LayoutParams(-1,-2,1));
         dipandmebshootinggnome.post(new Runnable() {
             @Override
@@ -155,7 +159,8 @@ public class GameResult extends AppCompatActivity {
         l3.setOrientation(LinearLayout.HORIZONTAL);
         l3.setGravity(Gravity.CENTER);
         final ImageView demagedDipper=new ImageView(this);
-        demagedDipper.setImageResource(R.drawable.demmageddipper);
+        //demagedDipper.setImageResource(R.drawable.demmageddipper);
+        Glide.with(this).load(R.drawable.demmageddipper).into(demagedDipper);
         demagedDipper.setLayoutParams(new LinearLayout.LayoutParams(-1,-2,1));
         demagedDipper.post(new Runnable() {
             @Override

@@ -145,7 +145,7 @@ public class AbilitySet implements ISet<AbilitySpecyfication> {
                 new MoneyPossesStrategy("Mystery Coin",10));
         AbilitySpecyfication summonLog= new AbilitySpecyfication(AE.SUMMONLOG,R.drawable.log,10000,new TimeChangeBullet(BulletSet.getInstance().getBullet(BE.LOG),5),
               Rarity.UNCOMMON,false,new MoneyPossesStrategy("Mystery Coin",10));
-        AbilitySpecyfication armchairthrow= new AbilitySpecyfication(AE.ARMCHAIRTHROW,R.drawable.grendaamchair,10000,new SuperShoot(BulletSet.getInstance().getBullet(BE.GRENDAARMCHAIR)),
+        AbilitySpecyfication armchairthrow= new AbilitySpecyfication(AE.ARMCHAIRTHROW,R.drawable.grendaamchair,5000,new SuperShoot(BulletSet.getInstance().getBullet(BE.GRENDAARMCHAIR).clone()),
                 Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10));
         AbilitySpecyfication firstJurnal= new AbilitySpecyfication(AE.FIRSTJURNAL,R.drawable.jurnal1,10000,new ChangeBullet(BulletSet.getInstance().getBullet(BE.FIRSTJURNAL)), Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10));
         WaitAbilitySpecyfication secondJurnal= new WaitAbilitySpecyfication(AE.SECONDJURNAL,R.drawable.jurnal2,0,new ChangeBullet(BulletSet.getInstance().getBullet(BE.SECONDJURNAL)),

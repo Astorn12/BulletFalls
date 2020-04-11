@@ -18,9 +18,6 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
         this.mChannel=mChannel;
         this.mManager=mManager;
     }
-    {
-
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {

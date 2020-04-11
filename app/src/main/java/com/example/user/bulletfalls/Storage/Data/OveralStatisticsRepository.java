@@ -4,12 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.example.user.bulletfalls.OveralStatisticsAndCollectionsMissions.OveralStatistick;
-import com.example.user.bulletfalls.Profile.Level;
+import com.example.user.bulletfalls.Missions.Requirements.OveralStatistick;
 import com.example.user.bulletfalls.Storage.DatabaseAdministrator;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class OveralStatisticsRepository extends Repository<OveralStatistick> {
 
@@ -46,6 +42,11 @@ public class OveralStatisticsRepository extends Repository<OveralStatistick> {
         Cursor cursor=da.getCursor(getTableName(),"name",name);
         cursor.moveToFirst();
         return createFromCursor(cursor);
+    }
+
+    public void clear(){
+        DatabaseAdministrator da= new DatabaseAdministrator(context);
+
     }
 
     @Override
@@ -90,4 +91,6 @@ public class OveralStatisticsRepository extends Repository<OveralStatistick> {
     public String getTableName() {
         return "OverallStatistics";
     }
+
+
 }

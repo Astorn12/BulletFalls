@@ -24,6 +24,7 @@ import com.example.user.bulletfalls.Game.Elements.Hero.FamilyPackage.FamiliesCon
 import com.example.user.bulletfalls.Game.Elements.Hero.Hero;
 import com.example.user.bulletfalls.Game.Elements.Beast.Beast;
 import com.example.user.bulletfalls.Game.Elements.Items.Item;
+import com.example.user.bulletfalls.Missions.MissionManager;
 import com.example.user.bulletfalls.Profile.UserProfile;
 import com.example.user.bulletfalls.R;
 import com.example.user.bulletfalls.Storage.Sets.GameSet;
@@ -75,6 +76,7 @@ public class GameController {
     GameSketch gameSketch;
     ActionMedium actionMedium;
     EyeOnGame eyeOnGame;
+
 
     public GameController(Activity activity,String gameSketchName) {
         this.eyeOnGame= new EyeOnGame(this);
@@ -395,6 +397,7 @@ public class GameController {
         this.gameSketch.getBounty().fillBounty(medium, medium.getBounty());
         UserProfile userProfile = new UserProfile(gameActivity);
         userProfile.makeOfBounty(medium.getBounty());
+        collectMissionsAndStatistics();
 
         GameSummary.getInstance().setSummary(medium, this.hero.getSpecyfication(), "Nowa gra", medium.getBounty());
 
@@ -406,9 +409,15 @@ public class GameController {
         gameActivity.finish();
     }
 
+    private void collectMissionsAndStatistics() {
+        MissionManager missionManager= new MissionManager(this.gameActivity);
+        missionManager.checkMissions(this.medium);
+    }
+
+
     private void cancelAllAbilityThreads() {
         for (Ability av : this.abilities) {
-            av.getAbilitySpecyfication().cancelThread();
+            av.cancelThread();
         }
     }
 
@@ -535,12 +544,31 @@ public class GameController {
     }
 
     public void abilityListining() {
-        this.abilities.get(0).setOnClickListener(new View.OnClickListener() {
+
+
+        for(Ability ability : this.abilities){
+            ability.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(ability.isReady()) {
+                    ability.addAction(getEyeOnGame());
+
+                        medium.abilityUse(ability.getAbilitySpecyfication());
+                    }
+                }
+            });
+        }
+
+
+
+
+      /*  this.abilities.get(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hero.getAbilities().getFirstAbility().isReady() && hero.getAbilities().getFirstAbility().isActive()) {
                     hero.getFirstAbility().addAction(getEyeOnGame());
                     medium.abilityUse(hero.getFirstAbility());
+                   // hero.getFirstAbility().activate();
                 }
             }
         });
@@ -561,7 +589,7 @@ public class GameController {
                     medium.abilityUse(hero.getThirdAbility());
                 }
             }
-        });
+        });*/
     }
 
 

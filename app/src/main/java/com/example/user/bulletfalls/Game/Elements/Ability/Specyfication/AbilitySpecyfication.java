@@ -39,17 +39,10 @@ import static java.lang.Thread.sleep;
 public class AbilitySpecyfication extends DisplayedSpecyfication implements  Comparable, PossesAble,RarityIndicator {
 
 
-    private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
-    private static final int CORE_POOL_SIZE =    CPU_COUNT + 1;
-    private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;
-    private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<Runnable>(128);
-    //GameController controller;
-
     int renewalTime;
-    boolean ready;
+
     protected boolean active=true;
-    @JsonIgnore
-    int renewalUpdateProgress;
+
     Rarity rarity;
 
 
@@ -57,14 +50,14 @@ public class AbilitySpecyfication extends DisplayedSpecyfication implements  Com
     boolean unique;
     PossesStrategy possesStrategy;
     StartAction startAction;
-    AbilityRestorTask task;
+
 
     public AbilitySpecyfication(String name, int imageResource, int renewalTime, StartAction startAction, Rarity rarity, boolean unique, PossesStrategy possesStrategy) {
         super(name,imageResource);
 
         this.startAction = startAction;
-        this.ready=true;
-        this.renewalUpdateProgress=100;
+
+
 
         this.name=name;
         this.rarity=rarity;
@@ -80,8 +73,8 @@ public class AbilitySpecyfication extends DisplayedSpecyfication implements  Com
 
     public AbilitySpecyfication()
     {
-        this.ready=true;
-        this.renewalUpdateProgress=100;
+
+
     }
 
    // protected void activate()
@@ -91,20 +84,13 @@ public class AbilitySpecyfication extends DisplayedSpecyfication implements  Com
 
     public void action(GameController controller)
     {
-    addAction(controller.getEyeOnGame());
+        addAction(controller.getEyeOnGame());
     }
     public void addAction(EyeOnGame eyeOnGame)
     {
-        if(isReady()) {
-            eyeOnGame.addAction(startAction.prepareAction(eyeOnGame));
-            if (renewalTime > 0) {
-                this.setReady(false);
-                AbilityRestorTask art=new AbilityRestorTask();
-                this.task=art;
-                art.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-            }
-        }
+            eyeOnGame.addAction(startAction.prepareAction(eyeOnGame));
+
 
 
     }
@@ -125,28 +111,9 @@ public class AbilitySpecyfication extends DisplayedSpecyfication implements  Com
     public void setStartAction(StartAction startAction) {
         this.startAction = startAction;
     }
-    public boolean isReady() {
-        return ready;
-    }
-    public void setReady(boolean ready) {
-        this.ready = ready;
-    }
 
-    public int getRenewalUpdateProgress() {
-        return renewalUpdateProgress;
-    }
 
-    public void setRenewalUpdateProgress(int renewalUpdateProgress) {
-        if(renewalUpdateProgress>=0&&renewalUpdateProgress<=100) {
-            this.renewalUpdateProgress = renewalUpdateProgress;
-        }
-        }
 
-    public void updateRenewalProgress(int alfa)
-    {
-     setRenewalUpdateProgress(alfa);
-       // executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
 
 
     @Override
@@ -156,43 +123,9 @@ public class AbilitySpecyfication extends DisplayedSpecyfication implements  Com
         return ((AbilitySpecyfication)a).rarity.ordinal() > this.rarity.ordinal()? -1:1 ;
     }
 
-    public void cancelThread() {
-        if(task!=null)
-        this.task.cancel(true);
-
-    }
-
-    public class AbilityRestorTask extends AsyncTask<Integer,Integer,Boolean> {
-        @Override
-        protected Boolean doInBackground(Integer... integers) {
-            //for(int i=0;i<100;i++)
-           // {
-                try {
-                    for(int i=0;i<100;i++) {
-                        sleep(renewalTime/100);
-                        publishProgress(i);
-                        Log.d("AsyncTask",i+"");
-
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-           // }
-            return null;
-        }
-        @Override
-        protected void onProgressUpdate(Integer... progress) {
-
-            updateRenewalProgress(progress[0]);
-
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-           setReady(true);
-        }
 
 
-    }
+
 
 
     public String getName() {

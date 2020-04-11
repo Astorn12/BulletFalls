@@ -14,7 +14,7 @@ import com.example.user.bulletfalls.Game.Elements.Beast.Beast;
 import com.example.user.bulletfalls.Game.Elements.Helper.Character;
 import com.example.user.bulletfalls.Game.Elements.Helper.Summoner;
 import com.example.user.bulletfalls.Game.Elements.Weapon.Weapon;
-import com.example.user.bulletfalls.Game.GameBiznesFunctions.Classes.MasterAbility;
+import com.example.user.bulletfalls.Game.GameBiznesFunctions.SuperPowers.MasterAbility;
 import com.example.user.bulletfalls.Game.Management.EyeOnGame;
 import com.example.user.bulletfalls.Game.Activities.Game;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;

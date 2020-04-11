@@ -9,22 +9,50 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.example.user.bulletfalls.Game.Elements.Ability.ObserverInterfaces.AbilityProgressObserved;
+import com.example.user.bulletfalls.Game.Elements.Ability.ObserverInterfaces.AbilityProgressObserver;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
+import com.example.user.bulletfalls.Game.Management.EyeOnGame;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+import static java.lang.Thread.sleep;
 
 /**Klasa podstawowa dla wszystkich kulek herosów, przeciwników i besti   Bullets and Characters*/
 public class Ability extends androidx.appcompat.widget.AppCompatImageView {
 
+    private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
+    private static final int CORE_POOL_SIZE = CPU_COUNT + 1;
+    private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;
+    private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<Runnable>(128);
+
+    @JsonIgnore
+    int renewalUpdateProgress;
+
+    boolean ready;
+    AbilityRestorTask task;
+
     AbilitySpecyfication abilitySpecyfication;
+
+
     public Ability(Context context, AbilitySpecyfication abilitySpecyfication) {
         super(context);
         this.abilitySpecyfication = abilitySpecyfication;
         //this.setImageResource(abilitySpecyfication.getImageResources());
         Glide.with(context).load(abilitySpecyfication.getImage()).into(this);
-
+        this.ready=true;
         this.setBackgroundColor(Color.WHITE);
+        this.renewalUpdateProgress=100;
+
         checkActivation();
     }
 
@@ -99,6 +127,13 @@ public class Ability extends androidx.appcompat.widget.AppCompatImageView {
         });
     }
 
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
 
     public void deactivate()
     {
@@ -106,9 +141,85 @@ public class Ability extends androidx.appcompat.widget.AppCompatImageView {
         this.setColorFilter(shadow);
         //this.setBackgroundColor(shadow);
     }
+    public void cancelThread() {
+        if(task!=null)
+            this.task.cancel(true);
+
+    }
 
     public AbilitySpecyfication getSpecyfication(){
         return this.abilitySpecyfication;
     }
 
+    public void addAction(EyeOnGame eyeOnGame) {
+        if(this.ready) {
+            this.getAbilitySpecyfication().addAction(eyeOnGame);
+
+            if (abilitySpecyfication.getRenewalTime() > 0) {
+                this.setReady(false);
+                AbilityRestorTask art=new AbilityRestorTask();
+                //this.task=art;
+                art.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+
+    }
+
+    public void setRenewalUpdateProgress(int renewalUpdateProgress) {
+        if(renewalUpdateProgress>=0&&renewalUpdateProgress<=100) {
+            this.renewalUpdateProgress = renewalUpdateProgress;
+        }
+    }
+
+    public void updateRenewalProgress(int alfa)
+    {
+        setRenewalUpdateProgress(alfa);
+        update(this.renewalUpdateProgress);
+        // executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public void update(int progress) {
+
+        movingBackground(progress);
+
+    }
+
+
+
+
+
+
+
+
+    public class AbilityRestorTask extends AsyncTask<Integer,Integer,Boolean> {
+        @Override
+        protected Boolean doInBackground(Integer... integers) {
+            //for(int i=0;i<100;i++)
+            // {
+            try {
+                for(int i=0;i<100;i++) {
+                    sleep(abilitySpecyfication.getRenewalTime()/100);
+                    publishProgress(i);
+                    Log.d("AsyncTask",i+"");
+
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            // }
+            return null;
+        }
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+
+            updateRenewalProgress(progress[0]);
+
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            setReady(true);
+        }
+
+
+    }
 }

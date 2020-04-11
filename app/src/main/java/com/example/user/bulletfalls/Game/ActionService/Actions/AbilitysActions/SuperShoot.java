@@ -16,6 +16,6 @@ public class SuperShoot extends Action {
 
     @Override
     public void doMagic(EyeOnGame eyeOnGame) {
-        eyeOnGame.getHero().getAttackDefenceFilter().boostAttack(new Clip(1,this.bulletSpecyfication));
+        eyeOnGame.getHero().getAttackDefenceFilter().boostAttack(new Clip(1,this.bulletSpecyfication.clone()));
     }
 }

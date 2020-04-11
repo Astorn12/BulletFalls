@@ -14,6 +14,8 @@ public class FamilyIncreaseLifeAbility implements FamilyAbility {
         return new BoostHeroLife(ActionTypeBI.BEGIN,boost);
     }
 
+
+
     @Override
     public void describe(LinearLayout linearLayout, int boost) {
         TextView textView= new TextView(linearLayout.getContext());
@@ -32,5 +34,10 @@ public class FamilyIncreaseLifeAbility implements FamilyAbility {
     @Override
     public String getPrefix() {
         return "+";
+    }
+
+    @Override
+    public String getDescription(int boost) {
+        return  getPrefix()+boost+" hero "+getFootnote();
     }
 }

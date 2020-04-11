@@ -2,35 +2,23 @@
 package com.example.user.bulletfalls.Activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.example.user.bulletfalls.Activities.GameListActivity.GamesList;
-import com.example.user.bulletfalls.OveralStatisticsAndCollectionsMissions.MissionManager;
-import com.example.user.bulletfalls.OveralStatisticsAndCollectionsMissions.MissionsActivity;
+import com.example.user.bulletfalls.Missions.MissionManager;
+import com.example.user.bulletfalls.Missions.MissionsActivity;
 import com.example.user.bulletfalls.Profile.Collection.HeroCollection.HeroCollection;
 import com.example.user.bulletfalls.Profile.Collection.UserCollection;
-import com.example.user.bulletfalls.Profile.LevelBar;
 import com.example.user.bulletfalls.Profile.UserProfile;
+import com.example.user.bulletfalls.Storage.Data.OveralStatisticsRepository;
 import com.example.user.bulletfalls.Storage.DatabaseAdministrator;
 import com.example.user.bulletfalls.Game.Management.ArchivCurrencyContainer;
 import com.example.user.bulletfalls.Storage.Sets.AbilitySet;
@@ -63,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this.headLine =(LinearLayout) this.findViewById(R.id.mainwallet);
+
 
         ArchivCurrencyContainer archivCurrencyContainer= new ArchivCurrencyContainer();
         archivCurrencyContainer.add(new Currency("Mystery Coins"),5);
@@ -87,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 HeroesSet.getInstance().clear();
                 BulletSet.getInstance().clear();
                 AbilitySet.getInstance().clear();
+
             if (BulletSet.getInstance().isEmpty()) {
                 BulletSet.getInstance().AddToDatabaseTest(this);
                 BulletSet.getInstance().save(this);
@@ -123,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
         EnemySet.getInstance().load(this);
 
 
-        MissionManager missionManager= new MissionManager();
-        missionManager.updateSavingOfTheOveralStatisctics(this);
+        MissionManager missionManager= new MissionManager(this);
+        missionManager.updateSavingOfTheOveralStatisctics();
         //ładowanie bazy danych SQLite
 
         //this.deleteDatabase("profileDB.db");

@@ -34,4 +34,9 @@ public class FamilyPowerUpBulletAbility implements FamilyAbility {
     public String getPrefix() {
         return "+";
     }
+
+    @Override
+    public String getDescription(int boost) {
+        return "Siła kulek +"+boost;
+    }
 }
