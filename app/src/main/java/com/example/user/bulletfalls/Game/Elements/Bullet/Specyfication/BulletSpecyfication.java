@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.user.bulletfalls.Game.Elements.Bullet.Strategy.RotationStrategies.WithoutRotation;
+import com.example.user.bulletfalls.Game.Elements.Bullet.Strategy.RotationStrategies.IRotationStrategy;
 import com.example.user.bulletfalls.Game.Elements.Helper.RarityIndicator;
 import com.example.user.bulletfalls.Game.Elements.Helper.Sizers.BulletScale;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Active.BulletAS;
@@ -48,12 +50,16 @@ public class BulletSpecyfication extends DynamicSpecyfication implements Named, 
     /**ACTIVE STATISTICS*/
     BulletMoveStrategy bulletMoveStrategy;
     BulletDoToCharacterStrategy bulletDoToCharacterStrategy;
-
+    IRotationStrategy rotationStrategy;
     /**COLLECTION STATISTICS*/
     Rarity rarity;
     PossesStrategy possesStrategy;
 
     public BulletSpecyfication(BE bulletName, DynamicVS dynamicVS, BulletPS bulletPS, BulletAS bulletAS, BulletCS bulletCS) {
+        this(bulletName, dynamicVS, bulletPS,bulletAS,bulletCS, new WithoutRotation());
+
+    }
+    public BulletSpecyfication(BE bulletName, DynamicVS dynamicVS, BulletPS bulletPS, BulletAS bulletAS, BulletCS bulletCS,IRotationStrategy rotationStrategy) {
         super(bulletName.getValue(), dynamicVS, bulletPS);
 
         this.collisionAble=bulletPS.isCollisionAble();
@@ -66,7 +72,7 @@ public class BulletSpecyfication extends DynamicSpecyfication implements Named, 
 
         this.rarity=bulletCS.getRarity();
         this.possesStrategy=bulletCS.getPossesStrategy();
-
+        this.rotationStrategy=rotationStrategy;
     }
 
     private BulletSpecyfication(){
@@ -92,7 +98,7 @@ public class BulletSpecyfication extends DynamicSpecyfication implements Named, 
         return new BulletSpecyfication(BE.getEnumByString(this.name), new DynamicVS(this.imageResource,this.getHeight()) ,
                 new BulletPS(this.speed,this.shape,this.collisionAble,this.power,this.bulletScale),
                 new BulletAS(this.bulletMoveStrategy.clone(),this.bulletDoToCharacterStrategy),
-                new BulletCS (this.rarity,this.possesStrategy));
+                new BulletCS (this.rarity,this.possesStrategy),this.getRotationStrategy());
     }
 
 
@@ -216,6 +222,12 @@ public class BulletSpecyfication extends DynamicSpecyfication implements Named, 
         this.bulletScale = bulletScale;
     }
 
+    public IRotationStrategy getRotationStrategy() {
+        return rotationStrategy;
+    }
 
+    public void setRotationStrategy(IRotationStrategy rotationStrategy) {
+        this.rotationStrategy = rotationStrategy;
+    }
 
 }

@@ -29,7 +29,8 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
         @JsonSubTypes.Type(value=   SummonFromList.class, name = "summonfromlist"),
         @JsonSubTypes.Type(value=   ShootBooster.class, name = "shootbooster"),
         @JsonSubTypes.Type(value=   SummonStrategy.class, name = "summonstrategy"),
-        @JsonSubTypes.Type(value=   ProtectedBall.class, name = "protectedball")
+        @JsonSubTypes.Type(value=   ProtectedBall.class, name = "protectedball"),
+        @JsonSubTypes.Type(value=   AnimatedStartAction.class, name = "animatedstartaction")
 
 })
 public interface StartAction {

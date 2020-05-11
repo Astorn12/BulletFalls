@@ -33,6 +33,6 @@ public class MoneyCollector implements FamilyAbility {
 
     @Override
     public String getDescription(int boost) {
-        return "Gold *"+boost;
+        return "Gold "+boost+getFootnote();
     }
 }

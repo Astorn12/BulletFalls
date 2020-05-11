@@ -2,6 +2,12 @@ package com.example.user.bulletfalls.Storage.Sets;
 
 import android.content.Context;
 
+import com.example.user.bulletfalls.Game.ActionService.Actions.ActionsAnimations.AnimationAndActionSimultaneously;
+import com.example.user.bulletfalls.Game.ActionService.Actions.ActionsAnimations.AnimationBeforeAction;
+import com.example.user.bulletfalls.Game.ActionService.Actions.ActionsAnimations.HeroAnimation;
+import com.example.user.bulletfalls.Game.ActionService.Actions.ActionsAnimations.HeroDance;
+import com.example.user.bulletfalls.Game.ActionService.Actions.AnimationAction;
+import com.example.user.bulletfalls.Game.Elements.Ability.Strategy.AnimatedStartAction;
 import com.example.user.bulletfalls.Game.Elements.Ability.Strategy.ProtectedBall;
 import com.example.user.bulletfalls.Game.Elements.BulletManiputatorsPackage.AttackDefenceFilter;
 import com.example.user.bulletfalls.GlobalUsage.Enums.AE;
@@ -9,6 +15,7 @@ import com.example.user.bulletfalls.GlobalUsage.Enums.BE;
 import com.example.user.bulletfalls.Game.Elements.Beast.BeastSpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.WaitAbilitySpecyfication;
 import com.example.user.bulletfalls.Game.Elements.Ability.Specyfication.AbilitySpecyfication;
+import com.example.user.bulletfalls.GlobalUsage.Enums.HE;
 import com.example.user.bulletfalls.GlobalUsage.Enums.Permission;
 import com.example.user.bulletfalls.GlobalUsage.Enums.Rarity;
 import com.example.user.bulletfalls.Game.Elements.Ability.Strategy.ShootBooster;
@@ -39,6 +46,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -145,7 +153,10 @@ public class AbilitySet implements ISet<AbilitySpecyfication> {
                 new MoneyPossesStrategy("Mystery Coin",10));
         AbilitySpecyfication summonLog= new AbilitySpecyfication(AE.SUMMONLOG,R.drawable.log,10000,new TimeChangeBullet(BulletSet.getInstance().getBullet(BE.LOG),5),
               Rarity.UNCOMMON,false,new MoneyPossesStrategy("Mystery Coin",10));
-        AbilitySpecyfication armchairthrow= new AbilitySpecyfication(AE.ARMCHAIRTHROW,R.drawable.grendaamchair,5000,new SuperShoot(BulletSet.getInstance().getBullet(BE.GRENDAARMCHAIR).clone()),
+        AbilitySpecyfication armchairthrow= new AbilitySpecyfication(AE.ARMCHAIRTHROW,R.drawable.grendaamchair,5000,
+
+                new AnimatedStartAction(new SuperShoot(BulletSet.getInstance().getBullet(BE.GRENDAARMCHAIR).clone()),
+                        new HeroAnimation(new HeroDance(HE.GRENDA,R.drawable.grenda_shoot_animation,8)),new AnimationBeforeAction()),
                 Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10));
         AbilitySpecyfication firstJurnal= new AbilitySpecyfication(AE.FIRSTJURNAL,R.drawable.jurnal1,10000,new ChangeBullet(BulletSet.getInstance().getBullet(BE.FIRSTJURNAL)), Rarity.LEGENDARY,true,new MoneyPossesStrategy("Mystery Coin",10));
         WaitAbilitySpecyfication secondJurnal= new WaitAbilitySpecyfication(AE.SECONDJURNAL,R.drawable.jurnal2,0,new ChangeBullet(BulletSet.getInstance().getBullet(BE.SECONDJURNAL)),
@@ -157,7 +168,11 @@ public class AbilitySet implements ISet<AbilitySpecyfication> {
 
 
         List<BeastSpecyfication> dinos= BeastsSet.getInstance().getChosen("dino1","dino2","dino3","dino4");
-        AbilitySpecyfication dinoSummon= new AbilitySpecyfication(AE.DINOSUMMON,R.drawable.dinosinresin,10000,new RandomSummon(dinos),Rarity.STARTING,false,
+        AbilitySpecyfication dinoSummon= new AbilitySpecyfication(AE.DINOSUMMON,R.drawable.dinosinresin,10000,
+                new AnimatedStartAction( new RandomSummon(dinos), new HeroAnimation(new HeroDance(HE.QUENTINTREBLEY,R.drawable.quentintrembley_empty_animation,1)),new AnimationBeforeAction()),
+
+
+                Rarity.STARTING,false,
                 new MoneyPossesStrategy("Mystery Coin",10));
 
         AbilitySpecyfication firstsummoning= new AbilitySpecyfication(AE.FIRSTSUMMON,R.drawable.goat,10000,new SummonStrategy(new Single("Gompers"),new AlwaysOne(),new AllOfTheme()),Rarity.STARTING,false,

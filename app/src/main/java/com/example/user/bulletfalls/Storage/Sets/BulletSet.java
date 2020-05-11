@@ -2,6 +2,9 @@ package com.example.user.bulletfalls.Storage.Sets;
 
 import android.content.Context;
 
+import com.example.user.bulletfalls.Game.Elements.Bullet.Strategy.BulletDoToCharacterStrategyPackage.Poison;
+import com.example.user.bulletfalls.Game.Elements.Bullet.Strategy.BulletDoToCharacterStrategyPackage.RotationCrit;
+import com.example.user.bulletfalls.Game.Elements.Bullet.Strategy.RotationStrategies.Rotation;
 import com.example.user.bulletfalls.Game.Elements.Helper.Sizers.BulletScale;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Active.BulletAS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Collection.BulletCS;
@@ -102,6 +105,7 @@ public class BulletSet implements ISet<BulletSpecyfication>{
     }
 
     public  BulletSpecyfication getBullet(BE be) {
+
         return getBullet(be.getValue());
     }
 
@@ -208,12 +212,21 @@ public class BulletSet implements ISet<BulletSpecyfication>{
                 new BulletAS(new Horizontal(),new Disarm(2000)),
                 new BulletCS(Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10)));
 
+        BulletSpecyfication wendyAxe= new BulletSpecyfication(BE.WENDYAXE,
+                new DynamicVS(R.drawable.wendyaxe,100),
+                new BulletPS(20,Shape.CIRCLE,false,20,BulletScale.M),
+                new BulletAS(new Horizontal(),new RotationCrit()),
+                new BulletCS(Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10)), new Rotation(15));
+
+        BulletSpecyfication candyTulip= new BulletSpecyfication(BE.CANDYTYLIP,
+                new DynamicVS(R.drawable.tulipancandybullet,100),
+                new BulletPS(25,Shape.CIRCLE,true,20,BulletScale.M),
+                new BulletAS(new Horizontal(),new Poison(5,5000,10,1000)),
+                new BulletCS(Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10)), new Rotation(20));
 
 
 
-
-
-       // RotateBullet wendyAxe=new RotateBullet(BE.WENDYAXE,context, 10, 20, null, 300, 300, R.drawable.wendyaxe, null, false,20,new Horizontal(),Shape.CIRCLE,Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
+        //RotateBullet wendyAxe=new RotateBullet(BE.WENDYAXE,context, 10, 20, null, 300, 300, R.drawable.wendyaxe, null, false,20,new Horizontal(),Shape.CIRCLE,Permission.YES,Rarity.RARE,new MoneyPossesStrategy("Mystery Coin",10));
 
 
         bullets.add(grendaArmachair);
@@ -226,9 +239,10 @@ public class BulletSet implements ISet<BulletSpecyfication>{
         bullets.add(firstJurnal);
         bullets.add(secondJurnal);
         bullets.add(thirdjurnal);
-        //bullets.add(wendyAxe);
+        bullets.add(wendyAxe);
         bullets.add(orange);
         bullets.add(increasingbullet);
+        bullets.add(candyTulip);
 
 
     }

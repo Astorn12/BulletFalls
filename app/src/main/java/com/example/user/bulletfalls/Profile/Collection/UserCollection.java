@@ -105,7 +105,7 @@ public class UserCollection {
         this.userFulCollection.get(2).add(
                 new CollectionItem(AE.ABILITY.getValue(),true),
                 new CollectionItem(AE.ARMCHAIRTHROW.getValue(),true),
-                new CollectionItem(AE.DINOSUMMON.getValue(),false),
+                new CollectionItem(AE.DINOSUMMON.getValue(),true),
                 new CollectionItem(AE.CARPEDIEM.getValue(),false),
                 new CollectionItem(AE.FIRSTJURNAL.getValue(),true),
                 new CollectionItem(AE.FIRSTSUMMON.getValue(),false),

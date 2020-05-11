@@ -28,7 +28,7 @@ public class Poison implements BulletDoToCharacterStrategy {
         this.toxicRate=toxicRate;
         this.startingTime=startingTime;
     }
-    public Poison() { }
+    private Poison() { }
     @Override
     public void doToCharacter(final Character character) {
 
@@ -40,6 +40,8 @@ public class Poison implements BulletDoToCharacterStrategy {
                     sleep(startingTime);
                     int number=overalTime/iterationTime;
                     for(int i=0;i<number;i++) {
+                        if(character.getLife()<=0) break;
+
                         sleep(iterationTime);
                        // character.poison(toxicRate);
                         publishProgress(toxicRate);
@@ -53,7 +55,11 @@ public class Poison implements BulletDoToCharacterStrategy {
             }
            @Override
            protected void onProgressUpdate(Integer... progress) {
-                character.poison(progress[0]);
+                if(character.getLife()>0) {
+                    character.poison(progress[0]);
+                    System.out.println("Trucie o "+progress[0]);
+                }
+
            }
         };
         asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

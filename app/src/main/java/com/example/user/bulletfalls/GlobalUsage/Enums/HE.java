@@ -23,7 +23,8 @@ public enum HE  {
     MRSGLEEFUL("Mrs. Gleeful"),
     BUDGLEEFUL("Bud Gleeful"),
     GIDEONGLEEFUL("Gideon Gleeful"),
-    PACIFIC("Pacific Northwest");
+    PACIFIC("Pacific Northwest"),
+    DIPPERWITHMIRRORS("Dipper With Mirrors");
 
 
 

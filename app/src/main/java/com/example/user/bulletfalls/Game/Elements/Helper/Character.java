@@ -293,14 +293,14 @@ public abstract class Character extends Dynamic {
      * Gdy aminacja wywoływana jest przez abulitkę, abilitka ma swoją nazwę wtedy marker może przyjmować wartość nazwy abilitki
      * np znowu dla tremblina zostła wywołana abilitka z własnym markerem RandomSummon, wtedy aminacja będzie miała nazwę, tremblin_randomsummon_animation
      * */
-    public void powerAnimation(String marker)
+    public void powerAnimation(int animationResource)
     {
         int sp = this.speed;/**zapisywanie orginalnej prędkości*/
         this.speed = 0;/**zatrzymywanie postaci*/
         int oldId = this.getImage();/**orginalny wygląd characteru*/
 
 
-        String animationName=createAnimationString(marker);/**nazwa animacji w folderze drawabl*/
+       // String animationName=createAnimationString(marker);/**nazwa animacji w folderze drawabl*/
 
         BitmapFactory.Options dimensions = new BitmapFactory.Options();
         dimensions.inJustDecodeBounds = true;
@@ -320,7 +320,8 @@ public abstract class Character extends Dynamic {
         }
         Dimension oldDimension = new Dimension(getLayoutParams().width, getLayoutParams().height);
         /**sprawdzienie czy istnieje taka animacja*/
-        int id = this.getResources().getIdentifier(animationName, "drawable", this.getContext().getPackageName());
+        //int id = this.getResources().getIdentifier(animationName, "drawable", this.getContext().getPackageName());
+        int id = animationResource;
         if (id != 0)
         {
         ((Game) this.getContext()).changeResourceForAnimation(this, id, oldId);
@@ -338,7 +339,8 @@ public abstract class Character extends Dynamic {
         this.getLayoutParams().width = realwa;
         this.getLayoutParams().height = realha;
 
-        animation.start();
+        //animation.start();
+        animation.run();
         checkIfAnimationDone(animation, sp, oldId, oldDimension); }
     }
     protected AnimationDrawable CharacterAnimation(String animationName)
@@ -444,6 +446,7 @@ public abstract class Character extends Dynamic {
     }
     public void poison(int value)
     {
+
      this.getDamage(value);
         //poisonAnimation();
     }

@@ -71,7 +71,7 @@
             android:layout_width="31dp"
             android:layout_height="37dp"
 
-            app:srcCompat="@color/black" />
+            />
     </FrameLayout>
 
     <ScrollView

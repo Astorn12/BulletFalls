@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Point;
 import android.widget.FrameLayout;
 
+import com.example.user.bulletfalls.Game.Elements.Bullet.Strategy.BulletDoToCharacterStrategyPackage.RotationCrit;
+import com.example.user.bulletfalls.Game.Elements.Bullet.Strategy.RotationStrategies.IRotationStrategy;
+import com.example.user.bulletfalls.Game.Elements.Bullet.Strategy.RotationStrategies.Rotation;
 import com.example.user.bulletfalls.Game.Elements.Helper.Sizers.BulletScale;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Active.BulletAS;
 import com.example.user.bulletfalls.Game.Elements.Helper.Statistics.Collection.BulletCS;
@@ -55,6 +58,7 @@ public class Bullet extends Dynamic implements Comparable {
     /**COLLECTION STATISTICS*/
     Rarity rarity;
     PossesStrategy possesStrategy;
+    IRotationStrategy rotationStrategy;
 
 
     Point startingCoordinates;
@@ -71,7 +75,7 @@ public class Bullet extends Dynamic implements Comparable {
 
         this.rarity=specyfication.getRarity();
         this.possesStrategy=specyfication.getPossesStrategy();
-
+        this.rotationStrategy=specyfication.getRotationStrategy();
     }
 
 
@@ -87,6 +91,7 @@ public class Bullet extends Dynamic implements Comparable {
         {
             this.power=0;
         }
+        this.rotationStrategy.rotate(this);
     }
 
     @Override
@@ -108,12 +113,21 @@ public class Bullet extends Dynamic implements Comparable {
                 new DynamicVS(this.image,this.height),
                 new BulletPS(this.speed,this.shape,this.collisionAble,this.power,this.bulletScale),
                 new BulletAS(this.bulletMoveStrategy,this.bulletDoToCharacterStrategy),
-                new BulletCS(this.getRarity(),this.possesStrategy));
+                new BulletCS(this.getRarity(),this.possesStrategy),this.getRotationStrategy());
     }
 
     public int collisionWithCharacterEfect(Character character)
     {
         int d= character.getDamage(this.power);
+
+        if(bulletDoToCharacterStrategy.getClass().equals(RotationCrit.class) & this.rotationStrategy.getClass().equals(Rotation.class)) {
+
+
+            ((RotationCrit) bulletDoToCharacterStrategy).setFinalRotate(((Rotation)rotationStrategy).getRotationMeter());
+            ((RotationCrit) bulletDoToCharacterStrategy).setPower(this.getPower());
+            d+=((RotationCrit) bulletDoToCharacterStrategy).getFinalDamage();
+
+        }
         this.bulletDoToCharacterStrategy.doToCharacter(character);
         return d;
     }
@@ -240,4 +254,11 @@ public class Bullet extends Dynamic implements Comparable {
         this.startingCoordinates = startingCoordinates;
     }
 
+    public IRotationStrategy getRotationStrategy() {
+        return rotationStrategy;
+    }
+
+    public void setRotationStrategy(IRotationStrategy rotationStrategy) {
+        this.rotationStrategy = rotationStrategy;
+    }
 }

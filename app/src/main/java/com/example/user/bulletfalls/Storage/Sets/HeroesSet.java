@@ -146,6 +146,12 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new AngelProtector()),
                 new HeroCS("dipper",Arrays.asList(FamilyName.MysteryShack),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.CHILD),standardPrice,1));
 
+        HeroSpecyfication dipperwithmirrors= new HeroSpecyfication("Dipper With Mirrors",
+                new CharacterVS(R.drawable.mirroreddipper,1,new Description()),
+                new HeroPS(30,150,20,BulletSet.getInstance().getBullet(BE.DISARM)),
+                new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new AngelProtector()),
+                new HeroCS("dipper",Arrays.asList(FamilyName.MysteryShack),Arrays.asList(Kind.HUMAN,Kind.MEN,Kind.CHILD),standardPrice,1));
+
             HeroSpecyfication soos= new HeroSpecyfication("Soos Ramirez",
                 new CharacterVS(R.drawable.soos,1,new Description()),
                 new HeroPS(20,300,20,BulletSet.getInstance().getBullet(BE.STANDARD)),
@@ -162,7 +168,7 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
                 new CharacterVS(R.drawable.wendy,1,new Description()),
                 new HeroPS(20,150,10,BulletSet.getInstance().getBullet(BE.STANDARD)),
                 new HeroAS(CharacterPositioning.LEFTCENTER,adf,nothing,new Mugol()),
-                new HeroCS("mabel",Arrays.asList(FamilyName.MysteryShack,FamilyName.Lumberjack),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.TEENEAGER),standardPrice,1));
+                new HeroCS("wendy",Arrays.asList(FamilyName.MysteryShack,FamilyName.Lumberjack),Arrays.asList(Kind.HUMAN,Kind.WOMEN,Kind.TEENEAGER),standardPrice,1));
 
         HeroSpecyfication waddles= new HeroSpecyfication("Waddles",
                 new CharacterVS(R.drawable.waddles,1,new Description()),
@@ -287,6 +293,7 @@ public class HeroesSet implements ISet<HeroSpecyfication>  {
         heroes.add(gideon);
         heroes.add(budgleeful);
         heroes.add(mrsgleeful);
+        heroes.add(dipperwithmirrors);
         //RotateBullet wendyAxe= new RotateBullet(BE.WENDYAXE,context, 10, 20, null, 100, 100,  R.drawable.wendyaxe, null, false,1,new Horizontal(),Shape.RECTANGLE,Permission.YES,Rarity.STARTING,new MoneyPossesStrategy("Mystery Coin",10));
         //wendy.setBullet(wendyAxe);
     }

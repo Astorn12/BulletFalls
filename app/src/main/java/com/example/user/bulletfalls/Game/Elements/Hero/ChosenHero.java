@@ -129,11 +129,16 @@ public class ChosenHero extends AppCompatActivity {
         before=(ImageView)this.findViewById(R.id.before);
         next=(ImageView)this.findViewById(R.id.next);
         final Activity ac=this;
+        if(getNumberOfHeroWithMark()==1){
+            before.setAlpha(0);
+            next.setAlpha(0);
+        }
+        else{
         before.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Hero newHero= getBeforeHero();
-                if(!newHero.equals(chosenHero))
+                if(!newHero.getName().equals(chosenHero.getName()))
                 {
                     chosenHero=newHero;
                 heroName.setText(chosenHero.getName());
@@ -142,6 +147,8 @@ public class ChosenHero extends AppCompatActivity {
                         .load(chosenHero.getImage())
                         .into(heroPhoto);
                 fillGroups();
+                loadAbilityList();
+                loadBulletList();
             }}
         });
 
@@ -150,7 +157,7 @@ public class ChosenHero extends AppCompatActivity {
             public void onClick(View v) {
                 Hero newHero = getNextHero();
 
-                if (!newHero.equals(chosenHero)) {
+                if (!newHero.getName().equals(chosenHero.getName())) {
                     chosenHero = newHero;
                     heroName.setText(chosenHero.getName());
                     setHeroInfo();
@@ -158,9 +165,11 @@ public class ChosenHero extends AppCompatActivity {
                             .load(chosenHero.getImage())
                             .into(heroPhoto);
                     fillGroups();
+                    loadAbilityList();
+                    loadBulletList();
                 }
             }
-        });
+        });}
     }
 
     private Hero getNextHero() {
@@ -178,6 +187,10 @@ public class ChosenHero extends AppCompatActivity {
             }
         }
         return null;
+    }
+    private int getNumberOfHeroWithMark(){
+        List<Hero> markedList= ToViewConverter.convertHeroes(this,HeroesSet.getInstance().getMarkedList(chosenHero.getIndyvidualHeroMarker()));
+        return markedList.size();
     }
 
     private Hero getBeforeHero() {
@@ -205,6 +218,7 @@ public class ChosenHero extends AppCompatActivity {
         final Activity home=this;
          List<Bullet> bulletsFromDB=ToViewConverter.convertBullets(this,BulletSet.getInstance().getBulletListForHero(chosenHero.getName(),this.getApplicationContext()));
         Collections.sort(bulletsFromDB);
+        bulletList.removeAllViews();
         int i=bulletList.getChildCount();
         if(i==0)
         {
@@ -268,6 +282,7 @@ public class ChosenHero extends AppCompatActivity {
         final Activity home= this;
         List<AbilitySpecyfication> abilities=AbilitySet.getInstance().getAbilityListForHero(chosenHero.getName());
         Collections.sort(abilities);
+        abilityList.removeAllViews();
         for(final AbilitySpecyfication a : abilities)
         {
             //a.activate();

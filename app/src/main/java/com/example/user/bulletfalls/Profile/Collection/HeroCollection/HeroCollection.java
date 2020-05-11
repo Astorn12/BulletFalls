@@ -83,6 +83,7 @@ public class HeroCollection extends AppCompatActivity {
 
 
     TextView title;
+    ImageView familiLogo;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +97,9 @@ public class HeroCollection extends AppCompatActivity {
         featuresFilterButton=(ImageButton)this.findViewById(R.id.obligatoryFilter);
         sorter=(ImageButton)this.findViewById(R.id.sort);
         extraFilter=(ImageButton)this.findViewById(R.id.extrafilter);
-
+        title=  findViewById(R.id.title);
         this.filterComposite= new CollectionFilterComposite<>();
+        this.familiLogo=findViewById(R.id.familylogo);
         createMenus();
         bindMenus();
 
@@ -121,6 +123,7 @@ public class HeroCollection extends AppCompatActivity {
                 title.setText(displayMode);
                 switch(displayMode){
                     case "Default":
+                        title.setText("Collection");
                         break;
                     case "Speed":
                         filterComposite.add(new HeroCollectionSorter( new Comparator<HeroSpecyfication>() {
@@ -155,7 +158,7 @@ public class HeroCollection extends AppCompatActivity {
                             @Override
                             public int compare(HeroSpecyfication o1, HeroSpecyfication o2) {
                                 if(o1.getTier()==o2.getTier()) return 0;
-                                else return o1.getTier()<o2.getTier() ?1 :-1;
+                                else return o1.getTier()>o2.getTier() ?1 :-1;
                             }
                         }));
                         break;
@@ -235,11 +238,16 @@ public class HeroCollection extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onItemClick(int position, PowerMenuItem item) {
+
+
                 filterComposite.clearFamilyFilters();
                 if(familiesMenu.getSelectedPosition()==position){
                     familiesMenu.setSelectedPosition(-1);
+                    familiLogo.setImageResource(0);
                 }else {
                     FamilyName familyName=familiesContainer.getAll().get(position).getGroupName();
+                    Family family=familiesContainer.getGroup(familyName);
+                    familiLogo.setImageResource(family.getMiniature());
                     filterComposite.add(new FamilyFilter(familiesContainer.getAll().get(position).getGroupName()));
                     familiesMenu.setSelectedPosition(position);
 

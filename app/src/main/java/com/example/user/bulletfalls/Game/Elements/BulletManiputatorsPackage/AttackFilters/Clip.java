@@ -19,7 +19,7 @@ public class Clip extends AttackFilter {
     @Override
     public void filter(List<Bullet> bullets, Character character,boolean isShootingTime) {
         for(int i=0;i<bullets.size();i++){
-            if(bulletAmount<0) {
+            if(bulletAmount<=0) {
                 this.setRemovAble(true);
                 break;
             }

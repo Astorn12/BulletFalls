@@ -14,7 +14,8 @@ public enum BE {
     THIRDJURNAL("Third Jurnal"),
     COUNTERBULLET("Counter Bullet"),
     INCREASINGBULLET("Incresing Bullet"),
-    WENDYAXE("Wendy Axe");
+    WENDYAXE("Wendy Axe"),
+    CANDYTYLIP("Candy Tulip");
 
     private final String value;
 

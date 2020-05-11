@@ -575,15 +575,29 @@ public class Game extends AppCompatActivity {
         });
     }
 
-    private void bigChange(final Dynamic dynamic, final Drawable drawable)
+    public void bigChange(final Dynamic dynamic, final Drawable drawable)
     {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                // viewElement.setImageDrawable(drawable);
                 dynamic.setImageDrawable(drawable);
+
             }
         });
+    }
+
+    public Runnable setBackgroundResource(Character character, int resource){
+
+        Runnable r= new Runnable() {
+            @Override
+            public void run() {
+                character.setBackgroundResource(resource);
+
+            }
+        };
+        runOnUiThread(r);
+        return r;
     }
     public void startAnimation(final Point start,final AnimationDrawable animationDrawable)
     {

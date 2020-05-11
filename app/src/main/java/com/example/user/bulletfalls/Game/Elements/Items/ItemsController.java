@@ -28,8 +28,9 @@ public class ItemsController {
 
     public void moveItems()
     {
-        for(Item item:items)
+        for(int i=0;i<items.size();i++)
         {
+            Item item=items.get(i);
             if(item.isShowed())
                 item.move(null);
             else {

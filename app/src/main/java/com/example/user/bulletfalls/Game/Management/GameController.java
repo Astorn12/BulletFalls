@@ -553,7 +553,7 @@ public class GameController {
                     if(ability.isReady()) {
                     ability.addAction(getEyeOnGame());
 
-                        medium.abilityUse(ability.getAbilitySpecyfication());
+                    medium.abilityUse(ability.getAbilitySpecyfication());
                     }
                 }
             });

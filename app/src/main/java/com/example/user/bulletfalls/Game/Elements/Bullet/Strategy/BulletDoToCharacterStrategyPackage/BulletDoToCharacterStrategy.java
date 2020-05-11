@@ -23,7 +23,8 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
         @JsonSubTypes.Type(value=SlowDownShooting.class, name = "slowdownshooting"),
         @JsonSubTypes.Type(value=TimeSlowDownShooting.class, name = "timeslowdownshooting"),
         @JsonSubTypes.Type(value=BulletWeaken.class, name = "bulletweaken"),
-        @JsonSubTypes.Type(value=SlowDownBullet.class, name = "slowdownbullet")
+        @JsonSubTypes.Type(value=SlowDownBullet.class, name = "slowdownbullet"),
+        @JsonSubTypes.Type(value=RotationCrit.class, name = "rotationcrit")
 
 })
 public interface BulletDoToCharacterStrategy {
